@@ -2,7 +2,7 @@
 
 **출처: [모든 개발자를 위한 HTTP 웹 기본 지식(김영한) 인프런 강의](https://www.inflearn.com/course/http-%EC%9B%B9-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC)**
 
-**Section 1. 인터넷 네트워크**
+<a href="1">Section 1. 인터넷 네트워크</a>
 - IP
 - TCP
 - UDP
@@ -60,7 +60,7 @@
 - 프록시 캐시
 - 캐시 무효화
 
-<h2>:pencil2: Section1. 인터넷 네트워크</h2>
+<h2><a id="1">:pencil2: Section1. 인터넷 네트워크</a></h2>
 
 IP
 지정한 IP 주소에 데이터를 전달하기 위한 프로토콜. 단위는 패킷.
