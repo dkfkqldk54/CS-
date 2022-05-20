@@ -2,28 +2,27 @@
 
 **출처: [모든 개발자를 위한 HTTP 웹 기본 지식(김영한) 인프런 강의](https://www.inflearn.com/course/http-%EC%9B%B9-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC)**
 
-<a href="#1">Section 1. 인터넷 네트워크</a>
+<a href="#1">:pencil2: Section 1. 인터넷 네트워크</a>
 - IP
 - TCP
 - UDP
 - PORT
 - DNS
 
-<a href="#2">Section 2. URI와 웹 브라우저의 요청 흐름</a>
+<a href="#2">:pencil2: Section 2. URI와 웹 브라우저의 요청 흐름</a>
 - URI
 - URN
 - URL
 - 웹 브라우저의 요청 흐름
 
-<a href="#3">Section 3. HTTP 기본</a>
+<a href="#3">:pencil2: Section 3. HTTP 기본</a>
 - HTTP?
 - 클라이언트 서버 구조
 - 무상태 프로토콜(Stateless)
 - 비연결성
 - HTTP 메시지
 
-<a href="#4">Section 4. HTTP 메서드</a>
-- HTTP 메서드 종류
+<a href="#4">:pencil2: Section 4. HTTP 메서드</a>
 - GET
 - POST
 - PUT
@@ -31,18 +30,18 @@
 - DELETE
 - HTTP 메서드 속성
 
-<a href="#5">Section 5. HTTP 메서드 활용</a>
+<a href="#5">:pencil2: Section 5. HTTP 메서드 활용</a>
 - 클라이언트에서 서버로 데이터 전송 종류
 - 클라이언트에서 서버로 데이터 전송 상황
 - HTTP API 설계 예시
 
-<a href="#6">Section 6. HTTP 상태코드</a>
+<a href="#6">:pencil2: Section 6. HTTP 상태코드</a>
 - 2xx 성공
 - 3xx 리다이렉션
 - 4xx 클라이언트 오류
 - 5xx 서버 오류
 
-<a href="#7">Section 7. HTTP 헤더1: 일반 헤더</a>
+<a href="#7">:pencil2: Section 7. HTTP 헤더1: 일반 헤더</a>
 - 헤더 개요
 - 콘텐츠 협상
 - 전송 방식
@@ -51,7 +50,7 @@
 - 인증
 - 쿠키
 
-<a href="#8">Section 8. HTTP 헤더2: 캐시와 조건부 요청</a>
+<a href="#8">:pencil2: Section 8. HTTP 헤더2: 캐시와 조건부 요청</a>
 - 캐시 기본 동작
 - 검증 헤더와 조건부 요청
 - Last-Modified, If-Modified-Since
@@ -62,335 +61,289 @@
 
 <h2><a id="1">:pencil2: Section1. 인터넷 네트워크</a></h2>
 
-**IP**
-지정한 IP 주소에 데이터를 전달하기 위한 프로토콜. 단위는 패킷.
+**:pushpin: IP**
 
-IP의 한계
-비연결성: 패킷을 받을 대상이 없거나 서비스 불능 상태인 경우에도 패킷을 전송함.
-비신뢰성: 패킷이 중간에 사라지거나(예: 중간 노드가 꺼져버리는 등)순서대로 오지 않을 수 있음(예: 용량이 큰 패킷은 늦게 도착하는 등)
-프로그램 구분: 같은 IP를 사용하고 있는 애플리케이션이 둘 이상일 경우(예: 1개의 PC로 음악을 듣고, 게임을 하는 등) 이들을 구분하기가 어려움. 
+지정한 IP 주소에 데이터를 전달하기 위한 프로토콜이다.<br>
+단위는 패킷이다.
 
-→ 위 3가지 한계를 해결하기 위해서 TCP가 필요함.
+**IP의 한계**
 
-TCP/IP 패킷 정보
+비연결성: 패킷을 받을 대상이 없거나, 서비스 불능 상태인 경우에도 패킷을 전송한다.<br>
+비신뢰성: 패킷이 중간에 사라지거나 순서대로 오지 않을 수 있다.<br>
+프로그램 구분: 같은 IP를 사용하고 있는 애플리케이션이 둘 이상일 경우 이들을 구분하기가 어렵다.<br>
 
-사진1
+→ 위 3가지 한계를 해결하기 위해서 TCP가 필요하다.
 
-전송 제어, 순서 제어, 검증 정보 등이 부가됨으로써 IP의 한계를 극복함.
+**:pushpin: TCP** 
 
-TCP(Transmisson Control Protocol)의 특성
-연결지향: 3 way handshake
-데이터 전달 보증: 데이터 전송 성공 시 데이터를 받았다는 응답을 받을 수 있음
-순서 보장: 1, 2, 3 순서로 보낸 패킷이 1, 3, 2로 도착하면 2부터 다시 보내달라고 요청
+TCP/IP 패킷에는 전송 제어, 순서 제어, 검증 정보 등이 부가됨으로써 IP의 한계를 극복할 수 있다.
 
-TCP 3way handshake
+**TCP(Transmisson Control Protocol)의 특성**
 
-사진2
+연결지향: 3 way handshake<br>
+데이터 전달 보증: 데이터 전송 성공 시 데이터를 받았다는 응답을 받을 수 있음<br>
+순서 보장: 1, 2, 3 순서로 보낸 패킷이 1, 3, 2로 도착하면 2부터 다시 보내달라고 요청<br>
 
-UDP(User Datagram Protocol)
-하얀 도화지에 비유(기능이 거의 없음)
-데이터 전달 및 순서가 보장되지 않지만 단순하고 빠름
-IP와 거의 같음. 여기에 PORT 번호와 체크섬만 추가함.
-애플리케이션에서 추가 작업이 필요함
+**TCP 3way handshake**
 
-그럼 왜 UDP를 쓰는가?
-TCP는 이미 정형화 된 틀이 있어서 더 이상 최적화하기가 어려움.
-그러나 UDP는 하얀 백지와 같아서 최적화 작업이 용이함.
-예전에는 TCP 점유율이 90% 이상이었지만, 최근에는 최적화 가능성으로 인해 UDP가 각광받고 있음.
+클라이언트 → 서버: SYN(접속 요청)<br>
+서버 → 클라이언트: SYN + ACK(요청 수락)<br>
+클라이언트 → 서버: ACK<br>
 
-PORT
+**:pushpin: UDP(User Datagram Protocol)**
 
-사진 3
+데이터 전달 및 순서가 보장되지 않지만 단순하고 빠르다.<br>
+기능이 별로 없어서 IP와 거의 같다.<br>
+IP에 PORT 번호와 체크섬만 추가한 정도다.<br>
+애플리케이션에서 추가 작업이 필요하다.<br>
 
-한 번에 둘 이상을 연결해야 할 경우 PORT가 필요함.
-0-65535 할당 가능
-0-1023 잘 알려진 포트. 사용하지 않는 것이 좋음.
-FTP 20, 21
-TELNET 23
-HTTP 80
-HTTPS 443
+**그럼 왜 UDP를 쓰는가?**
 
-DNS(Domain Name System)
-IP는 기억하기 어렵고 변경될 수 있음.
-따라서 DNS 서버에 도메인 명(예: google.com)과 IP 주소(200.200.200.2)를 등록하여 도메인 명으로 IP 주소를 요청하여 사용.
+TCP는 이미 정형화 된 틀이 있어서 더 이상 최적화하기가 어렵다.<br>
+그러나 UDP는 하얀 백지와 같아서 최적화 작업이 용이하다.<br>
+
+**:pushpin: PORT**
+
+할당 가능한 포트 0-65535<br>
+잘 알려진 포트 0-1023<br>
+FTP 20, 21<br>
+TELNET 23<br>
+HTTP 80<br>
+HTTPS 443<br>
+
+**:pushpin: DNS(Domain Name System)**
+
+IP는 기억하기 어렵고 변경될 수 있다.<br>
+따라서 DNS 서버에 도메인 명(예: google.com)과 IP 주소(200.200.200.2)를 등록하여 도메인 명으로 IP 주소를 요청하여 사용하는 것이 편하다.<br>
 
 <h2><a id="2">:pencil2: Section2. URI와 웹 브라우저의 요청 흐름</a></h2>
 
-URI(Uniform Resource Identifier)
-Uniform: 리소스를 식별하는 통일된 방식
-Resource: 자원, URI로 식별할 수 있는 모든 것. 제한 없음.
-Identifier: 다른 항목과 구분하는데 필요한 정보.
-URI는 URL(Locator)과 URN(Name)을 모두 포함한 개념.
+**:pushpin: URI(Uniform Resource Identifier)**
 
-URN(Uniform Resource Name)
-리소스에 이름을 부여한 것.
-예시: urn:example:ferret:nose
-위치는 변할 수 있지만, 이름은 변하지 않는다. 
-그러나 URN만으로는 실제 리소스를 찾를 수 있는 방법이 보편화되어 있지 않음.
-따라서 URI는 URL를 지칭하는 경우가 대부분임.
+URI는 URL(Locator)과 URN(Name)을 모두 포함한 개념이다.
 
-URL(Uniform Resource  Locator)
-예시: https://www.google.com:443/search?q=hello&hl=ko
-형식: scheme://[userinfo@]host[:port][/path][?query][#fragment]
+**:pushpin: URN(Uniform Resource Name)**
 
-scheme
-주로 프로토콜 사용
-프로토콜: 어떤 방식으로 자원에 접근할 것인가 하는 약속 규칙(http 등)
+리소스에 이름을 부여한 것이다.<br>
+예: urn:example:ferret:nose<br>
 
-userinfo
-URL에 사용자 정보를 포함해서 인증
-거의 사용하지 않음
+URN만으로는 실제 리소스를 찾을 수 있는 방법이 보편화되어 있지 않아 URI는 URL를 지칭하는 경우가 대부분이다.<br>
 
-host
-호스트명
-도메인명 또는 IP 주소를 직접 입력해서 사용 가능
+**:pushpin: URL(Uniform Resource Locator)**
 
-port
-일반적으로 생략함
-생략시 http는 80, https는 443
+예시: https://www.google.com:443/search?q=hello&hl=ko<br>
+형식: scheme://[userinfo@]host[:port][/path][?query][#fragment]<br>
 
-path
-리소스 경로, 계층적 구조
-예시: /home/file1.jpg
+**scheme**
 
-query
-key=value 형태임
-?로 시작. &로 추가 가능
-query parameter, query string 등으로 불림.
+주로 프로토콜을 사용한다.
 
-fragment
-html 내부 북마크에서 사용함.
-서버로 전송되는 정보는 아님.
+**userinfo**
 
-웹 브라우저의 요청 흐름
-1. https://www.google.com:443/search?q=hello&hl=ko 입력
-2. DNS 서버 조회. IP주소랑 포트 정보 찾아냄. HTTP 요청 메세지 생성.
-HTTP 요청 메세지
-GET/search?q=hello&hl=ko HTTP/1.1 Host: www.google.com
-3. socket 라이브러리를 통해 전달(IP와 PORT로 TCP/IP를 연결하고 데이터 전달)
-4. TCP/IP 패킷 생성. HTTP 메세지 포함.
-5. 전기적 신호로 변환되어 인터넷으로 흘러감.
-6. 요청 받은 후 HTTP 응답 메시지 만들어냄.
-HTTP/1.1 200 OK
-Content-Type: text/html:charset=UTF-8
-Content-Length: 3423
-<html>
-...
-</html>
-7. 웹 브라우저가 html 문서를 사용자에게 보여줌.
+URL에 사용자 정보를 포함해서 인증할 때 사용하나 실제로는 거의 사용하지 않는다.
+
+**host**
+
+호스트명을 사용한다.<br>
+도메인명 또는 IP 주소를 직접 입력해서 사용할 수 있다.
+
+**port**
+
+일반적으로 생략한다.
+
+**path**
+
+리소스 경로를 나타낸다.<br>
+예: /home/file1.jpg
+
+**query**
+
+key=value 형태이며 ?로 시작하고 &로 추가 가능하다.<br>
+query parameter, query string 등으로 불린다.
+
+**fragment**
+
+html 내부 북마크에서 사용하며 서버로 전송되는 정보는 아니다.
+
+**:pushpin: 웹 브라우저의 요청 흐름**
+1. https://www.google.com:443/search?q=hello&hl=ko 입력한다.
+2. DNS 서버 조회를 조회하여 IP주소랑 포트 정보 찾아낸다.
+3. HTTP 요청 메세지를 생성한다.
+3. socket 라이브러리를 통해 전달한다.
+4. TCP/IP 패킷 생성한다.
+5. 전기적 신호로 변환되어 인터넷으로 흘러간다.
+6. 요청 받은 후 HTTP 응답 메시지 만들어낸다.
+7. 웹 브라우저가 html 문서를 사용자에게 보여준다.
 
 <h2><a id="3">:pencil2: Section3. HTTP 기본</a></h2>
 
-HTTP?
-HTML, TEXT, 이미지, 음성, 영상, 파일, JSON 등 거의 모든 형태의 데이터 전송 가능함.
-서버 간에 데이터를 주고 받을 때도 대부분 HTTP를 사용함.
+**:pushpin: HTTP?**
 
-HTTP의 역사
-HTTP/0.9: 1991년. GET 메서드만 지원. HTTP 헤더 없음.
-HTTP/1.0: 1996년. 메서드와 헤더 추가.
-HTTP/1.1: 1997년. 가장 많이 사용. 가장 중요. TCP 사용.
-HTTP/2: 2015년. 성능 개선. TCP 사용.
-HTTP/3: 진행중. TCP 대신 UDP 사용. 성능 개선.
+HTML, TEXT, 이미지, 음성, 영상, 파일, JSON 등 거의 모든 형태의 데이터를 전송할 수 있다.<br>
+서버 간에 데이터를 주고 받을 때도 대부분 HTTP를 사용한다.
 
-HTTP 특징
-클라이언트 서버구조
-무상태 프로토콜(Stateless)
-비연결성
-HTTP 메시지
+**HTTP의 역사**
 
-클라이언트 서버 구조
-Request-Response 구조
-클라이언트는 서버에 요청을 보내고 응답을 대기
-서버는 요청에 대한 결과를 만들어서 응답
+HTTP/0.9: 1991년, GET 메서드만 지원하고 HTTP 헤더 없음<br>
+HTTP/1.0: 1996년, 메서드와 헤더 추가<br>
+HTTP/1.1: 1997년, 가장 많이 사용함(TCP 사용)<br>
+HTTP/2: 2015년, 성능 개선(TCP 사용)<br>
+HTTP/3: 성능 개선(UDP 사용)<br>
 
-무상태 프로토콜(Stateless)
-서버가 클라이언트의 상태를 보존하지 않는 것
-Stateful과 대비되는 개념임.
-단점: 클라이언트가 추가 데이터를 전송해야 함. 즉 매번 필요한 정보를 몽땅 입력해줘야 작동함.
-장점: 서버 확장성 높음. 스케일 아웃(수평확장). 클라이언트의 요청이 증가해도 서버 대거 투입 가능. 무한한 서버 증설 가능.
+**:pushpin: 클라이언트 서버 구조**
 
-사진4(Stateful)
-정보를 항상 유지해야 함. 따라서 서버 증설이 어려움.
-서버 1이 중간에 종료되면 처음부터 다 다시 해야함.
+클라이언트는 서버에 요청을 보내고 응답을 대기하고 서버는 요청에 대한 응답을 보낸다.
 
-사진5(Stateless)
-서버 1에 장애가 생기면 서버2로 넘어가면 됨. 문맥이 필요없음.
+**:pushpin: 무상태 프로토콜(Stateless)**
 
-모든 것을 무상태로 설계할 수 있는 경우도 있고 그렇지 않은 경우도 있음.
-Stateless 예시: 로그인이 필요없는 단순 서비스 소개 화면
-Stateful 예시: 로그인
-로그인한 사용자의 경우 로그인 했다는 상태를 서버에 유지.
-일반적으로 브라우저 쿠키와 서버 세션들을 사용하여 상태를 유지함.
-상태 유지는 최소한만 사용해야 함.
+서버가 클라이언트의 상태를 보존하지 않는 것을 가리키며 Stateful과 대비되는 개념이다.<br>
+단점: 클라이언트가 추가 데이터를 전송해야 한다. 즉 매번 필요한 정보를 몽땅 입력해줘야 한다.<br>
+장점: 클라이언트의 요청이 증가해도 서버를 대거 투입할 수 있어 서버의 확장성이 높다.
 
-비연결성
-사진6(연결을 유지하는 모델)
-사용하지 않는 서버와도 계속 연결을 유지하고 있어서 서버 자원을 소모함.
+**:pushpin: 비연결성**
 
-사진7(연결을 유지하지 않는 모델)
-서버는 연결을 유지하지 않음. 최소한의 자원만 유지함.
+사용하지 않는 서버와 계속 연결을 유지하고 있을 필요가 없다.<br>
+서버가 연결을 유지하지 않아 최소한의 자원만 사용할 수 있다.
 
-HTTP는 기본적으로 연결을 유지하지 않는 모델임.
-일반적으로 초 단위 이하의 빠른 속도로 응답함.
-1시간 동안 수천명이 서비스를 사용해도 실제 서버에서 동시레 처리하는 요청은 수십개 이하로 매우 적음
-비연결성을 통해 서버 자원을 매우 효율적으로 사용할 수 있음
+다만 비연결성은 연결할 때마다 TCP/IP 연결을 새로 맺어야 하는(3-way-handshake 시간이 추가됨) 등 한계가 존재한다.<br> 
+지금은 HTML 지속 연결(요청-응답이 다 끝날 때까지 연결을 지속하다가 맨 마지막에 종료)로 문제를 해결하였다.
 
-비연결성 한계와 극복
-TCP/IP 연결을 새로 맺어야 함(3-way-handshake 시간이 추가됨)
-웹 브라우저로 사이트를 됴청하면 HTML 뿐만 아니라 자바스크립트, CSS, 이미지 등 수 많은 자원이 함께 다운로드 됨.
-지금은 HTML 지속 연결로 문제를 해결(요청-응답이 다 끝날 때까지 연결을 지속하다가 맨 마지막에 종료)
-HTTP/2, HTTP/3에서 더 많은 최적화가 이루어짐.
+**:pushpin: HTTP 메시지**
 
-HTTP 메시지
-사진 8(HTTP 메시지 구조)
-시작 라인(start-line)
-헤더(header)
-공백 라인(empty line, 무조건 들어가야 해)
+**HTTP 메시지 구조**
+
+시작 라인(start-line)<br>
+헤더(header)<br>
+공백 라인(empty line, 무조건 들어가야 한다.)<br>
 message body
 
-시작 라인
-start line은 request line과 status line으로 나뉨
+**시작 라인(start-line)**
 
-request line = method SP(공백) request-target SP HTTP-version CRLF(엔터)
-예) GET /search?q=hello&hl=ko HTTP/1.1
+start line은 request line과 status line으로 나뉜다.
 
-HTTP 메서드
-서버가 수행해야 할 동작을 지정함.
-종류: GET, POST, PUT, DELETE
-GET: 리소스 조회
-POST: 요청 내역 처리
+request line = method SP(공백) request-target SP HTTP-version CRLF(엔터)<br>
+예: GET /search?q=hello&hl=ko HTTP/1.1
 
-status-line = HTTP-version SP status-code SP reason-phras3 CRLF
-예) HTTP/1.1 200 OK
+status-line = HTTP-version SP status-code SP reason-phrase CRLF<br>
+예: HTTP/1.1 200 OK
 
-HTTP 상태 코드
-요청 성공, 실패 등을 나타냄
-200: 성공
-400: 클라이언트 요청 오류
-500: 서버 내부 오류
-이유 문구: 사람이 이해할 수 있는 설명 글
+**헤더(header)**
 
-HTTP 헤더
-header-field = field-name ":" OWS(띄어쓰기 허용) field-value OWS
-예) Host: www.google.com
-예) Content-Type: text/html;charset=UTF-8
-Content-Length: 3423
-field-name은 대소문자 구분하지 않음
-HTTP 전송에 필요한 모든 부가 정보를 포함함.
-필요시 임의의 헤더 추가 가능.
+header-field = field-name ":" OWS(띄어쓰기 허용) field-value OWS<br>
+예: Host: www.google.com<br>
+예: Content-Type: text/html;charset=UTF-8<br>
+field-name은 대소문자를 구분하지 않는다.
 
-HTTP 메시지 바디
-실제 전송할 데이터
-HTML 문서, 이미지, 영상, JSON 등 byte로 표현 가능한 모든 정보
+**message body**
 
+실제 전송할 데이터로 HTML 문서, 이미지, 영상, JSON 등 byte로 표현 가능한 모든 정보를 담는다.
 
 <h2><a id="4">:pencil2: Section 4. HTTP 메서드</a></h2>
 
-HTTP 메서드 종류
-GET: 리소스 조회
-POST: 요청 데이터 처리, 주로 등록에 사용
-PUT: 리소스 대체, 해당 리소스가 없으면 생성
-PATCH: 리소스 부분 변경
-DELETE: 리소스 삭제
-HEAD: GET과 동일하지만 메시지 부분 제외하고 상태줄과 헤더만 반환
-OPTIONS: 대상 리소스에 대한 통신 가능 옵션(메서드)을 설명
-CONNECT: 대상 자원으로 식별되는 서버에 대한 터널을 설정
-TRACE: 대상 리소스에 대한 경로를 따라 메시지 루프백 테스트 수행
+**:pushpin: GET**
 
-GET
-리소스 조회
-서버에 전달하고 싶은 데이터는 query(쿼리 파라미터, 쿼리 스트링)를 통해서 전달
-메시지 바디를 사용해서 데이터를 전달할 수 있지만, 지원하지 않는 곳이 많아서 권장하지 않음
+리소스를 조회할 때 사용한다.<br>
+서버에 전달하고 싶은 데이터는 query(쿼리 파라미터, 쿼리 스트링)를 통해서 전달한다.
 
-요청
-GET /members/100 HTTP/1.1
-Host localhost:8080
+요청<br>
+GET /members/100 HTTP/1.1<br>
+Host: localhost:8080
 
-응답
-HTTP/1.1 200 ok
-Content-Type: application/json
-Content-Length: 34
-{
- "username":"young",
- "age":20
+응답<br>
+HTTP/1.1 200 ok<br>
+Content-Type: application/json<br>
+Content-Length: 34<br>
+{<Br>
+ "username":"young",<br>
+ "age":20<br>
 }
 
-POST
-메시지 바디를 통해 서버로 요청 데이터 전달
+**:pushpin: POST**
+ 
+메시지 바디를 통해 서버로 요청 데이터를 전달한다.<br>
 서버는 메시지 바디를 통해 들어온 데이터를 처리하는 모든 기능을 수행한다.
 
-1. 요청 데이터 처리
-예) 주문→결제완료→배달시작→배달완료
-값 변경을 넘어 프로세스의 상태가 변하는 경우
-POST /orders/{orderID}/start-delivery
-여기서 start-delivery를 컨트룰 URI라고 하는데 실무에서는 resource만으로 다 처리할 수 없어서 사용
-2. 새 리소스 생성
-3. 다른 메서드로 처리하기 애매한 경우
-예) JSON으로 조회 데이터를 넘겨야 하는데, GET 메서드를 사용하기 어려운 경우
-주로 전달되는 데이터로 신규 리소스 등록, 프로세스 처리에 사용
+**요청 데이터 처리**
+ 
+예: 주문→결제완료→배달시작→배달완료<br>
+POST /orders/{orderID}/start-delivery<br>
+값 변경을 넘어 프로세스의 상태가 변하는 경우<br>
 
-요청
-POST /members HTTP/1.1
-Content-Type: application/json
-{
- "username":"young",
- "age":20
+**새 리소스 생성**
+ 
+**다른 메서드로 처리하기 애매한 경우**
+ 
+예: JSON으로 조회 데이터를 넘겨야 하는데, GET 메서드를 사용하기 어려운 경우
+
+요청<br>
+POST /members HTTP/1.1<br>
+Content-Type: application/json<br>
+{<br>
+ "username":"young",<br>
+ "age":20<br>
 }
 
-응답
-HTTP/1.1 201 Created
-Content-Type: application/json
-Content-Length: 34
-Location: /members/100
-{
- "username":"young",
- "age":20
+응답<br>
+HTTP/1.1 201 Created<Br>
+Content-Type: application/json<br>
+Content-Length: 34<br>
+Location: /members/100<br>
+{<br>
+ "username":"young",<br>
+ "age":20<br>
 }
 
-PUT
-리소스 있으면 완전 대체
-리소스 없으면 생성
-클라이언트가 리소스의 위치를 알고 URI 지정
+**:pushpin: PUT**
+ 
+리소스 있으면 완전히 대체하고, 리소스 없으면 생성한다.<br>
+클라이언트가 리소스의 위치를 알고 URI 지정해야 한다.
 
-요청
-PUT /members/100 HTTP/1.1
-Content-Type: application/json
-{
- "username":"young",
- "age":20
-}
+요청<br>
+PUT /members/100 HTTP/1.1<br>
+Content-Type: application/json<br>
+{<br>
+ "username":"young",<br>
+ "age":20<br>
+}<br>
 
-만약 바디에 "age":20만 넣으면 기존에 있던 username 필드 없어지고 age만 저장됨 → 수정이 어려움 → PATCH 필요
+**:pushpin: PATCH**
+ 
+리소스 부분 변경할 때 사용한다.
 
-PATCH
-리소스 부분 변경
-PATCH /members/100 HTTP/1.1
-Content-Type: application/json
-{
- "age":20
-}
+요청<br>
+PATCH /members/100 HTTP/1.1<br>
+Content-Type: application/json<br>
+{<br>
+ "age":20<br>
+}<br>
 
-DELETE
-리소스 제거
-DELETE /members/100 HTTP/1.1
-Host localhost:8080
+**:pushpin: DELETE**
+ 
+리소스 제거할 때 사용한다.
+ 
+요청<br>
+DELETE /members/100 HTTP/1.1<br>
+Host: localhost:8080
 
-HTTP 메서드의 속성
-1. 안전(safe)
-호출해도 리소스를 변경하지 않는다.
-GET, HEAD 등.
+**:pushpin: HTTP 메서드의 속성**
 
-2.멱등(idempotent)
-f(f(x))=f(x)
-한번 호출하든 두번 호출하든 결과가 똑같다.
-GET, PUT, DELETE 그러나 POST는 중복 결제 등 멱등이 아님
+**안전(safe)**
+ 
+호출해도 리소스를 변경하지 않는다.<br>
+GET, HEAD가 있다.
+
+**멱등(idempotent)**
+ 
+f(f(x))=f(x)<br>
+한번 호출하든 두번 호출하든 결과가 똑같다.<br>
+GET, PUT, DELETE가 있다.<br>
+그러나 POST는 중복 결제 등 멱등이 아니다.<br>
 활용: 응답이 안 왔을 때 다시 요청해도 되는 경우, 자동복구 매커니즘
 
-3. 캐시 가능(cacheable)
-응답 결과 리소스를 캐시해서 사용해도 되는가
-GET, HEAD, POST, PATCH 캐시 가능
-실제로는 GET. HEAD 정도만 캐시로 사용
-POST, PATCH는 본문 내용까디 캐시 키로 고려해야 하는데, 구현이 쉽지 않음
+**캐시 가능(cacheable)**
+응답 결과 리소스를 캐시해서 사용해도 된다.<br>
+GET, HEAD, POST, PATCH는 캐시 가능하다.<br>
+POST, PATCH는 본문 내용까디 캐시 키로 고려해야 하는데, 구현이 쉽지 않다.
 
 <h2><a id="5">:pencil2: Section5. HTTP 메서드 활용</a></h2>
 
