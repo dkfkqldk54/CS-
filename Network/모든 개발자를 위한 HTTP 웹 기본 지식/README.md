@@ -83,7 +83,7 @@ TCP/IP 패킷에는 전송 제어, 순서 제어, 검증 정보 등이 부가됨
 **3-way-handshake**
 
 클라이언트 → 서버: SYN(접속 요청)<br>
-서버 → 클라이언트: SYN + ACK(요청 수락)<br>
+서버 → 클라이언트: ACK(요청 수락) + SYN<br>
 클라이언트 → 서버: ACK<br>
 
 **:pushpin: UDP(User Datagram Protocol)**
@@ -108,8 +108,8 @@ HTTPS: 443<br>
 
 **:pushpin: DNS(Domain Name System)**
 
-IP는 기억하기 어렵고 변경될 수도 있다.<br>
-따라서 DNS 서버에 도메인 명과 IP 주소를 등록하여 도메인 명으로 IP 주소를 요청하여 사용하는 것이 편하다.<br>
+IP는 기억하기 어렵고, 변경될 수도 있다.<br>
+따라서 DNS 서버에 도메인 명과 IP 주소를 등록하여, 도메인 명으로 IP 주소를 요청하여 사용하는 것이 편하다.<br>
 
 <h2><a id="2">:pencil2: Section2. URI</a></h2>
 
