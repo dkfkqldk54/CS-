@@ -9,20 +9,20 @@
 - PORT
 - DNS
 
-**Section 2. URI와 웹 브라우저의 요청 흐름**
+<a href="#2">Section 2. URI와 웹 브라우저의 요청 흐름</a>
 - URI
 - URN
 - URL
 - 웹 브라우저의 요청 흐름
 
-**Section 3. HTTP 기본**
+<a href="#3">Section 3. HTTP 기본</a>
 - HTTP?
 - 클라이언트 서버 구조
 - 무상태 프로토콜(Stateless)
 - 비연결성
 - HTTP 메시지
 
-**Section 4. HTTP 메서드**
+<a href="#4">Section 4. HTTP 메서드</a>
 - HTTP 메서드 종류
 - GET
 - POST
@@ -31,18 +31,18 @@
 - DELETE
 - HTTP 메서드 속성
 
-**Section 5. HTTP 메서드 활용**
+<a href="#5">Section 5. HTTP 메서드 활용</a>
 - 클라이언트에서 서버로 데이터 전송 종류
 - 클라이언트에서 서버로 데이터 전송 상황
 - HTTP API 설계 예시
 
-**Section 6. HTTP 상태코드**
+<a href="#6">Section 6. HTTP 상태코드</a>
 - 2xx 성공
 - 3xx 리다이렉션
 - 4xx 클라이언트 오류
 - 5xx 서버 오류
 
-**Section 7. HTTP 헤더1: 일반 헤더**
+<a href="#7">Section 7. HTTP 헤더1: 일반 헤더</a>
 - 헤더 개요
 - 콘텐츠 협상
 - 전송 방식
@@ -51,7 +51,7 @@
 - 인증
 - 쿠키
 
-**Section 8. HTTP 헤더2: 캐시와 조건부 요청**
+<a href="#8">Section 8. HTTP 헤더2: 캐시와 조건부 요청</a>
 - 캐시 기본 동작
 - 검증 헤더와 조건부 요청
 - Last-Modified, If-Modified-Since
@@ -62,7 +62,7 @@
 
 <h2><a id="1">:pencil2: Section1. 인터넷 네트워크</a></h2>
 
-IP
+**IP**
 지정한 IP 주소에 데이터를 전달하기 위한 프로토콜. 단위는 패킷.
 
 IP의 한계
@@ -114,7 +114,7 @@ DNS(Domain Name System)
 IP는 기억하기 어렵고 변경될 수 있음.
 따라서 DNS 서버에 도메인 명(예: google.com)과 IP 주소(200.200.200.2)를 등록하여 도메인 명으로 IP 주소를 요청하여 사용.
 
-<h2>:pencil2: Section2. URI와 웹 브라우저의 요청 흐름</h2>
+<h2><a id="2">:pencil2: Section2. URI와 웹 브라우저의 요청 흐름</a></h2>
 
 URI(Uniform Resource Identifier)
 Uniform: 리소스를 식별하는 통일된 방식
@@ -179,7 +179,7 @@ Content-Length: 3423
 </html>
 7. 웹 브라우저가 html 문서를 사용자에게 보여줌.
 
-<h2>:pencil2: Section3. HTTP 기본</h2>
+<h2><a id="3">:pencil2: Section3. HTTP 기본</a></h2>
 
 HTTP?
 HTML, TEXT, 이미지, 음성, 영상, 파일, JSON 등 거의 모든 형태의 데이터 전송 가능함.
@@ -284,7 +284,7 @@ HTTP 메시지 바디
 HTML 문서, 이미지, 영상, JSON 등 byte로 표현 가능한 모든 정보
 
 
-<h2>:pencil2: Section 4. HTTP 메서드</h2>
+<h2><a id="4">:pencil2: Section 4. HTTP 메서드</a></h2>
 
 HTTP 메서드 종류
 GET: 리소스 조회
@@ -392,7 +392,7 @@ GET, HEAD, POST, PATCH 캐시 가능
 실제로는 GET. HEAD 정도만 캐시로 사용
 POST, PATCH는 본문 내용까디 캐시 키로 고려해야 하는데, 구현이 쉽지 않음
 
-<h2>:pencil2: Section5. HTTP 메서드 활용</h2>
+<h2><a id="5">:pencil2: Section5. HTTP 메서드 활용</a></h2>
 
 클라이언트에서 서버로 데이터 전송 종류
 1. 쿼리 파라미터를 통한 데이터 전송
@@ -456,7 +456,7 @@ AJAX 같은 기술 이용하여 해결 가능하긴 함
 회원 삭제 /members/{id}/delete → POST
 메서드를 다양하게 쓸 수 없어서 edit, delete 등 컨트룰 URI 사용
 
-<h2>:pencil2: Section 6. HTTP 상태 코드</h2>
+<h2><a id="6">:pencil2: Section 6. HTTP 상태 코드</a></h2>
 
 상태 코드: 클라이언트가 보낸 요청의 처리 상태를 응답에서 알려주는 기능
 
@@ -570,7 +570,7 @@ POST로 주문 후에 윕 브라우저를 새로고침하면 POST로 다시 요�
 서버가 일시적인 과부하 또는 예정된 작업으로 잠시 요청을 처리할 수 없음
 Retry-After 헤더 팔드로 얼마 뒤에 복구되는지 보낼 수도 있음.
 
-<h2>:pencil2: Section 7. HTTP 헤더1: 일반 헤더</h2>
+<h2><a id="7">:pencil2: Section 7. HTTP 헤더1: 일반 헤더</a></h2>
 
 헤더 개요
 
@@ -775,7 +775,7 @@ SameSite
 XSRF 공격 방지
 요청 도메인과 쿠키에 설정된 도메인이 같은 경우만 쿠키 전송
 
-<h2>:pencil2: Section 8. HTTP 헤더2: 캐시와 조건부 요청</h2>
+<h2><a id="8">:pencil2: Section 8. HTTP 헤더2: 캐시와 조건부 요청</a></h2>
 
 캐시 기본 동작
 
