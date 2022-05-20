@@ -9,11 +9,10 @@
 - PORT
 - DNS
 
-<a href="#2">:pencil2: Section 2. URI와 웹 브라우저의 요청 흐름</a>
+<a href="#2">:pencil2: Section 2. URI</a>
 - URI
 - URN
 - URL
-- 웹 브라우저의 요청 흐름
 
 <a href="#3">:pencil2: Section 3. HTTP 기본</a>
 - HTTP?
@@ -63,16 +62,13 @@
 
 **:pushpin: IP**
 
-지정한 IP 주소에 데이터를 전달하기 위한 프로토콜이다.<br>
-단위는 패킷이다.
+지정한 IP 주소에 데이터를 전달하기 위한 프로토콜이며 단위는 패킷이다.
 
 **IP의 한계**
 
-비연결성: 패킷을 받을 대상이 없거나, 서비스 불능 상태인 경우에도 패킷을 전송한다.<br>
-비신뢰성: 패킷이 중간에 사라지거나 순서대로 오지 않을 수 있다.<br>
+비연결성: 패킷을 받을 대상이 없거나, 서비스 불능인 경우에도 패킷을 전송한다.<br>
+비신뢰성: 패킷이 중간에 사라지거나, 순서대로 오지 않을 수 있다.<br>
 프로그램 구분: 같은 IP를 사용하고 있는 애플리케이션이 둘 이상일 경우 이들을 구분하기가 어렵다.<br>
-
-→ 위 3가지 한계를 해결하기 위해서 TCP가 필요하다.
 
 **:pushpin: TCP** 
 
@@ -80,11 +76,11 @@ TCP/IP 패킷에는 전송 제어, 순서 제어, 검증 정보 등이 부가됨
 
 **TCP(Transmisson Control Protocol)의 특성**
 
-연결지향: 3 way handshake<br>
-데이터 전달 보증: 데이터 전송 성공 시 데이터를 받았다는 응답을 받을 수 있음<br>
-순서 보장: 1, 2, 3 순서로 보낸 패킷이 1, 3, 2로 도착하면 2부터 다시 보내달라고 요청<br>
+연결지향: 3-way-handshake<br>
+데이터 전달 보증: 데이터 전송 성공 시 데이터를 받았다는 응답을 받을 수 있다.<br>
+순서 보장: 1, 2, 3 순서로 보낸 패킷이 1, 3, 2 순서로 도착하면 2부터 다시 보내달라고 요청한다.<br>
 
-**TCP 3way handshake**
+**3-way-handshake**
 
 클라이언트 → 서버: SYN(접속 요청)<br>
 서버 → 클라이언트: SYN + ACK(요청 수락)<br>
@@ -93,30 +89,29 @@ TCP/IP 패킷에는 전송 제어, 순서 제어, 검증 정보 등이 부가됨
 **:pushpin: UDP(User Datagram Protocol)**
 
 데이터 전달 및 순서가 보장되지 않지만 단순하고 빠르다.<br>
-기능이 별로 없어서 IP와 거의 같다.<br>
-IP에 PORT 번호와 체크섬만 추가한 정도다.<br>
+기능이 별로 없어서 IP와 거의 같고, PORT 번호와 체크섬만 추가한 정도다.<br>
 애플리케이션에서 추가 작업이 필요하다.<br>
 
 **그럼 왜 UDP를 쓰는가?**
 
-TCP는 이미 정형화 된 틀이 있어서 더 이상 최적화하기가 어렵다.<br>
-그러나 UDP는 하얀 백지와 같아서 최적화 작업이 용이하다.<br>
+TCP는 이미 정형화되어 있어 더 이상 최적화하기가 어렵다.<br>
+그러나 UDP는 하얀 백지와 같아서 최적화하기가 용이하다.<br>
 
 **:pushpin: PORT**
 
-할당 가능한 포트 0-65535<br>
-잘 알려진 포트 0-1023<br>
-FTP 20, 21<br>
-TELNET 23<br>
-HTTP 80<br>
-HTTPS 443<br>
+할당 가능한 포트: 0-65535<br>
+잘 알려진 포트: 0-1023<br>
+FTP: 20, 21<br>
+TELNET: 23<br>
+HTTP: 80<br>
+HTTPS: 443<br>
 
 **:pushpin: DNS(Domain Name System)**
 
-IP는 기억하기 어렵고 변경될 수 있다.<br>
-따라서 DNS 서버에 도메인 명(예: google.com)과 IP 주소(200.200.200.2)를 등록하여 도메인 명으로 IP 주소를 요청하여 사용하는 것이 편하다.<br>
+IP는 기억하기 어렵고 변경될 수도 있다.<br>
+따라서 DNS 서버에 도메인 명과 IP 주소를 등록하여 도메인 명으로 IP 주소를 요청하여 사용하는 것이 편하다.<br>
 
-<h2><a id="2">:pencil2: Section2. URI와 웹 브라우저의 요청 흐름</a></h2>
+<h2><a id="2">:pencil2: Section2. URI</a></h2>
 
 **:pushpin: URI(Uniform Resource Identifier)**
 
@@ -127,7 +122,7 @@ URI는 URL(Locator)과 URN(Name)을 모두 포함한 개념이다.
 리소스에 이름을 부여한 것이다.<br>
 예: urn:example:ferret:nose<br>
 
-URN만으로는 실제 리소스를 찾을 수 있는 방법이 보편화되어 있지 않아 URI는 URL를 지칭하는 경우가 대부분이다.<br>
+URN만으로는 리소스를 찾을 수 있는 방법이 보편화되어 있지 않아 URI는 URL를 지칭하는 경우가 대부분이다.<br>
 
 **:pushpin: URL(Uniform Resource Locator)**
 
@@ -165,16 +160,6 @@ query parameter, query string 등으로 불린다.
 
 html 내부 북마크에서 사용하며 서버로 전송되는 정보는 아니다.
 
-**:pushpin: 웹 브라우저의 요청 흐름**
-1. https://www.google.com:443/search?q=hello&hl=ko 입력한다.
-2. DNS 서버 조회를 조회하여 IP주소랑 포트 정보 찾아낸다.
-3. HTTP 요청 메세지를 생성한다.
-3. socket 라이브러리를 통해 전달한다.
-4. TCP/IP 패킷 생성한다.
-5. 전기적 신호로 변환되어 인터넷으로 흘러간다.
-6. 요청 받은 후 HTTP 응답 메시지 만들어낸다.
-7. 웹 브라우저가 html 문서를 사용자에게 보여준다.
-
 <h2><a id="3">:pencil2: Section3. HTTP 기본</a></h2>
 
 **:pushpin: HTTP?**
@@ -192,7 +177,7 @@ HTTP/3: 성능 개선(UDP 사용)<br>
 
 **:pushpin: 클라이언트 서버 구조**
 
-클라이언트는 서버에 요청을 보내고 응답을 대기하고 서버는 요청에 대한 응답을 보낸다.
+클라이언트는 서버에 요청을 보내고 응답을 대기하고, 서버는 요청에 대한 응답을 보낸다.
 
 **:pushpin: 무상태 프로토콜(Stateless)**
 
@@ -205,8 +190,8 @@ HTTP/3: 성능 개선(UDP 사용)<br>
 사용하지 않는 서버와 계속 연결을 유지하고 있을 필요가 없다.<br>
 서버가 연결을 유지하지 않아 최소한의 자원만 사용할 수 있다.
 
-다만 비연결성은 연결할 때마다 TCP/IP 연결을 새로 맺어야 하는(3-way-handshake 시간이 추가됨) 등 한계가 존재한다.<br> 
-지금은 HTML 지속 연결(요청-응답이 다 끝날 때까지 연결을 지속하다가 맨 마지막에 종료)로 문제를 해결하였다.
+다만 연결할 때마다 TCP/IP 연결을 새로 맺어야 하는 등 한계가 존재한다.<br> 
+지금은 요청과 응답이 다 끝날 때까지 연결을 지속하다가 마지막에 종료하는 HTML 지속 연결로 문제를 해결하였다.
 
 **:pushpin: HTTP 메시지**
 
@@ -215,7 +200,7 @@ HTTP/3: 성능 개선(UDP 사용)<br>
 시작 라인(start-line)<br>
 헤더(header)<br>
 공백 라인(empty line, 무조건 들어가야 한다.)<br>
-message body
+바디(message body)
 
 **시작 라인(start-line)**
 
@@ -232,9 +217,8 @@ status-line = HTTP-version SP status-code SP reason-phrase CRLF<br>
 header-field = field-name ":" OWS(띄어쓰기 허용) field-value OWS<br>
 예: Host: www.google.com<br>
 예: Content-Type: text/html;charset=UTF-8<br>
-field-name은 대소문자를 구분하지 않는다.
 
-**message body**
+**바디(message body)**
 
 실제 전송할 데이터로 HTML 문서, 이미지, 영상, JSON 등 byte로 표현 가능한 모든 정보를 담는다.
 
@@ -243,7 +227,6 @@ field-name은 대소문자를 구분하지 않는다.
 **:pushpin: GET**
 
 리소스를 조회할 때 사용한다.<br>
-서버에 전달하고 싶은 데이터는 query(쿼리 파라미터, 쿼리 스트링)를 통해서 전달한다.
 
 요청<br>
 GET /members/100 HTTP/1.1<br>
@@ -263,15 +246,14 @@ Content-Length: 34<br>
 메시지 바디를 통해 서버로 요청 데이터를 전달한다.<br>
 서버는 메시지 바디를 통해 들어온 데이터를 처리하는 모든 기능을 수행한다.
 
-**요청 데이터 처리**
+**1. 요청 데이터 처리**
  
 예: 주문→결제완료→배달시작→배달완료<br>
-POST /orders/{orderID}/start-delivery<br>
-값 변경을 넘어 프로세스의 상태가 변하는 경우<br>
+POST /orders/{orderID}/start-delivery
 
-**새 리소스 생성**
+**2. 새 리소스 생성**
  
-**다른 메서드로 처리하기 애매한 경우**
+**3. 다른 메서드로 처리하기 애매한 경우**
  
 예: JSON으로 조회 데이터를 넘겨야 하는데, GET 메서드를 사용하기 어려운 경우
 
@@ -341,9 +323,9 @@ GET, PUT, DELETE가 있다.<br>
 활용: 응답이 안 왔을 때 다시 요청해도 되는 경우, 자동복구 매커니즘
 
 **캐시 가능(cacheable)**
+ 
 응답 결과 리소스를 캐시해서 사용해도 된다.<br>
 GET, HEAD, POST, PATCH는 캐시 가능하다.<br>
-POST, PATCH는 본문 내용까디 캐시 키로 고려해야 하는데, 구현이 쉽지 않다.
 
 <h2><a id="5">:pencil2: Section5. HTTP 메서드 활용</a></h2>
 
