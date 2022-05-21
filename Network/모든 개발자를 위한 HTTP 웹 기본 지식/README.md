@@ -491,7 +491,7 @@ POST로 주문 후에 웹 브라우저를 새로고침하면 POST로 다시 요�
 주로 인증 자격 증명은 있지만 접근 권한이 불충분한 경우<br>
 예: 어드민 등급이 아닌 사용자가 로그인은 했지만, 어드민 등급의 리소스에 접근하는 경우
 
-**404 Not Found**
+**404 Not Found<br>**
 요청 리소스를 찾을 수 없는 상태 혹은 클라이언트가 권한이 부족한 리소스에 접근할 때 해당 리소스를 숨기고 싶을 때
 
 **:pushpin: 5xx 서버 오류**
@@ -509,306 +509,310 @@ Retry-After 헤더 필드로 얼마 뒤에 복구되는지 보낼 수도 있다.
 
 <h2><a id="7">:pencil2: Section 7. HTTP 헤더1: 일반 헤더</a></h2>
 
-헤더 개요
+**:pushpin: 헤더 개요**
 
-Content-Type
-표현 데이터의 형식
-text/html;charset=utf-8
-application/json
+**Content-Type<br>**
+표현 데이터의 형식<br>
+text/html;charset=utf-8<br>
+application/json<br>
 image/png
 
-Content-Encoding
-표현 데이터의 압축 방식
-gzip
-deflate
+**Content-Encoding<br>**
+표현 데이터의 압축 방식<br>
+gzip<br>
+deflate<br>
 identity(압축하지 않았다는 뜻)
 
-Content-Language
-표현 데이터의 자연 언어
+**Content-Language<br>**
+표현 데이터의 자연 언어<br>
 ko, en, en-US
 
-Content-Length
-표현 데이터의 길이
+**Content-Length<br>**
+표현 데이터의 길이<br>
 바이트 단위
 
-콘텐츠 협상
-클라이언트가 선호하는 표현을 요청하는 것
-협상 헤더는 요청시에만 사용함.
-Accept-Charset: 클라이언트가 선호하는 문자 인코딩
-Accept-Encoding: 클라이언트가 선호하는 압축 인코딩
+**:pushpin: 콘텐츠 협상<br>**
+클라이언트가 선호하는 표현을 요청하는 것으로 협상 헤더는 요청시에만 사용한다.<br>
+Accept-Charset: 클라이언트가 선호하는 문자 인코딩<br>
+Accept-Encoding: 클라이언트가 선호하는 압축 인코딩<br>
 Accept-Language: 클라이언트가 선호하는 자연 언어
 
-협상 우선순위
+**협상 우선순위**
 
-Quality Values(q)
-0~1 범위이며 클수록 높은 우선순위
+**Quality Values(q)<br>**
+0~1 범위이며 클수록 높은 우선순위<br>
 생략하면 1
 
-구체적인 것이 우선한다.
-1. text/plain
-2. text/*
+**구체적인 것이 우선한다.<br>**
+1. text/plain<br>
+2. text/*<br>
 3. */*
 
-구체적인 것을 기준으로 미디어 타입을 맞춘다.
+**구체적인 것을 기준으로 미디어 타입을 맞춘다.<br>**
 Accept: text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4
 
-전송 방식
+**:pushpin: 전송 방식**
 
-단순 전송(Content-Length)
+**1. 단순 전송(Content-Length)**
 
-압축 전송(Content-Encoding)
+**2. 압축 전송(Content-Encoding)**
 
-분할 전송(Transfer-Encoding)
-5
+**3. 분할 전송(Transfer-Encoding)<br>**
+ 
+5<br>
 Hello
 
-5
+5<br>
 World
 
-0
+0<br>
 \r\n
 
-5바이트 먼저 보내고, 5바이트 보내고, 끝내는 식
-Transfer-Encoding: chunked
-여기서는 Content-Length를 포함하면 안 됨
+5바이트 먼저 보내고, 5바이트 보내고, 끝내는 식이다.<br>
+Transfer-Encoding: chunked<br>
+여기서는 Content-Length를 포함하면 안 된다.
 
-범위 전송(Range, Content-Range)
-요청
+**4. 범위 전송(Range, Content-Range)<br>**
+ 
+**요청<br>**
 Range: bytes=1001-2000
-응답
+ 
+**응답<br>**
 Content-Range: bytes 1001-2000/2000
 
-일반 정보
+**:pushpin: 일반 정보**
 
-From
-유저 에이전트의 이메일 정보
-일반적으로 잘 사용되지 않음
-검색 엔진 같은 곳에서 주로 사용
-요청에서 사용
+**From<br>**
+유저 에이전트의 이메일 정보<br>
+일반적으로 잘 사용되지 않는다.<br>
+검색 엔진 같은 곳에서 주로 사용한다.<br>
+요청에서 사용한다.
 
-Referer
-현재 요청된 페이지의 이전 웹페이지 주소
-A→B로 이동하는 경우
-B를 요청할 때 Referer: A를 포함해서 요청
-Referer를 사용해서 유입 경로 분석 가능
-referer는 referrer의 오타임
+**Referer<br>**
+현재 요청된 페이지의 이전 웹페이지 주소<br>
+A→B로 이동하는 경우<br>
+B를 요청할 때 Referer: A를 포함해서 요청한다.<br>
+Referer를 사용해서 유입 경로를 분석할 수 있다.
 
-User-Agent
-클라이언트의 애플리케이션 정보(웹 브라우저 정보 등등)
-통계 정보
-어떤 종류의 브라우저에서 장애가 발생하는지 파악하는 요청에서 사용
+**User-Agent<br>**
+클라이언트의 애플리케이션 정보(웹 브라우저 정보 등등)<br>
+통계 정보<br>
+어떤 종류의 브라우저에서 장애가 발생하는지 파악하는 요청에서 사용한다.
 
-Server
-요청을 처리하는 ORIGIN 서버의 소프트웨어 정보
-Server: Apache/2.2.22(Debian)
-응답에서 사용
+**Server<br>**
+요청을 처리하는 ORIGIN 서버의 소프트웨어 정보<br>
+Server: Apache/2.2.22(Debian)<br>
+응답에서 사용한다.
 
-Date
-메시지가 발생한 날짜와 시간
-응답에서 사용
+**Date<br>**
+메시지가 발생한 날짜와 시간<br>
+응답에서 사용한다.
 
-특별한 정보
+**:pushpin: 특별한 정보**
 
-Host
-요청한 호스트 정보(도메인)
-요청에서 사용, 필수
-하나의 서버가 여러 도메인을 처리해야 할 때
-하나의 IP 주소에 여러 도메인이 적용되어 있을 때
+**Host<br>**
+요청한 호스트 정보(도메인)<br>
+요청에서 사용하며 필수로 들어가야 한다.<br>
+하나의 서버가 여러 도메인을 처리해야 할 때<br>
+ 하나의 IP 주소에 여러 도메인이 적용되어 있을 때
 
-Location
-페이지 리다이렉션
-웹 브라우저는 3xx 응답의 결과에 Location 헤더가 있으면 Location 위치로 자동 이동
+**Location<br>**
+페이지 리다이렉션<br>
+웹 브라우저는 3xx 응답의 결과에 Location 헤더가 있으면 Location 위치로 자동 이동한다.
 
-Allow
-허용 가능한 HTTP 메서드
-405(Mathod Not Allowed)에서 응답에 포함해야 함
+**Allow<br>**
+허용 가능한 HTTP 메서드<br>
+405(Mathod Not Allowed)에서 응답에 포함해야 한다.<br>
 Allow: GET, HEAD, PUT
 
-Retry-After
-유저 에이전트가 다음 요청을 하기까지 기다려야 하는 시간
-503(Service Unavailable) 서비스가 언제까지 불능인지 알려줄 수 있음
-Retry-After: Fri, 31 DEC 23:59:59 GMT(날짜 표기)
+**Retry-After<br>**
+유저 에이전트가 다음 요청을 하기까지 기다려야 하는 시간<br>
+503(Service Unavailable) 서비스가 언제까지 불능인지 알려줄 수 있다.<br>
+Retry-After: Fri, 31 DEC 23:59:59 GMT(날짜 표기)<br>
 Retey-After: 120(초단위 표기)
 
-인증
+**:pushpin: 인증**
 
-Authorization
+**Authorization<br>**
 클라이언트의 인증 정보를 서버에 전달
 
-WWW-Authenticate
-리소스 접근 시 필요한 인증 방법 정의
-401 Unauthorized 응답과 함께 사용
+**WWW-Authenticate<br>**
+리소스 접근 시 필요한 인증 방법 정의<br>
+401 Unauthorized 응답과 함께 사용한다.
 
-쿠키
+**:pushpin: 쿠키**
 
-Set-cookie: 서버에서 클라이언트로 쿠키를 전달(응답)
+Set-cookie: 서버에서 클라이언트로 쿠키를 전달(응답)<br>
 cookie: 클라이언트가 서버에서 받은 쿠키를 저장하고, HTTP 요청시 서버로 전달
 
-쿠키가 필요한 이유
-HTTP는 Stateless임
-모든 요청에 사용자 정보 입력해야 함
-브라우저 종료하고 다시 열면? 또 입력해야 함
+**쿠키가 필요한 이유<br>**
+HTTP는 Stateless라서 모든 요청에 사용자 정보 입력해야 한다.<br>
+브라우저 종료하고 다시 열면? 또 입력해야 한다.
 
-요청
-POST /login HTTP/1.1
+**요청<br>**
+POST /login HTTP/1.1<br>
 user=홍길동
 
-응답
-HTTP/1.1 200 ok
+**응답<br>**
+HTTP/1.1 200 ok<br>
 Set-Cookie: user=홍길동
 
-쿠키 정보는 쿠키 저장소에 저장함
-Cookie: user=홍길동
-요청이 있으면 쿠키를 헤더에 추가
+쿠키 정보는 쿠키 저장소에 저장한다.<br>
+Cookie: user=홍길동<br>
+요청이 있으면 쿠키를 헤더에 추가한다.
 
-사용처
-사용자 로그인 세션 관리
+**사용처<br>**
+사용자 로그인 세션 관리<br>
 광고 정보 트래킹
 
-쿠키 정보는 항상 서버에 전송됨
-네트워크 트래픽 추가 유발
-최소한의 정보만 사용
-서버에 전송하지 않고, 웹 브라우저 내부에 데이터를 저장하고 싶으면 웹 스토리지 사용
-보안에 민감한 데이터는 저장하면 안 됨
+쿠키 정보는 항상 서버에 전송된다.<br>
+네트워크 트래픽 추가 유발하므로 최소한의 정보만 사용해야 한다.<br>
+서버에 전송하지 않고, 웹 브라우저 내부에 데이터를 저장하고 싶으면 웹 스토리지 사용하면 된다.<br>
+보안에 민감한 데이터는 저장하면 안 된다.
 
-쿠기 생명주기
-Set-Cookie: expires=날짜 만료일에 삭제
-Set-Cookie: max-age=3600 0이나 음수되면 삭제
-세션 쿠키: 만료 날짜 생략 시 브라우저 종료시까지만 유지
+**쿠기 생명주기<br>**
+Set-Cookie: expires=날짜 만료일에 삭제<br>
+Set-Cookie: max-age=3600 0이나 음수되면 삭제<br>
+세션 쿠키: 만료 날짜 생략 시 브라우저 종료시까지만 유지<br>
 영속 쿠키: 만료 날짜 입력 시 해당 날짜까지만 유지
 
-쿠키 도메인
+**쿠키 도메인<br>**
 
-명시: 명시한 문서 기준 도메인 → 서브 도메인 포함
-domain=example.org 지정해서 쿠키 생성
+**1. 명시: 명시한 문서 기준 도메인 → 서브 도메인 포함<br>**
+domain=example.org 지정해서 쿠키 생성<br>
 example.org는 물론이고 dev.example.org도 쿠키 접근
 
-생략: 현재 문서 기준 도메인만 적용
-example.org에서 쿠키를 생성하고 domain 지정은 생략
+**2. 생략: 현재 문서 기준 도메인만 적용<br>**
+example.org에서 쿠키를 생성하고 domain 지정은 생략<br>
 example.org에서만 쿠키 접근하고 dev.example.org는 쿠키 미접근
 
-쿠키 경로
+**쿠키 경로<br>**
 
-예: path=/home
-이 경로를 포함한 하위 경로 페이지만 쿠키 접근
-일반적으로 path=/ 루트로 지정
-path=/home 지정시
-/home 가능
-/home/dev1 가능
+예: path=/home<br>
+이 경로를 포함한 하위 경로 페이지만 쿠키 접근<br>
+일반적으로 path=/ 루트로 지정<br>
+path=/home 지정시<br>
+/home 가능<br>
+/home/dev1 가능<br>
 /hello 불가능
 
-쿠키 보안
+**쿠키 보안<br>**
 
-Secure
-쿠키는 http, https 구분하지 않고 전송
-secure 적용시 https인 경우에만 전송
+**Secure<br>**
+쿠키는 http, https 구분하지 않고 전송한다.<br>
+secure 적용시 https인 경우에만 전송한다.
 
-HttpOnly
-XSS 공격 방지
-자바스크립트에서 접근 불가
-HTTP 전송에만 사용
+**HttpOnly<br>**
+XSS 공격 방지<br>
+자바스크립트에서 접근 불가<br>
+HTTP 전송에만 사용한다.
 
-SameSite
-XSRF 공격 방지
-요청 도메인과 쿠키에 설정된 도메인이 같은 경우만 쿠키 전송
+**SameSite<br>**
+XSRF 공격 방지<br>
+요청 도메인과 쿠키에 설정된 도메인이 같은 경우만 쿠키 전송한다.
 
 <h2><a id="8">:pencil2: Section 8. HTTP 헤더2: 캐시와 조건부 요청</a></h2>
 
-캐시 기본 동작
+**:pushpin: 캐시 기본 동작**
 
-캐시가 없을 때
+**캐시가 없을 때<br>**
 데이터가 변경되지 않아도 계속 네트워크를 통해서 데이터를 다운로드 받아야 한다.
 
-캐시 적용
+**캐시 적용<br>**
 캐시 덕분에 캐시 가능 시간동안 네트워크를 사용하지 않아도 된다.
 
-캐시 시간 초과
+**캐시 시간 초과<br>**
 캐시 유효 시간이 초과되면 서버를 통해 데이터를 다시 조회히고, 캐시를 갱신한다. 이 때, 다시 네트워크 다운로드가 발생한다.
 
-서버에서 기존 데이터 변경하지 않았을 때
-로컬 캐시를 다시 쓰고 싶음. 따라서 데이터가 바뀌지 않았다는 것을 확인하고 싶어. 검증 헤더를 추가함.
+**서버에서 기존 데이터 변경하지 않았을 때<br>**
+로컬 캐시를 다시 쓰고싶음.<br>
+따라서 데이터가 바뀌지 않았다는 것을 확인하고 싶다.
 
-검증 헤더와 조건부 요청
+**:pushpin: 검증 헤더와 조건부 요청**
 
-검증 헤더
-캐시 데이터와 서버 데이터가 같은지 검증하는 데이터
+**검증 헤더<br>**
+캐시 데이터와 서버 데이터가 같은지 검증하는 데이터<br>
 Last-Modified, ETag
 
-조건부 요청 헤더
-검증 헤더로 조건에 따른 분기
-If-Modified-Since: Last-Modified 사용
-If-None-Match: ETag 사용
-조건에 만족되면 200 ok
+**조건부 요청 헤더<br>**
+검증 헤더로 조건에 따른 분기<br>
+If-Modified-Since: Last-Modified 사용<br>
+If-None-Match: ETag 사용<br>
+조건에 만족되면 200 ok<br>
 만족되지 않으면 304 Not Modified
 
-Last-Modified, If-Modified-Since
+**:pushpin: Last-Modified, If-Modified-Since**
 
-예시
-응답 Last-Modified: 2000년~
-요청 If-Modified-Since: 2000년~
-응답 304 Not Modified, body없이 헤더만 보냄
-클라이언트는 응답 헤더 정보로 캐시의 메타 정보 갱신 및 캐시에 저장된 데이터 재활용
+**예시<br>**
+응답 Last-Modified: 2000년~<br>
+요청 If-Modified-Since: 2000년~<br>
+응답 304 Not Modified, body없이 헤더만 보낸다.<br>
+클라이언트는 응답 헤더 정보로 캐시의 메타 정보 갱신 및 캐시에 저장된 데이터를 재활용한다.
 
-단점
-1초 미만 단위로 캐시 조정이 불가능
-날짜 기반의 로직 사용
-데이터를 수정해서 날짜가 다르지만, 실질적으로 변화가 없어 결과가 똑같은 경우
-서버에서 별도의 캐시 로직을 관리하고 싶은 경우
+**단점<br>**
+1초 미만 단위로 캐시 조정이 불가능하다.<br>
+날짜 기반의 로직을 사용한다.<br>
+데이터를 수정해서 날짜가 다르지만, 실질적으로 변화가 없어 결과가 똑같은 경우<br>
+서버에서 별도의 캐시 로직을 관리하고 싶은 경우<br>
 예: 스페이스나 주석처럼 크게 영향이 없는 변경으로부터 캐시를 유지하고 싶은 경우
 
-- ETag, If-None-Match
+**:pushpin: ETag, If-None-Match**
 
-ETag(Entity Tag)
-캐시용 데이터에 임의의 고유한 버전, 이름을 달아둠
-예: ETag:"v1.0"
-데이터가 변경되면 이 이름을 바꾸어서 변경함
-예: ETag:"aaa" → ETag:"bbb"
-단순하게 ETag만 보내서 같으면 유지, 다르면 다시 받기
+**ETag(Entity Tag)<br>**
+캐시용 데이터에 임의의 고유한 버전으로 이름을 달아둔다.<br>
+예: ETag:"v1.0"<br>
+데이터가 변경되면 이 이름을 바꾸어서 변경한다.<br>
+예: ETag:"aaa" → ETag:"bbb"<br>
+단순하게 ETag만 보내서 같으면 유지하고, 다르면 다시 받는다.
 
-캐시 제어 로직을 서버에서 완전히 관리
-클라이언트는 단순히 이 값을 서버에 제공(클라이언트은 캐시 메커니즘을 모른)
-예: 서버는 베타 오픈 기간인 3일 동안 파일이 변경되어도 ETag 동일하게 유지
+캐시 제어 로직을 서버에서 완전히 관리한다.<br>
+클라이언트는 캐시 메커니즘을 알 필요 없이 단순히 이 값을 서버에 제공한다.<br>
+
+**예시<br>**
+서버는 베타 오픈 기간인 3일 동안 파일이 변경되어도 ETag 동일하게 유지<br>
 애플리케이션 배포 주기에 맞춰 ETag 모두 갱신
 
-- 캐시와 조건부 요청 헤더
+**:pushpin: 캐시와 조건부 요청 헤더**
 
-캐시 제어 헤더
+**캐시 제어 헤더**
 
-Cache-Control: max-age
+**Cache-Control: max-age<br>**
 캐시 유효 시간, 초 단위
 
-Cache-Control: no-cache
+**Cache-Control: no-cache<br>**
 항상 origin 서버에 검증하고 사용
 
-Cache-Control: no-store
+**Cache-Control: no-store<br>**
 데이터에 민감한 정보가 있으므로 저장하면 안 됨
 메모리에서 사용하고 최대한 빨리 삭제
 
-Cache-Control: must-revalidate
-캐시 만료 후 최초 조치시 원 서버에 검증
+**Cache-Control: must-revalidate<br>**
+캐시 만료 후 최초 조치시 원 서버에 검증<br>
 원 서버 접근 실패시 반드시 오류가 발생해야 함(504 Gateway Timeout)
 
-Pragm: no-cache
+**Pragm: no-cache<br>**
 HTTP 1.0 하위 호환
 
-Expires
-expires: Mon, 01 Jan 1990 00:00:00 GMT
-캐시 만료일을 정확한 날짜로 지정
-HTTP 1.0부터 사용
-지금은 더 유연한 Cache-Control: max-age 권장
+**Expires<br>**
+expires: Mon, 01 Jan 1990 00:00:00 GMT<br>
+캐시 만료일을 정확한 날짜로 지정<br>
+HTTP 1.0부터 사용<br>
+지금은 더 유연한 Cache-Control: max-age 권장<br>
 Cache-Control: max-age 사용시 Expires는 무시됨
 
-프록시 캐시
-미국에 있는 원서버(public)에서 바로 다운로드를 받으면 오래 걸림. 따라서 프록시 캐시 서버(private)을 중간에 둔다.
+**:pushpin: 프록시 캐시**
+ 
+미국에 있는 원서버(public)에서 바로 다운로드를 받으면 오래 걸린다.<br>
+따라서 프록시 캐시 서버(private)을 중간에 둔다.
 
-Cache-Control: Public
+**Cache-Control: Public<br>**
 응답이 public 캐시에 저장되어도 됨
 
-Cache-Control: Private
-응답이 해당 사용자만을 위한 것임
+**Cache-Control: Private<br>**
+응답이 해당 사용자만을 위한 것임<br>
 private 캐시에 저장(기본값)
 
-캐시 무효화
-Cache-Control: no-cache, no-store, must-revalidate
-Pragma: no-cache
-확실하게 캐시를 무효화시키기 위해서는 4가지를 모두 적용해야 함.
+**캐시 무효화<br>**
+Cache-Control: no-cache, no-store, must-revalidate<br>
+Pragma: no-cache<br>
+확실하게 캐시를 무효화시키기 위해서는 4가지를 모두 적용해야 한다.
