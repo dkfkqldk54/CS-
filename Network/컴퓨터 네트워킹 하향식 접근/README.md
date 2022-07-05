@@ -13,12 +13,12 @@
 - 쿠키
 - 웹 캐싱
 - 조건부 GET
+- 간단한 UDP 서버-클라이언트 구현 코드
+- 간단한 TCP 서버-클라이언트 구현 코드
 - SMTP
 - DNS
 - 스트리밍
 - CDN
-- 간단한 UDP 서버-클라이언트 구현 코드
-- 간단한 TCP 서버-클라이언트 구현 코드
 
 <h2><a id="1">:pencil2: Chapter1. 컴퓨터 네트워크와 인터넷</a></h2>
 
@@ -77,3 +77,159 @@ API(Application Programming Interface)라고도 함
 
 TCP: SMTP, Telnet, HTTP, FTP
 TCP or UDP: HTTP, RTP(인터넷 전화)
+
+**:pushpin: HTTP란?**
+
+Web은 HTTP의 별명임<br>
+클라이언트-서버 모델<br>
+Request와 Response로 이루어짐<br>
+TCP를 사용함<br>
+비상태 프로토콜(Stateless, 클라이언트에 대한 정보를 유지하지 않음)
+
+**HTTP 요청 메시지**
+
+(요청 라인) 방식 SP URL SP 버전 CR LF<br>
+(헤더 라인) 헤더 필드 이름: SP 값 CR LF<br>
+...<br>
+(공백 라인) CR LF<br>
+(개체 몸체) ...
+
+**HTTP 응답 메시지**
+
+(상태 라인) 버전 SP 상태코드 SP 문장 CR LF<br>
+(헤더 라인) 헤더 필드 이름: SP 값 CR LF<br>
+...<br>
+(공백 라인) CR LF<br>
+(개체 몸체) ...
+
+**:pushpin: 비지속 연결과 지속 연결**
+
+HTTP는 비지속 연결과 지속 연결 모두 사용할 수 있음<br>
+디폴트 모드는 지속 연결임<br>
+비지속 연결은 연결이 다른 객체를 위해 유지되지 않으며, 각 TCP 연결은 하나의 요청 메시지와 하나의 응답 메세지만 전송함<br>
+지속 연결은 서버에서 응답을 보낸 후에 TCP 연결을 그대로 유지하며, 같은 클라이언트와 서버 간의 이후 요청과 응답은 같은 연결을 통해 보내짐
+
+**:pushpin: 쿠키**
+
+HTTP는 Stateless임<br>
+사용자에 따라 콘텐츠를 제공하거나, 사용자를 확인하고 싶은 욕구가 있어서 쿠키가 활용됨<br>
+웹 사이트 방문시 서버는 유일한 식별번호를 만들고, 이 식별번호로 index하는 백엔드 데이터 베이스안에 엔트리를 만들어 놓음<br>
+서버는 set-cookie 헤더를 보내고, 클라이언트는 cookie 헤더를 보냄
+
+**:pushpin: 웹 캐싱**
+
+웹 캐시 = 프록시 서버<br>
+브라우저는 웹 캐시와 TCP 연결을 설정하고, 웹 캐시에 있는 객체에 대해 HTTP 요청을 보냄<br>
+웹 캐시는 객체 사용이 있으면 브라우저로 HTTP 응답 메세지와 함께 객체를 전송함<br>
+없으면 원서버에 요청하고, 응답과 객체를 받은 후, 복사본을 클라이언트에게 보내줌<br>
+웹 캐시를 사용함으로써 접속 회선을 증설하지 않고 지연을 개선시킬 수 있음
+
+**:pushpin: 조건부 GET**
+
+캐시에서 이미 갖고 있는 객체는 보내지 않도록 하기 위함<br>
+캐시가 웹 서버에 객체를 요청할 때 서버는 Last-Modified 헤더와 함께 응답을 보냄<br>
+이후 다른 브라우저가 캐시에 동일한 객체를 요구한 경우, 캐시는 If-Modified-Since 헤더와 함께 요청을 보냄<br>
+변경되지 않았을 경우 304 Not Modified와 함께 빈 개체 몸체로 응답을 보냄
+
+**:pushpin: 간단한 UDP 서버-클라이언트 구현 코드**
+
+**UDPClient.py**
+
+from socket import *<br>
+serverName = 'hostname'<br>
+serverPort = 12000<br>
+clientSocket = socket(socket.AF_INET, socket.SOCK_DGRAM)<br>
+message = raw_input('Input lowercase sentence:')<br>
+clientSocket.sednto(message, (serverName, serverPort))<br>
+modifiedMessage, serverAddress = clientSocket.recvfrom(2048)<br>
+print modifiedMessage<br>
+clientSocket.close()
+
+**UDPServer.py**
+
+from socket import *<br>
+serverPort = 12000<br>
+serverSocket = socket(AF_INET, SOCK_DGRAM)<br>
+serverSocket.bind(('', serverPort))<br>
+print("The server is ready to receive")<br>
+while True:<br>
+  message, clientAddress = serverSocket.recvfrom(2048)<br>
+  modifiedMessage = message.decode().upper()<br>
+  serverSocket.sendto(modifiedMessage.encode().clientAddress)
+  
+**:pushpin: 간단한 TCP 서버-클라이언트 구현 코드**
+
+**TCPClient.py**
+
+from socket import *<br>
+serverName = 'servername'<br>
+serverPort = 12000<br>
+clientSocket = socket(AF_INET, SOCK_STREAM)<br>
+clientSocket.connect((serverName, serverPort))<br>
+sentence = raw_input('Input lowercase sentence:')<br>
+clientSocket.send(sentence.encode())<br>
+modifiedSentence = clientSocket.recv(1024)<br>
+print('From Server: ', modifiedSentence.decode())<br>
+clientSocket.close()
+
+**TCPServer.py**
+
+from socket import *<br>
+serverPort = 12000<br>
+serverSocket = socket(AF_INET, SOCK_STREAM)<br>
+serverSocket.bind(('', serverPort))<br>
+serverSocket.listen(1)<br>
+print('The Server is ready to receive')<br>
+while True:<br>
+  connectionSocket, addr = serverSocket.accept()<br>
+  sentence = connectionSocket.recv(1024).decode()<br>
+  capitalizedSentence = sentence.upper()<br>
+  connectionSocket.send(capitalizedSentence.encode())<br>
+  connectionSocket.close()
+  
+**:pushpin: SMTP(Simple Mail Transfer Protocol)**
+
+송신자의 메일 서버로부터 수신자의 메일 서버로 전송하는 데 TCP의 신뢰적인 데이터 전송 서비스를 이용함<br>
+두 메일 서버가 멀리 떨어져 있어도 중간 메일 서버를 사용하지 않고 직접 연결함<br>
+지속 연결을 사용함<br>
+HTTP는 Pull 프로토콜인 반면 SMTP는 Push 프로토콜임<br>
+따라서 송신자 에이전트-송신자 메일서버, 송신자 메일서버-수신자 메일서버는 SMTP를 사용하지만, 수신자 메일서버-수신자 에이전트는 SMTP를 사용할 수 없음<br>
+수신자 메일서버-수신자 에이전트는 POP3(Post Office Protocol Version 3), IMAP(Internet Mail Access Protocol), HTTP 등을 사용함
+
+**:pushpin: DNS(Domain Name System)**
+
+애플리케이션 프로토콜(HTTP, SMTP, FTP 등)은 사용자가 제공한 호스트 네임을 IP주소로 변환함<br>
+호스트 앨리어싱(복잡한 호스트 네임을 가진 호스트는 하나 이상의 별명을 가질 수 있다)<br>
+부하 분산(여러 IP주소가 하나의 정식 호스트 네임과 연관되어 있는 중복 웹 서버로 요청할 경우 각 응답에서 주소는 순환적으로 보냄, 여러 중복 서버들 사이에서 트래픽을 분산하는 효과가 있음)<br>
+루트 DNS 서버, 최상위 레벨 도메인(TLD) 서버, 책임 DNS 서버로 계층적으로 구성되어 있음
+
+**DNS 캐싱**
+
+로컬 DNS 서버는 호스트 네임과 IP주소 쌍을 저장할 수 있고, 같은 질의가 올 경우 원하는 IP주소를 제공할 수 있음<br>
+로컬 DNS 서버는 TLD 서버의 IP주소도 저장할 수 있어서 루트 DNS 서버를 우회할 수도 있음
+
+**DNS 자원 레코드**
+
+DNS 자원 레코드는 호스트 네임을 IP주소로 매핑하기 위해 사용됨<br>
+Name, Value, Type, TTL로 구성됨<br>
+TTL은 자원 레코드의 생존기간을 의미함<br>
+Type=A: Name은 호스트 네임, Value는 IP주소<br>
+Type=NS: Name은 도메인, Value는 책임 DNS 서버의 호스트 네임<br>
+Type=CName: Name은 별칭 호스트 네임, Value는 정식 호스트 네임<br>
+Type=MX: Name은 메일 서버의 별칭 호스트 네임, Value는 메일 서버의 정식 이름
+
+**:pushpin: 스트리밍**
+
+HTTP 스트리밍은 모든 클라이언트들이 가용 대역폭의 차이가 있음에도 불구하고, 똑같이 인코딩된 비디오를 전송받는다는 문제점이 있음<br>
+이를 해결하기 위해 DASH(Dynamic Adaptive Streaming over HTTP)가 개발됨<br>
+DASH에서 비디오는 서로 다른 비트율과 품질을 가진 서로 다른 버전으로 인코딩됨<br>
+클라이언트는 동적으로 서로 다른 버전의 비디오를 비디오 조각(chunck) 단위로 요청함<br>
+각 비디오 버전은 서로 다른 URL을 가지고 있음<br>
+HTTP 서버는 각 버전의 URL을 제공하는 매니페스트(manifest) 파일을 가지고 있음
+
+**:pushpin: CDN(Contents Distribution Network, 콘텐츠 분배 네트워크)**
+
+다수 지점에 분산된 서버들에 콘텐츠 데이터의 복사본을 저장함<br>
+사용자는 가장 적절한 CDN 서버로 연결됨<br>
+지역 클러스터에 없는 비디오를 요청하면, 해당 비디오를 중앙 서버나 다른 클러스터로부터 전송받아 서비스 하는 동시에 복사본을 만들어 저장함<br>
+저장 공간이 가득 차면 자주 사용되지 않는 비디오 데이터는 삭제됨
