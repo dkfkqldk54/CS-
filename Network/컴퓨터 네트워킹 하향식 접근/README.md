@@ -32,6 +32,18 @@
 - TCP 혼잡제어
 - TCP 혼잡제어 알고리즘
 
+<a href="#4">:pencil2: CHAPTER4. 네트워크 계층: 데이터 평면</a>
+
+- 네트워크 계층의 개요
+- 패킷 스케쥴링
+- IPv4 데이터그램 형식
+- IPv4 데이터그램 단편화
+- IPv4 데이터그램 주소체계
+- DHCP
+- NAT
+- IPv6
+- IPv4에서 IPv6로의 전환
+
 <h2><a id="1">:pencil2: Chapter1. 컴퓨터 네트워크와 인터넷</a></h2>
 
 **:pushpin: 회선 교환**
