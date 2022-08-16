@@ -20,7 +20,7 @@
 - 스트리밍
 - CDN
   
-<a href="#3">:pencil2: CHAPTER3. 트랜스포트 계층</a>
+<a href="#3">:pencil2: Chapter3. 트랜스포트 계층</a>
 
 - 인터넷 트랜스포트 계층의 개요
 - 비연결형 트랜스포트: UDP
@@ -32,7 +32,7 @@
 - TCP 혼잡제어
 - TCP 혼잡제어 알고리즘
 
-<a href="#4">:pencil2: CHAPTER4. 네트워크 계층: 데이터 평면</a>
+<a href="#4">:pencil2: Chapter4. 네트워크 계층: 데이터 평면</a>
 
 - 네트워크 계층의 개요
 - 패킷 스케쥴링
@@ -43,6 +43,15 @@
 - NAT
 - IPv6
 - IPv4에서 IPv6로의 전환
+
+<a href="#5">:pencil2: Chapter5. 네트워크 계층: 제어 평면</a>
+
+- 라우팅 알고리즘
+- 링크 상태(LS) 라우팅 알고리즘(다익스트라 알고리즘)
+- 거리 벡터(DV) 라우팅 알고리즘
+- 자율 시스템(AS)
+- ICMP(Internet Control Message Protocol)
+- SNMP(Simple Network Management Protocol)
 
 <h2><a id="1">:pencil2: Chapter1. 컴퓨터 네트워크와 인터넷</a></h2>
 
@@ -258,7 +267,7 @@ HTTP 서버는 각 버전의 URL을 제공하는 매니페스트(manifest) 파�
 지역 클러스터에 없는 비디오를 요청하면, 해당 비디오를 중앙 서버나 다른 클러스터로부터 전송받아 서비스 하는 동시에 복사본을 만들어 저장함<br>
 저장 공간이 가득 차면 자주 사용되지 않는 비디오 데이터는 삭제됨
 
-<h2><a id="3">:pencil2: CHAPTER3. 트랜스포트 계층</a></h2>
+<h2><a id="3">:pencil2: Chapter3. 트랜스포트 계층</a></h2>
 
 **:pushpin: 인터넷 트랜스포트 계층의 개요**
 
@@ -562,3 +571,116 @@ NAT 라우터는 홈 네트워크의 브라우저 IP 주소(10.0.0.1)와 출발�
 이 IPv4 데이터그램에 목적지 주소를 터널의 수신 측에 IPv6 노드를 적어서 터널을 통과시킴.<br>
 터널 수신 측의 IPv6 노드는 IPv4 데이터그램을 받고 이 IPv4 데이터그램이 실제로는 IPv6 데이터그램임을 식별함.(IPv4 데이터그램 프로토콜 번호가 41임)<br>
 이 노드는 IPv6 데이터그램으로 만든 후 IPv6 데이터그램을 IPv6 노드에 보냄.
+
+<h2><a id="5">:pencil2: Chapter5. 네트워크 계층: 제어 평면</a></h2>
+
+**:pushpin: 라우팅 알고리즘**
+
+라우팅 알고리즘의 목표는 송신자로부터 수신자까지 라우터의 네트워크를 통과하는 최소 비용 경로를 결정하는 것임.<br>
+그래프 G = (N, E)에서 N은 노드, E는 노드들을 연결하는 라우터의 물리 링크로 에지임.<br>
+중앙 집중형 라우팅 알고리즘은 네트워크 전체에 대한 완전한 정보를 가지고 출발지와 목적지 사이의 최소 비용 경로를 계산함. 링크 상태 알고리즘이라고도 함.<br>
+분산 라우팅 알고리즘은 어떤 노드도 모든 링크의 비용에 대한 완전한 정보를 가지고 있지 않음. 각 노드는 자신에 직접 연결된 링크에 대한 비용 정보만 가지고 시작함. 이후 반복된 계산과 주변 노드와의 정보 교환을 통해 노드는 점차적으로 목적지 또는 목적지 집합까지 최소 비용 경로를 계산함.<br>
+정적 라우팅 알고리즘(경로 느리게 변함, 사람의 개입)과 동적 라우팅 알고리즘(네트워크 트래픽 부하나 토플로지 변화에 따라 라우팅 경로 바꿈)으로 나눌 수도 있음.<br>
+부하에 민감한 알고리즘(링크 비용이 동적으로 변함)과 부하에 민감하지 않은 알고리즘(오늘날 인터넷)으로도 나뉨.<br>
+
+**:pushpin: 링크 상태(LS) 라우팅 알고리즘(다익스트라 알고리즘)**
+
+<pre>
+Initialization
+N' = {u}
+for all nodes v
+  if v is a neighbor of u
+    then D(v) = c(u, v)
+  else D(v) = infinite
+
+Loop
+  find w not in N' such that D(w) is a minimum
+  add w to N'
+  update D(v) for each neighbor v of w and not in N':
+    D(v) = min(D(v), D(w)+c(w,v))
+until N' = N
+</pre>
+
+D(v): 알고리즘의 현재 반복 시점에서 출발지 노드부터 목적지 v까지의 최소 비용 경로의 비용<br>
+N': 노드의 집합<br>
+
+네트워크 토플로지와 모든 링크 비용이 알려져 있어서 링크 상태 알고리즘의 입력값으로 사용될 수 있음.<br>
+이는 각 노드가 자신과 연결된 링크의 식별자와 비용을 포함하는 링크 상태 패킷을 네트워크 상의 모든 다른 노드로 브로드캐스팅 함으로써 가능함.<br>
+링크 상태 알고리즘 종료 이후에 각 노드에 대해서 출발지 노드로부터의 최소 비용 경로 상의 직전 노드를 알게됨.<br>
+각 직전 노드는 또 그 직전 노드를 가지므로 전체 경로 구축 가능함.<br>
+첫 번째 반복에서 n개의 노드 검사, 두 번째는 n-1, ..., 최대 O(n)의 복잡도를 가짐.<br>
+링크 상태 알고리즘은 수행될 때마다 트래픽 흐름이 바뀌게 되는 진동 문제가 생길 수 있음.<br>
+이를 방지하기 위해서 트래픽 양에 의존하지 않도록 할 수도 있지만, 모든 라우터가 동시에 링크 상태 알고리즘을 사용하지 못 하도록 하는 것이 더 효과적임.<br>
+
+**:pushpin: 거리 벡터(DV) 라우팅 알고리즘**
+
+분산적: 직접 연결된 이웃으로부터 정보를 받고, 계산하며, 결과를 이웃에게 배포함.<br>
+반복적: 이웃끼리 더 이상 정보를 교환하지 않을 때까지 프로세스가 지속됨.<br>
+비동기적: 모든 노드가 서로 정확히 맞물려 동작할 필요가 없음.<br>
+
+x에 직접 접속된 이웃 노드까지의 비용 c(x, v)<br>
+x로부터 N에 있는 목적지 y로의 비용 예측값을 포함하는 벡터 Dx = [Dx(y): y in N)]<br>
+이웃 노드들의 거리 벡터들 Dv = [Dv(y): y in N]<br>
+분산적으로 비동기적인 알고리즘에서 각 노드가 자신의 거리 벡터를 이웃들에게 보내면, 수신한 노드는 자신의 거리 벡터를 업데이트 함.<br>
+Dx(y) = min{c(x,v)+Dv(y)}<br>
+이를 반복하다 보면 Dx(y)는 노드 x에서 노드 y까지의 실제 최소 비용 경로인 Dx(y)로 수렴함.<br>
+
+<pre>
+각 노드 x에서
+Initialization:
+  for all destinations y in N:
+    Dx(y) = c(x,y)
+      /*if y is not a neighbor then c(x,y)=infinite*/
+    for each neighbor w
+    Dw(y) = ? for all destinations y in N
+    for each neighbor w
+      send distance vector Dx = [Dx(y): y in N] to w
+      
+Loop:
+  wait (until I see a link cost change to some neighbor w or until I receive a distance vector from some neighbor w)
+  for each y in N:
+    Dx(y) = min{c(x,v)+Dv(y)}
+  if Dx(y) changed for any destination y
+    send distance vector Dx = [Dx(y): y in N] to all neighbors
+    
+forever
+</pre>
+
+**:pushpin: 자율 시스템(AS)**
+
+AS는 동일한 관리 제어 하에 있는 라우터의 그룹으로 구성됨.<br>
+같은 AS 안에 있는 라우터들은 동일한 라우팅 알고리즘을 사용하고, 상대방에 대한 정보를 가지고 있음.<br>
+자율 시슽메 내부에서 동작하는 라우팅 알고리즘을 AS 내부 라우팅 프로토콜이라 하며 OSPF(Open Shortest Path First, 개방형 최단 경로 우선)이 대표적인 예임.<br>
+AS간 라우팅 프로토콜은 BGP(Border Gateway Protocol, 경계 게이트웨이 프로토콜)을 사용함.<br>
+같은 AS 내에 있는 목적지는 AS 내부 라우팅 프로토콜에 의해 결정되고, 목적지가 AS 외부에 있는 경우에는 BGP가 필요함.<br>
+BGP는 특정한 목적지 주소를 향해서 패킷을 보내는 것이 아니라 CIDR 형식으로 표현된 주소의 앞쪽 접두부를 향해 포워딩함.<br>
+BGP의 속성은 대표적으로 3가지가 있음.<br>
+AS-PATH는 메시지가 통과하는 AS들의 리스트, NEXT-HOP은 AS-PATH를 시작하는 라우터 인터페이스의 IP주소, 목적지 주소 접두부임.<br>
+뜨거운 감자 라우팅은 NEXT-HOP 라우터까지의 경로 비용이 최소가 되는 경로를 선택함.<br>
+AS 바깥에 있는 부분에 대한 비용은 신경쓰지 않고, 패킷을 자신의 AS 밖으로 내보냄.<br>
+경로가 하나가 아니라 여러 개면 BGP는 경로 선택 알고리즘을 실시함.<br>
+AS 네트워크 관리자가 정한 지역 선호도를 반영함.<br>
+같은 지역 선호도라면 최단 AS-PATH 경로를 선택함.<br>
+같은 AS-PATH면 뜨거운 감자 라우팅을 수행함.<br>
+같은 비용이면 BGP 식별자를 사용함.<br>
+
+**:pushpin: ICMP(Internet Control Message Protocol)**
+
+호스트와 라우터가 서로 간에 네트워크 계층 정보를 주고 받기 위해 사용됨.<br>
+ICMP 메시지는 IP 데이터그램에 담겨 전송되므로 구조적으로 IP 바로 위에 있음.<br>
+타입과 코드 필드가 있음.<br>
+가장 전형적인 사용 형태로는 오류 보고가 있으며, "목적지 네트워크에 도달할 수 없음"(타입 3, 코드 0)이 대표적임.<br>
+
+**:pushpin: SNMP(Simple Network Management Protocol)**
+
+관리 서버와 그 관리 서버를 대표하여 실행되고 있는 에이전트 사이에서 네트워크 관리 제어 및 정보 메시지를 전달하기 위해 사용됨.<br>
+일반적으로 요청-응답 모드로 사용되는데, 관리 서버가 요청하고 에이전트가 응답하며, 요청은 피관리 장치와 관련된 MIB(Management Information Base) 객체 값들을 질의(검색) 또는 수정(설정) 하기 위해 이용됨.<br>
+PDUs(Protocol Data Units)로 알려진 7가지 타입의 메시지<br>
+GetRequest: MIB 값들의 임의적인 집합 요청<br>
+GetNextRequest: MIB 객체들의 목록 또는 테이블을 순차적으로 검색<br>
+GetBulkRequest: 데이터를 큰 블록으로 반환. 여러 개의 Get 요청시 발생할 수 있는 오버헤드 피함.<br>
+SetRequest: 관리 서버가 피관리 장치 안의 하나 또는 그 이상의 MIB 객체들의 값을 설정함.<br>
+InformRequest: 하나의 관리 서버가 다른 관리 서버에게 수신 서버의 원격에 있는 MIB 정보를 알림.<br>
+Response: 피관리 장치에서 관리 서버로 요청된 정보 반환.<br>
+트랩 메시지: 비동기적, 요청을 수신했을 때가 아니라 관리 서버가 통지를 요구한 이벤트 발생시<br>
+일반적으로 SNMP PDU는 UDP 데이터그램의 페이로드에 실림.<br>
