@@ -18,7 +18,6 @@
 - 원소 삽입
 - 원소 삭제
 - 기타 작업
-- 연결 리스트 전체 코드
 
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
 
@@ -315,4 +314,3 @@ def sort(self) -> None:
   for index in range(len(a)):
     self.append(a[index])
 </pre>
-**:pushpin: 연결 리스트 전체 코드**
