@@ -162,6 +162,157 @@ class LinkedListBasic:
 </pre>
 
 **:pushpin: 원소 삽입**
+  
+연결 리스트에 원소 x를 삽입하는 코드는 아래와 같음.<br>
+<pre>
+def insert(self, i:int, newItem):
+  if i >= 0 and i <= self.__numItems:
+    prev = self.__getNode(i-1)
+    newNode = ListNode(newItem, prev.next)
+    prev.next = newNode
+    self.__numItems += 1
+  else:
+    print("index", i, ":out of bound in insert()")
+</pre>
+i=0이면 i-1번 노드는 더미 헤드 노드가 되고, i=__numItems면 i-1번 노드는 마지막 노드임.<br>
+연결 리스트의 i번 노드를 알려주는 코드는 아래와 같음.<br>
+<pre>
+def __getNode(self, i:int) -> ListNode:
+  curr = self.__head # 더미헤드, index = -1
+  for index in range(i+1):
+    curr = curr.next
+  return curr
+</pre>
+연결 리스트 끝에 원소 x를 추가하는 코드는 아래와 같음.<br>
+<pre>
+def append(self.newItem):
+  prev = self.__getNode(self.__numItems-1)
+  newNode = ListNode(newItem, prev.next)
+  prev.next = newNode
+  self.__numItems += 1
+</pre>
+
 **:pushpin: 원소 삭제**
+
+i번째 원소를 삭제하는 코드는 아래와 같음.<br>
+<pre>
+def pop(self, i:int):
+  if (i>=0 and i<=self.__numItems-1):
+    prev = self.__getNode(i-1)
+    curr = prev.next
+    prev.next = curr.next
+    retItem = curr.item
+    self.__numItems -= 1
+    return retItem
+  else:
+    return None
+</pre>
+
+원소 x를 삭제하는 코드(더미 헤드를 두는 버전)은 아래와 같음.<br>
+<pre>
+def remove(self, x):
+  (prev, curr) = self.__findNode(x)
+  if curr != None:
+    prev.next = curr.next
+    self.__numItems -= 1
+
+def __findNode(self, x) -> (ListNode, ListNode):
+  prev = self.__head # 더미 헤드
+  curr = prev.next
+  while curr != None:
+    if curr.item == x:
+      return (prev, curr)
+    else:
+      prev = curr; curr = curr.next
+  return (none, none)
+</pre>
+
 **:pushpin: 기타 작업**
+
+i번째 원소 리턴하기<br>
+<pre>
+def get(self, i:int):
+  if self.isEmpty():
+    return None
+  if (i>=0 and i<=self.__numItems-1):
+    return self.__getNode(i).item
+  else:
+    return None
+</pre>
+
+원소 x가 리스트의 몇 번 원소인지 알려주기<br>
+<pre>
+def index(self.x) -> int:
+  curr = self.__head.next
+  for index in range(self.__numItems):
+    if curr.item == x:
+      return index
+    else:
+      curr = curr.next
+  return -12345
+</pre>
+
+isEmpty, size, clear<br>
+<pre>
+def isEmpty(self) -> bool:
+  return self.__numItems == 0
+
+def size(self) -> int:
+  return self.__numItems
+  
+def clear(self):
+  self.__head = ListNode("dummy", None)
+  self.__numItems = 0
+</pre>
+
+원소 x가 몇 번 나타나는지 세기<br>
+<pre>
+def count(self, x) -> int:
+  cnt = 0
+  curr = self.__head.next
+  while curr != None:
+    if curr.item == x:
+      cnt += 1
+    curr = curr.next
+  return cnt
+</pre>
+
+연결 리스트 뒤에 다른 연결 리스트 붙이기<br>
+<pre>
+def extend(self, a): # a는 self와 같은 타입의 리스트
+  for index in range(a.size()):
+    self.append(a.get(index))
+</pre>
+
+연결 리스트 복사하기<br>
+<pre>
+def copy(self):
+  a = LinkedListBasic()
+  for index in range(self.__numItems):
+    a.append(self.get(index))
+  return a
+</pre>
+
+연결 리스트 뒤집기<br>
+<pre>
+def reverse(self):
+  a = LinkedListBasic()
+  for index in range(self.__numItems):
+    a.insert(0, self.get(index))
+  self.clear()
+  for index in range(a.size())
+    self.append(a.get(index))
+</pre>
+
+연결 리스트 정렬<br>
+<pre>
+def sort(self) -> None:
+  a = []
+  for index in range(self.__numItems):
+    a.append(self.get(index))
+  a.sort()
+  self.clear()
+  for index in range(len(a)):
+    self.append(a[index])
+</pre>
 **:pushpin: 연결 리스트 전체 코드**
