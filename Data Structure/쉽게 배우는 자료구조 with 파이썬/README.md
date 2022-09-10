@@ -18,6 +18,7 @@
 - 원소 삽입
 - 원소 삭제
 - 기타 작업
+- 배열 리스트와 연결 리스트의 비교
 
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
 
@@ -313,4 +314,23 @@ def sort(self) -> None:
   self.clear()
   for index in range(len(a)):
     self.append(a[index])
+</pre>
+
+**:pushpin: 배열 리스트와 연결 리스트의 비교**
+
+배열 리스트는 i번 원소를 찾을 때 i값으로 즉시 접근할 수 있으나, 연결 리스트는 헤드 노드에서부터 시작하여 링크를 i번 따라간 다음에야 i번 원소를 찾을 수 있음.<br>
+배열 리스트의 시간 복잡도는 Θ(1), 연결 리스트의 시간 복잡도는 Θ(i)임.<br>
+연결 리스트는 next를 위한 공간이 더 필요하고, 배열 리스트는 필요한 공간이 상대적으로 작음.<br>
+배열 리스트는 배열에 들어올 원소의 총 수를 미리 알 수 없어 충분히 큰 크기로 선언해야 해서 공간 낭비가 있음.<br>
+또한 중간에 더 큰 배열을 할당받아 원소를 새로 옮겨야 함.<br>
+원소들이 크기 순으로 정렬되어 있다면 배열 리스트에서는 최악의 경우에도 Θ(log n) 시간에 검색이 가능하나 연결 리스트는 Θ(n)의 시간이 소요됨.<br>
+Θ(log n) 시간에 검색할 수 있게 해주는 이진 탐색 알고리즘은 아래와 같음.<br>
+<pre>
+binarySearch(A[], p, r, x): # 배열 A[p, ..., r]에서 원소 x의 인덱스를 리턴한다.
+  if (p>r) return NOT_FOUND
+  else
+    q <- (p+2)/2
+    if (x=A[q]) return q
+    else if (x<A[q]) return binarySearch(A, p, q-1, x)
+    else binarySearch(A, q+1, r, x)
 </pre>
