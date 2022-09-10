@@ -332,11 +332,11 @@ def sort(self) -> None:
 
 <pre>
 binarySearch(A[], p, r, x): # 배열 A[p, ..., r]에서 원소 x의 인덱스를 리턴한다.
-  if (p>r) return NOT_FOUND
+  if (p > r) return NOT_FOUND
   else
     q <- (p+2)/2
     if (x=A[q]) return q
-    else if (x<A[q]) return binarySearch(A, p, q-1, x)
+    else if (x < A[q]) return binarySearch(A, p, q-1, x)
     else binarySearch(A, q+1, r, x)
 </pre>
 
@@ -349,11 +349,73 @@ binarySearch(A[], p, r, x): # 배열 A[p, ..., r]에서 원소 x의 인덱스를
 빈 원형 연결 리스트는 더미 헤드 노드가 자신을 링크함.<br>
 맨 뒤에 원소를 삽입하는 append()는 __head로부터 시작해 연결 리스트를 따라 끝까지 가는 작업이 없어짐.<br>
 prev 노드인 맨 뒤쪽 노드를 레퍼런스 __tail이 가리키고 있어 prev를 찾는 시간 Θ(n)이 소요되지 않음.<br>
+append()로 인해 비효율적이었던 extend(), copy(), reverse()가 가벼워짐.<br>
 
 **:pushpin: 가변 파라미터일 때 i번 원소 삭제하기**
 
+메서드나 함수의 파라미터에 *args와 같이 파라미터 앞에 *를 붙이면 파라미터를 튜플로 받을 때 인자의 개수를 가변적으로 받을 수 있음.<br>
+파라미터 이름이 꼭 args일 필요는 없고, 가변적으로 붙여도 됨.<br>
+<pre>
+def pop(self, *args):
+  if self.isEmpty():
+    return None
+  if len(args) != 0:
+    i = args[0]
+  if len(args) == 0 or i == -1:
+    i = self.__numItems - 1
+  if ( i >= 0 and i <= self.__numItems-1):
+    prev = self.getNode(i-1)
+    retItem = prev.next.item
+    prev.next = prev.next.next
+    self.__numItems -= 1
+    return retItem
+  else:
+    return None
+</pre>
+
 **:pushpin: 순회자**
 
+for 루프를 돌 때 필요한 작업은 대상 객체의 원소를 하나하나 차례로 훑는 것임.<br>
+이런 성질을 가진 객체를 순회 가능 객체라고 함.<br>
+연결 리스트를 파이썬의 기본 내장 리스트와 튜플, 딕셔너리 등과 동등하게 사용하려면 이를 순회 가능한 클래스로 만들어 줘야 함.<br>
+순회 가능한 클래스가 되려면 __iter__()와 __next__() 이 두 메서드가 있어야 함.<br>
+"for element in a"와 같은 표현이 있으면 파이썬은 객체 a의 메서드 __iter__()를 호출하여 순회자를 생성함.<br>
+순회자는 생성되면서 자신의 생성 메서드 __init__()을 수행하여 순회자의 첫 위치를 연결 리스트의 더미 헤드 노드에 두고 다음 노드로 이동할 준비를 함.<br>
+객체 자체가 순회자 역할을 할 수도 있고, 순회자 객체를 따로 만들 수도 있음.<br>
+"...in a"에서 객체 a의 원소를 차례로 보기 위해 __next__()를 계속 수행함.<br>
+__next__()는 다음 원소를 리턴하는 메서드임.<br>
+reverse() 로직 개선 코드는 아래와 같음.<br>
+<pre>
+def reverse(self) -> None:
+  __head = self.__tail.next # 더미 헤드
+  prev = __head; curr = prev.next; next = curr.next # 더미는 prev, 0번 노드는 curr, 1번 노드는 next로 설정함.
+  curr.next = __head; __head.next = self.__tail; self.__tail = curr # 0번 노드를 마지막 노드로, 마지막 노드를 0번 노드로 만듦.
+  for i in range(self.__numItems-1):
+    prev = curr; curr = next; next = next.next # 1번 노드가 prev, 2번 노드가 curr, 3번 노드가 next 이런 식으로 자리를 하나씩 밀어냄.
+    curr.next = prev # 1번 노드의 링크가 0번에게, 2번 노드의 링크가 1번에게, ... 한번 훑으면서 링크를 거꾸로 바꿈
+</pre>
+__iter와 CircularLinkedListIterator의 코드는 아래와 같음.<br>
+<pre>
+def __iter__(self):
+  return CircularLinkedListIterator(self)
+  
+class CircularLinkedListIterator:
+  def __init__(self, alist):
+    self.__head = alist.getNode(-1) # 더미 헤드
+    self.iterPosition = self.__head.next # 0번 노드
+  def __next__(self):
+    if self.iterPosition == self.__head:: #순환끝
+      raise StopIteration
+    else: # 현재 원소를 리턴하면서 다음 원소로 이동
+      item = self.iterPosition.item
+      self.iterPosition = self.iterPosition.next
+      return item
+</pre>
+
 **:pushpin: 양방향 연결 리스트**
+
+양방향 연결 리스트는 각 노드가 다음 노드 뿐만 아니라 직전 노드에 대한 링크도 가져 한 노드만 알면 앞뒤로 자유롭게 이동할 수 있음.<br>
+원형 양방향 연결 리스트는 마지막 노드의 next가 헤드 노드를 가리키고, 헤드 노드의 prev가 마지막 노드를 가리킴.<br>
+빈 리스트의 레퍼런스 __head는 더미 헤드 노드를 가리키고, 더미 헤드는 prev와 next 모두 자신을 링크함.<br>
 
 
