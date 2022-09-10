@@ -417,5 +417,11 @@ class CircularLinkedListIterator:
 양방향 연결 리스트는 각 노드가 다음 노드 뿐만 아니라 직전 노드에 대한 링크도 가져 한 노드만 알면 앞뒤로 자유롭게 이동할 수 있음.<br>
 원형 양방향 연결 리스트는 마지막 노드의 next가 헤드 노드를 가리키고, 헤드 노드의 prev가 마지막 노드를 가리킴.<br>
 빈 리스트의 레퍼런스 __head는 더미 헤드 노드를 가리키고, 더미 헤드는 prev와 next 모두 자신을 링크함.<br>
-
-
+양방향 연결 리스트의 클래스는 아래와 같음.<br>
+<pre>
+class BidirectNode:
+  def __init__(self, x, prevNode:'BidirectNode', nextNode:'BidirectNode'):
+    self.item = x
+    self.prev = prevNode
+    self.next = nextNode
+</pre>
