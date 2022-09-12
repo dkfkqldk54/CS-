@@ -24,6 +24,11 @@
 - 순회자
 - 양방향 연결 리스트
 
+<a href="#6">:pencil2: Chapter 6. 스택</a>
+- 가상 메모리 구조
+- 리스트를 이용한 스택
+- 연결 리스트를 이용한 스택
+
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
 
 어떤 문제나 함수 등이 자신과 성격이 똑같지만 크기가 더 작은 문제를 하나 이상 포함하고 있을 때 재귀적 구조를 가지고 있다고 말함.<br>
@@ -424,4 +429,112 @@ class BidirectNode:
     self.item = x
     self.prev = prevNode
     self.next = nextNode
+</pre>
+
+<h2><a id="6">:pencil2: Chapter 6. 스택</a></h2>
+
+**:pushpin: 가상 메모리 구조**
+
+정적 영역에는 컴파일 직후 상대적인 위치를 정할 수 있는 모든 정보가 있고, 동적 영역은 수행을 시작한 후에 알 수 있음.<br>
+정적 영역에는 프로그램 수행 코드(기계어 코드)와 프로그램이 끝날 때까지 존재하는 데이터(전역 변수와 정적 변수 등)가 있음.<br>
+동적 영역에는 프로그램 수행 중 할당받는 메모리(힙 영역)와 완료되지 않은 함수가 다른 함수를 호출할 때의 정보를 저장하는 영역(스택 영역)이 있음.<br>
+생성된 객체들은 힙 영역에 들어가고, 함수의 파라미터와 지역 변수는 수행 중에 동적 영역의 스택에 저장됨.<br>
+스택의 맨 위에는 현재 수행 중인 함수 정보가 저장되고, 이 함수를 호출한 함수는 바로 아랫 공간에 저장되어 있음.<br>
+수행을 마친 함수가 스택 영역에서 지워지면 원래 함수로 돌아와 다시 시작할 수 있도록 함수의 정보가 스택의 맨 위에 있게 됨.<br>
+
+**:pushpin: 리스트를 이용한 스택**
+
+파이썬에서 리스트는 배열로 구현되어 있으므로 리스트를 이용한 스택은 사실상 배열을 이용한 스택이라 할 수 있음.<br>
+리스트 스택의 구조는 아래와 같음.<br>
+<pre>
+class ListStack:
+  def __init__(self):
+    self.__stack = []
+  def push(self, x):
+    ...
+  def pop(self):
+    ...
+  def top(self):
+    ...
+  def isEmpty(self):
+    ...
+  def popAll(self):
+    ...
+</pre>
+메서드 __init__()은 클래스의 객체가 생성될 때 수행되는 메서드로 생성자 Constructor라고 함.<br>
+원소 삽입 코드는 아래와 같음.<br>
+<pre>
+def push(self, x):
+  self.__stack.append(x)
+</pre>
+원소 삭제 코드는 아래와 같음.<br>
+<pre>
+def pop(self):
+  return self.__stack.pop()
+</pre>
+top 코드는 아래와 같음.<br>
+<pre>
+def top(self):
+  if self.isEmpty():
+    return None
+  else:
+    return self.__stack[-1]
+</pre>
+isEmpty 코드는 아래와 같음.<br>
+<pre>
+def isEmpty(self)->bool:
+  return not bool(self.__stack)
+</pre>
+스택을 비우는 코드는 아래와 같음.<br>
+<pre>
+def popAll(self):
+  self.__stack = []
+</pre>
+
+**:pushpin: 연결 리스트를 이용한 스택**
+
+연결 리스트는 맨 앞을 스택 탑으로 삼는데, 연결 리스트에서는 맨 앞에 있는 원소를 더하거나 삭제하는 것이 더 효율적이기 때문임.<br>
+연결 리스트 스택의 구조는 아래와 같음.<br>
+<pre>
+class LinkedStack:
+  def __init__(self):
+    self.__list = LinkedListBasic()
+  def push(self, x):
+    ...
+  def pop(self):
+    ...
+  def top(self):
+    ...
+  def isEmpty(self):
+    ...
+  def popAll(self):
+    ...
+</pre>
+원소 삽입 코드는 아래와 같음.<br>
+<pre>
+def push(self, x):
+  self.__list.insert(0, x)
+</pre>
+원소 삭제 코드는 아래와 같음.<br>
+<pre>
+def pop(self):
+  return self.__list.pop(0)
+</pre>
+top 코드는 아래와 같음.<br>
+<pre>
+def top(self):
+  if self.isEmpty():
+    return None
+  else:
+    return self.__list.get(0)
+</pre>
+isEmpty 코드는 아래와 같음.<br>
+<pre>
+def isEmpty(self) -> bool:
+  return self.__list.isEmpty()
+</pre>
+스택 비우기 코드는 아래와 같음.<br>
+<pre>
+def popAll(self):
+  self.__list.clear()
 </pre>
