@@ -29,6 +29,11 @@
 - 리스트를 이용한 스택
 - 연결 리스트를 이용한 스택
 
+<a href="#7">:pencil2: Chapter 7. 큐</a>
+- 리스트를 이용한 큐
+- 연결 리스트를 이용한 큐
+- 큐 응용: 좌우동형 문자열 체크
+
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
 
 어떤 문제나 함수 등이 자신과 성격이 똑같지만 크기가 더 작은 문제를 하나 이상 포함하고 있을 때 재귀적 구조를 가지고 있다고 말함.<br>
@@ -537,4 +542,105 @@ def isEmpty(self) -> bool:
 <pre>
 def popAll(self):
   self.__list.clear()
+</pre>
+
+<h2><a id="7">:pencil2: Chapter 7. 큐</a></h2>
+
+**:pushpin: 리스트를 이용한 큐**
+
+리스트 큐의 클래스 구조는 아래와 같음.<br>
+<pre>
+class ListQueue:
+  def __init__(self):
+    self.__queue = []
+  def enqueue(self, x):
+    ...
+  def dequeue(self):
+    ...
+  def front(self):
+    ...
+  def isEmpty(self) -> bool:
+    ...
+</pre>
+원소 삽입 코드는 아래와 같음.<br>
+<pre>
+def enqueue(self, x):
+  self.__queue.append(x)
+</pre>
+원소 삭제 코드는 아래와 같음.<br>
+<pre>
+def dequeue(self):
+  return self.__queue.pop(0)
+</pre>
+top 코드는 아래와 같음.<br>
+<pre>
+def front(self):
+  return self.__queue[0]
+</pre>
+isEmpty 코드는 아래와 같음.<br>
+<pre>
+def isEmpty(self) -> bool:
+  return (len(self.__queue)==0);
+</pre>
+큐 비우기 코드는 아래와 같음.<br>
+<pre>
+def dequeueAll(self):
+  self.__queue = []
+</pre>
+
+**:pushpin: 연결 리스트를 이용한 큐**
+
+원소 삽입 코드는 아래와 같음.<br>
+<pre>
+def enqueue(self, x):
+  self.__queue.append(x)
+</pre>
+원소 삭제 코드는 아래와 같음.<br>
+<pre>
+def dequeue(self):
+  return self.__queue.pop(0)
+</pre>
+top 코드는 아래와 같음.<br>
+<pre>
+def front(self):
+  return self.__queue.get(0)
+</pre>
+isEmpty 코드는 아래와 같음.<br>
+<pre>
+def isEmpty(self)->bool:
+  return self.__queue.isEmpty()
+</pre>
+큐 비우기 코드는 아래와 같음.<br>
+<pre>
+def dequeueAll(self):
+  self.__queue.clear()
+</pre>
+생성자는 아래와 같음.<br>
+<pre>
+def __init__(self):
+  self.__queue = CircularLinkedList()
+</pre>
+
+**:pushpin: 큐 응용: 좌우동형 문자열 체크**
+
+좌우동형 문자열은 앞에서부터 읽으나 뒤에서부터 읽으나 같은 문자열을 말함.<br>
+임의의 문자열 A를 받으면 A의 문자들을 앞에서부터 읽으면서 스택과 큐에 동시제 저장한 뒤 스택과 큐에서 동시에 하나씩 읽어들이면서 삭제한다.<br>
+이 과정에서 스택과 큐에서 읽어 들인 문자가 동일하다면 계속 읽어들이고 중간에 큐가 비면 중단한다.<br>
+큐가 비어서 중단했다면 좌우동형이라고 리턴하고, 큐가 아직 비지 않았는데 중단했다면 좌우동형이 아니라고 리턴한다.<br>
+큐 대신 스택을 체크해도 된다.<br>
+코드는 아래와 같다.<br>
+<pre>
+from listStack import *
+from listQueue import *
+
+def isPalindrome(A) -> bool:
+  s = ListStack(); q = ListQueue()
+  for i in range(len(A)):
+    s.push(A[i]); q.enqueue(A[i])
+  while (not q.isEmpty()) and s.pop() == q.dequeue():
+    {}
+  if q.isEmpty():
+    return True
+  else:
+    return False
 </pre>
