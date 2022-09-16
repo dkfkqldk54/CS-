@@ -696,5 +696,48 @@ def __init__(self, list):
   else:
     self.__A = list
 </pre>
+
 **:pushpin: 원소 삽입**
+
+힙 A[0, ... , n-1]에 새 원소가 들어오면 맨 끝에 추가한 다음 힙 특성을 만족하도록 올라가면서 수선함.<br>
+이를 스며오르기라고 하는데 노드 A[i]를 부모의 값과 비교해서 힙 특성을 깨면 둘의 자리를 맞바꾸는 것임.<br>
+이런 작업을 힙 특성을 만족하는 최초의 지점까지 또는 더 이상 올라갈 수 없을 때까지 반복함.<br>
+<pre>
+def insert(self, x):
+  self.__A.append(x)
+  self.percolateUp(len(self.__A)-1)
+
+def percolateUp(self, i):
+  parent = (i -1) // 2
+  if i > 0 and self.__A[i] > self.__A[parent]:
+    self.__A[i], self.__A[parent] = self.__A[parent], self.__A[i]
+  self.percolateUp(parent)
+</pre>
+
 **:pushpin: 원소 삭제**
+
+삭제는 무조건 우선순위 값이 가장 큰 원소를 대상으로 함.<br>
+힙에서는 가장 큰 원소가 루트에 있으니 A[0, ..., n-1]에서는 무조건 A[0]이 삭제됨.<br>
+그러나 무작정 A[0]을 삭제하면 완전 이진 트리가 깨지므로 맨 끝 원소 A[n-1]을 A[0] 자리에 넣음.<br>
+힙 특성을 만족시키기 위해서 스며내리기가 필요함.<br>
+스며내리기는 어떤 노드의 두 서브 트리가 이미 힙인 상태에서 이 노드로부터 시작해서 수선하는 작업임.<br>
+<pre>
+def deleteMax(self):
+  if not self.isEmpty():
+    max = self.__A[0]
+    self.__A[0] = self.__A.pop()
+    self.percolateDown(0)
+    return max
+  else:
+    return None
+  
+def percolateDown(self, i:int):
+  child = 2 * i + 1
+  right = 2 * i + 2
+  if child <= len(self.__A)-1:
+    if right <= len(self.__A) - 1 and self.__A[right] > self.__A[child]:
+      child = right
+    if self.__A[i] < self.__A[child]:
+      self.__A[i], self.__A[child] = self.__A[child], self.__A[i]
+      self.percolateDown(child)
+</pre>
