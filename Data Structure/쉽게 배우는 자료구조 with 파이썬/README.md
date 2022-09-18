@@ -38,6 +38,9 @@
 - 힙이란?
 - 원소 삽입
 - 원소 삭제
+- 힙 생성
+- 기타 작업
+- 힙 수행 시간
 
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
 
@@ -741,3 +744,40 @@ def percolateDown(self, i:int):
       self.__A[i], self.__A[child] = self.__A[child], self.__A[i]
       self.percolateDown(child)
 </pre>
+
+**:pushpin: 힙 생성**
+
+주어진 리스트를 힙으로 만드는 작업은 맨 마지막 노드의 부모 노드부터 시작함.<br>
+스며내리기를 실시하는데 서브 트리의 루트가 되는 노드를 하나씩 앞으로 이동하면서 해당 서브 트리를 힙으로 수선하는 과정을 반복함.<br>
+최종적으로 A[0]가 루트가 되는 서브 트리를 수선하면 과정이 끝남.<br>
+<pre>
+def buildHeap(self):
+  for i in range((len(self.__A)-2//2, -1, -1):
+    self.percolateDown(i)
+</pre>
+
+**:pushpin: 기타 작업**
+
+힙의 최댓값 구하기<br>
+<pre>
+def max(self):
+  return self.__A[0]
+</pre>
+
+힙이 비었는지 확인하기<br>
+<pre>
+def isEmpty(self):
+  return len(self.__A) == 0
+</pre>
+
+힙 비우기<br>
+<pre>
+def clear(self):
+  self.__A = []
+</pre>
+
+**:pushpin: 힙 수행시간**
+
+힙 만들기는 Θ(n)의 시간이 든다.<br>
+힙에 원소를 삽입하는 건 A[n]에서 시작하는 한 번의 스며오르기가 전부이므로 O(log n)이 든다.<br>
+힙에서 원소를 삭제하는 건 A[0]에서 시작하는 한 번의 스며내리기가 전부이므로 O(log n)의 시간이 든다.<br>
