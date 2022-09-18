@@ -41,7 +41,10 @@
 - 힙 생성
 - 기타 작업
 - 힙 수행 시간
-
+  
+<a href="#9">:pencil2: Chapter 9. 정렬</a>
+- 기본 정렬 알고리즘
+  
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
 
 어떤 문제나 함수 등이 자신과 성격이 똑같지만 크기가 더 작은 문제를 하나 이상 포함하고 있을 때 재귀적 구조를 가지고 있다고 말함.<br>
@@ -781,3 +784,55 @@ def clear(self):
 힙 만들기는 Θ(n)의 시간이 든다.<br>
 힙에 원소를 삽입하는 건 A[n]에서 시작하는 한 번의 스며오르기가 전부이므로 O(log n)이 든다.<br>
 힙에서 원소를 삭제하는 건 A[0]에서 시작하는 한 번의 스며내리기가 전부이므로 O(log n)의 시간이 든다.<br>
+
+<h2><a id="9">:pencil2: Chapter 9. 정렬</a></h2>
+
+**:pushpin: 기본 정렬 알고리즘**
+
+기본 정렬의 수행 시간은 Θ(n^2)임.<br>
+
+**선택 정렬**<br>
+
+<pre>
+def selectionSort(A):
+  for last in range(len(A)-1, 0, -1):
+    k = theLargest(A, last)
+    A[k], A[last] = A[last], A[k]
+    
+def theLargest(A, last:int) -> int:
+  largest = 0
+  for i in range(last):
+    if A[i] > A[largest]:
+      largest = i
+  return largest
+</pre>
+
+**버블 정렬**<br>
+
+선택 정렬이 가장 큰 수를 찾아서 가장 오른쪽 숫자와 바꾸는 반면, 버블 정렬은 왼쪽부터 한 칸씩 이동하면서 이웃한 두 수를 비교해서 순서가 제대로 되어 있지 않으면 바꿈.<br>
+버블 정렬이 선택 정렬보다 느림<br>
+
+<pre>
+def bubbleSort(A):
+  for last in range(len(A)-1, 0, -1):
+    for i in range(last):
+      if A[i] < A[i+1]:
+        A[i], A[i+1] = A[i+1], A[i]
+</pre>
+  
+**삽입 정렬**<br>
+
+선택 정렬이나 버블 정렬보다 빠름.<br>
+리스트가 거의 정렬된 상태로 입력되면 While 루프는 거의 수행되지 않아 for 루프의 n-1번 순환만 신경쓰면 됨.<br>
+따라서 Θ(n)에 가까운 시간이 소요됨.<br>
+
+<pre>
+def insertionSort(A):
+  for last in range(1, len(A)):
+    newItem = A[last]
+    loc = last-1
+    while loc >= 0 and newItem < A[loc]:
+      A[loc+1] = A[loc]
+      loc -= 1
+    A[loc+1] = newItem
+</pre>
