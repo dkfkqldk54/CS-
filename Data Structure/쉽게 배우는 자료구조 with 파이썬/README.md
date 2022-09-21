@@ -43,7 +43,9 @@
 - 힙 수행 시간
   
 <a href="#9">:pencil2: Chapter 9. 정렬</a>
-- 기본 정렬 알고리즘
+- 기본 정렬 알고리즘: 선택 정렬, 버블 정렬, 삽입 정렬
+- 고급 정렬 알고리즘: 병합 정렬
+- 데이터 특성을 잘 이용하는 정렬 알고리즘
   
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
 
@@ -787,7 +789,7 @@ def clear(self):
 
 <h2><a id="9">:pencil2: Chapter 9. 정렬</a></h2>
 
-**:pushpin: 기본 정렬 알고리즘**
+**:pushpin: 기본 정렬 알고리즘: 선택 정렬, 버블 정렬, 삽입 정렬**
 
 기본 정렬의 수행 시간은 Θ(n^2)임.<br>
 
@@ -836,3 +838,52 @@ def insertionSort(A):
       loc -= 1
     A[loc+1] = newItem
 </pre>
+
+**:pushpin: 고급 정렬 알고리즘: 병합 정렬**
+
+병합 정렬은 먼저 입력을 반으로 나눔.<br>
+나눈 전반부와 후반부를 각각 독립적으로 정렬함.<br>
+마지막으로 정렬된 두 부분을 합쳐서 정렬된 리스트를 얻음.<br>
+<pre>
+def mergeSort(A, p:int, r:int):
+  if p < r:
+    q = (p+r) // 2
+    mergeSort(A, p, q)
+    mergeSort(A, q+1, r)
+    merge(A, p, q, r)
+    
+def merge(A, p:int, q:int, r:int):
+  i = p; j = q + 1; t = 0;
+  tmp = [0 for i in range(len(A)]
+  while i <= q and j <= r:
+    if A[i] <= A[j]:
+      tmp[t] = A[i]; i += 1; t += 1;
+    else:
+      tmp[j] = A[j]; j += 1; t += 1;
+  while i <= q:
+    tmp[t] = A[i]; i += 1; t += 1;
+  while j <= r:
+    tmp[t] = A[j]; j += 1; t += 1;
+  i = p; t = 0
+  while i <= r:
+    A[i] = tmp[t]; i += 1; t += 1;
+</pre>
+병합 정렬의 수행 시간은 Θ(nlogn)인데 이는 최악, 평균, 최선 모두 마찬가지임.<br>
+리스트 A를 병합하려면 A에 있는 모든 원소를 tmp에 옮겼다가 이를 다시 A로 옮겨야하므로 2n 번의 이동이 일어남.<br>
+비교 횟수는 n/2 ~ n-1번이 일어나지만 점근적 분석을 할 때는 중요도가 더 높은 2n을 사용함.<br>
+<pre>
+T(n) 
+= 2T(n/2) + 2n 
+= 2(2T(n/4)+n)+2n = 2^2T(n/(2^2)) + 2*2n
+= ...
+= 2^nT(n/(2^n)) + n*2n
+= n * c + 2nlogn
+= Θ(nlogn)
+</pre>
+병합 정렬도 약점이 있음.<br>
+주어진 리스트 이외에 추가로 공간을 사용하지 않는 정렬을 내부정렬이라고 하는데 병합정렬은 내부 정렬이 아님.<br>
+A에서 tmp로, tmp에서 A로 옮기는 과정을 개선할 수 있음.<br>
+A나 TMP가 주 리스트와 보조 리스트의 역할을 매번 바꾸면 10~20%정도 개선됨.<br>
+
+
+**:pushpin: 데이터 특성을 잘 이용하는 정렬 알고리즘**
