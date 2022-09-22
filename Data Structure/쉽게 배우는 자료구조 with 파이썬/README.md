@@ -47,6 +47,7 @@
 - 고급 정렬 알고리즘: 병합 정렬
 - 고급 정렬 알고리즘: 퀵 정렬
 - 고급 정렬 알고리즘: 힙 정렬
+- 고급 정렬 알고리즘: 셸 정렬
 - 데이터 특성을 잘 이용하는 정렬 알고리즘
   
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
@@ -951,6 +952,40 @@ def percolateDown(A, k:int, end:int):
 힙 정렬시 수행 시간은 O(nlogn)이며 최악의 경우는 Θ(nlogn)임.<br>
 가장 운이 좋은 경우는 Θ(n)로 모든 원소가 동일한 경우임.<br>
 힙 정렬은 병합 정렬과 달리 내부 정렬이나 수행 시간은 병합 정렬이 더 빠른 편임.<br>
+
+**:pushpin: 고급 정렬 알고리즘: 셸 정렬**
+
+거의 정렬되어 있으면 삽입 정렬은 Θ(n)밖에 걸리지 않는다는 특성을 이용한 정렬로 마지막에 삽입 정렬로 끝남.<br>
+마지막 삽입 정렬을 하기 전에 각 원소가 있어야 할 자리에서 멀리 떨어져 있을 가능성을 현저히 줄여놓음.<br>
+간격별로 정렬을 하는데 간격 수열 h0, h1, ...을 갭 수열이라고 함.<br>
+<pre>
+def shellSort(A):
+  H = gapSequence(len(A))
+  for h in H:
+    for k in range(h):
+      stepInsertionSort(A, k, h)
+      
+def stepInsertionSort(A, k:int, h:int):
+  for i in range(k+h, len(A), h):
+    j = i-h
+    newItem = A[i]
+    while j >= 0 and newItem < A[j]:
+      A[j+h] = A[j]
+      j -= h
+    A[j+h] = newItem
+    
+def gapSequence(n:int) -> list:
+  H = [1]; gap = 1
+  while gap < n/5:
+    gap = 3 * gap + 1
+    H.append(gap)
+  H.reverse()
+  return H
+</pre>
+셸 정렬은 삽입 정렬을 개선한 것이나 개선의 정도는 획기적임<br>
+그렇지만 퀵 정렬에 비하면 다소 느린 편임.<br>
+stepInsertionSort가 Ω(n)인데, 갭 수열이 Θ(logn)개 있으니 전체는 Ω(nlogn)임.<br>
+갭 수열에 따라 편차가 있는데 가장 좋은 상한은 O(n^1.25)임.<br>
 
 **:pushpin: 데이터 특성을 잘 이용하는 정렬 알고리즘**
 
