@@ -46,6 +46,7 @@
 - 기본 정렬 알고리즘: 선택 정렬, 버블 정렬, 삽입 정렬
 - 고급 정렬 알고리즘: 병합 정렬
 - 고급 정렬 알고리즘: 퀵 정렬
+- 고급 정렬 알고리즘: 힙 정렬
 - 데이터 특성을 잘 이용하는 정렬 알고리즘
   
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
@@ -913,6 +914,43 @@ def partition(A, p:int, r:int) -> int:
 최악의 경우는 한쪽으로 몰리는 경우가 반복되는 것인데 이 경우 Θ(n^2)임.<br>
 퀵 정렬은 매우 빨라 필드에서 가장 선호하는 정렬 알고리즘임.<br>
 최악의 경우 Θ(n^2)의 시간이 들지만 이런 경우는 이미 정렬되어 있거나 동일한 원소들이 많을 때만 그러함.<br>
+
+**:pushpin: 고급 정렬 알고리즘: 힙 정렬**
+리스트 A[0, ... , n-1]를 buildHeap()으로 정렬하고, 원소를 하나씩 제거하면서 percolateDown()으로 수선해주면 됨.<br>
+하나씩 빼주면서 차례대로 저정하면 정렬이 됨.<br>
+<pre>
+def heapSort(A):
+  B = [x for x in A]
+  h = Heap(B)
+  h.buildHeap()
+  for i in range(len(B)-1, -1, -1):
+    A[i] = h.deleteMax()
+</pre>
+위 코드는 내부 정렬이 아님. 추가적인 리스트를 사용하지 않는 내부 정렬 구현 힙 정렬은 아래와 같음.<br>
+<pre>
+def heapSort(A):
+  buildHeap(A)
+  for last in range(len(A)-1, 0, -1):
+    A[last], A[0] = A[0], A[last]
+    percolateDown(A, 0, last-1)
+ 
+def buildHeap(A):
+  for i in range((len(A)-2)//2, -1, -1):
+    percolateDown(A, i, len(A)-1)
+    
+def percolateDown(A, k:int, end:int):
+  child = 2*k + 1
+  right = 2*k + 1
+  if child <= end:
+    if right <= end and A[child] < A[right]:
+      child = right
+  if A[k] < A[child]:
+    A[k], A[child] = A[child], A[k]
+    percolateDown(A, child, end)
+</pre>
+힙 정렬시 수행 시간은 O(nlogn)이며 최악의 경우는 Θ(nlogn)임.<br>
+가장 운이 좋은 경우는 Θ(n)로 모든 원소가 동일한 경우임.<br>
+힙 정렬은 병합 정렬과 달리 내부 정렬이나 수행 시간은 병합 정렬이 더 빠른 편임.<br>
 
 **:pushpin: 데이터 특성을 잘 이용하는 정렬 알고리즘**
 
