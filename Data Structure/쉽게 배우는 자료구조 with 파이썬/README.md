@@ -999,4 +999,64 @@ stepInsertionSort가 Ω(n)인데, 갭 수열이 Θ(logn)개 있으니 전체는 
 정렬하고자 하는 원소들의 값이 -O(n) ~ O(n) 범위에 있는 정수인 경우에 사용 가능함.<br>
 원소들의 값이 모두 0~k 사이에 정수 (k ∈ O(n))를 가진다고 가정함.<br>
 계수 정렬은 먼저 리스트에 있는 원소들을 다 훑어서 1부터 k까지의 자연수가 각각 몇 번 나타나는지 셈.<br>
+이 정보를 이용해 리스트 A[]의 각 원소가 몇 번째 자리에 놓이면 되는지 계산함.<br>
+<pre>
+def countingSort(A):
+  k = max(A)
+  c = [0 for _ in range(k+1)]
+  for j in range(len(A)):
+    c[A[j]] += 1
+  for i in range(1, k+1):
+    c[i] = c[i] + c[i-1]
+  B = [0 for _ in range(len(A))]
+  for j in range(len(A)-1, -1, -1):
+    B[c[A[j]]-1] = A[j]
+    c[A[j]] -= 1
+  return B
+</pre>
+k가 O(n)을 초과하면 시간은 Θ(k)가 되므로 계수 정렬의 매력이 떨어짐<br>
 
+**기수 정렬**<br>
+
+원소들이 모두 상수 k개 이하의 자릿수를 가진 자연수(혹은 제한된 길이의 알파벳 등)와 같은 특수한 경우에 사용할 수 있는 방법이며 Θ(n)의 시간이 소요됨.<br>
+가장 낮은 자릿수만으로 정렬하고, 그 다음번 자릿수로 정렬, ... 마지막까지 하면 완료임.<br>
+i번째 자릿수에 대해 안정성을 유지하면서 정렬해야 하는데 이는 값이 같은 원소끼리는 정렬할 때 원래의 순서가 바뀌지 않는 성질을 가리킴<br>
+<pre>
+import math
+
+def radixSort(A):
+  maxValue = max(A)
+  numDigits = math.ceil(math.log10(maxValue))
+  bucket = [[] for _ in range(10)]
+  for i in range(numDigits):
+    for x in A:
+      y = (x // (10 ** i)) % 10
+      bucket[y].append(x)
+    A.clear()
+    for j in range(10):
+      A.extend(bucket[j])
+      bucket[j].clear()
+</pre>
+Θ(kn)의 시간이 들지만 k가 상수면 Θ(n)이 됨.<br>
+k가 상수가 아니라면 기수정렬은 매력이 없음.<br>
+
+**버킷 정렬**<br>
+
+정렬하고자 하는 원소들이 균등 분포할 때를 가정함.<br>
+정확히 균일한 분포라는 뜻은 아니고 전 영역의 어느 지점이나 데이터가 존재할 확률이 같다는 뜻임.<br>
+버킷 정렬은 균등 분포를 이루는 입력에 대해 이론적으로 선형시간 Θ(n)이 소요됨.<br>
+그러나 버킷리스트를 생성하고 리스트를 관리하는 오버헤드가 커서 실제로는 Θ(nlogn) 알고리즘보다 느림.<br>
+<pre>
+import math
+from insertionSort import insertionSort
+
+def bucketSort(A):
+  n = len(A)
+  B = [[] for _ in range(n)]
+  for i in ragne(n):
+    B[math.floor(n*A[i])].append(A[i])
+  A.clear()
+  for i in range(n):
+    insertionSort(B[i])
+    A.extend(B[i])
+</pre>
