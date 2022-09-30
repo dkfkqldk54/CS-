@@ -888,6 +888,41 @@ T(n)
 A에서 tmp로, tmp에서 A로 옮기는 과정을 개선할 수 있음.<br>
 A나 TMP가 주 리스트와 보조 리스트의 역할을 매번 바꾸면 10~20%정도 개선됨.<br>
 
+**추가: 연습문제 19번**<br>
+주 리스트와 보조 리스트를 바꿔가면서 병합 정렬을 수행하는 코드는 아래와 같음.
+<pre>
+tmp = b.copy()
+def new_mergeSort(p, r, mergelevel):
+  if p < r:
+    q = (p+r) // 2
+    new_mergeSort(p, q, mergelevel+1)
+    new_mergeSort(q+1, r, mergelevel+1)
+    new_merge(p, q, r, mergelevel)
+
+def new_merge(p, q, r, mergelevel):
+  i = p; j = q+1; t = p
+  if mergelevel % 2 == 1:
+    while i <= q and j <= r:
+      if b[i] <= b[j]:
+        tmp[t] = b[i]; t += 1; i += 1;
+      else:
+        tmp[t] = b[j]; t += 1; j += 1;
+    while i <= q:
+      tmp[t] = b[i]; t += 1; i += 1;
+    while j <= r:
+      tmp[t] = b[j]; t += 1; j += 1;
+  else:
+    while i <= q and j <= r:
+      if tmp[i] <= tmp[j]:
+        b[t] = tmp[i]; t += 1; i += 1;
+      else:
+        b[t] = tmp[j]; t += 1; j += 1;
+    while i <= q:
+      b[t] = tmp[i]; t += 1; i += 1;
+    while j <= r:
+      b[t] = tmp[j]; t += 1; j += 1;
+</pre>
+
 **:pushpin: 고급 정렬 알고리즘: 퀵 정렬**
 
 병합 정렬이 먼저 재귀적으로 작은 문제를 해결한 다음 후추러리를 하는데 반해, 퀵 정렬은 선행 작업을 한 다음 재귀적으로 작은 문제를 해결하면서 바로 끝남.<br>
