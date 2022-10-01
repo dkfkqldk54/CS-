@@ -951,6 +951,31 @@ def partition(A, p:int, r:int) -> int:
 퀵 정렬은 매우 빨라 필드에서 가장 선호하는 정렬 알고리즘임.<br>
 최악의 경우 Θ(n^2)의 시간이 들지만 이런 경우는 이미 정렬되어 있거나 동일한 원소들이 많을 때만 그러함.<br>
 
+**추가: 연습문제 17번**<br>
+동일한 원소가 많을 경우 성능을 향상시키는 방법은 아래와 같음.<br>
+<pre>
+def new_quickSort(a, start, end):
+  if start < end:
+    x, y = new_partition(a, start, end)
+    new_quickSort(a, start, x)
+    new_quickSort(a, y, end)
+
+def new_partition(a, start, end):
+  mid = start
+  pivot = a[end]
+  while mid <= end:
+    if a[mid] < pivot:
+      a[start], a[mid] = a[mid], a[start]
+      start += 1
+      mid += 1
+    elif a[mid] > pivot:
+      a[mid], a[end] = a[end], a[mid]
+      end -= 1
+    else:
+      mid += 1
+  return start-1, end
+</pre>
+
 **:pushpin: 고급 정렬 알고리즘: 힙 정렬**
 리스트 A[0, ... , n-1]를 buildHeap()으로 정렬하고, 원소를 하나씩 제거하면서 percolateDown()으로 수선해주면 됨.<br>
 하나씩 빼주면서 차례대로 저정하면 정렬이 됨.<br>
