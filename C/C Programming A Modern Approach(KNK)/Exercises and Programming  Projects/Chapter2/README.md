@@ -160,6 +160,7 @@ int main(void)
 
 **:pushpin: 6번**
 
+<pre>
 #include <<t>stdio.h>
 
 int main(void)
@@ -174,6 +175,7 @@ int main(void)
     
     return 0;
 }
+</pre>
 
 **:pushpin: 7번**
 
