@@ -58,6 +58,7 @@ for과 while이 키워드임 If는 i가 대문자이기 때문에 키워드가 �
 anwswer, =, (, 3, *, q, -, p, *, p, ), /, 3, ;
 
 **:pushpin: 9번**
+
 answer = (3*q - p*p) / 3;
 
 **:pushpin: 10번**
@@ -67,6 +68,7 @@ int와 main 사이, int와 height 사이, return과 0사이<br>
 <h2>:pencil2: Programming Projects</h2>
 
 **:pushpin: 1번**
+
 <pre>
 #include<stdio.h>
 
@@ -81,6 +83,7 @@ int main(void)
     return 0;
 }
 </pre>
+
 **:pushpin: 2번**
 <pre>
 #include <stdio.h>
@@ -98,6 +101,7 @@ int main(void)
 </pre>
 
 **:pushpin: 3번**
+
 <pre>
 #include <stdio.h>
 #include <math.h>
