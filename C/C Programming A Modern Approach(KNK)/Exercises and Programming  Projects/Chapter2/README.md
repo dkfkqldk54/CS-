@@ -121,6 +121,7 @@ int main(void)
 
 **:pushpin: 4번**
 
+<pre>
 #include<stdio.h>
 
 int main(void)
@@ -136,6 +137,7 @@ int main(void)
     
     return 0;
 }
+</pre>
 
 **:pushpin: 5번**
 
