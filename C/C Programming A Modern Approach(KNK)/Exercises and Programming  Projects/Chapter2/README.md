@@ -70,7 +70,7 @@ int와 main 사이, int와 height 사이, return과 0사이<br>
 **:pushpin: 1번**
 
 <pre>
-#include<stdio.h>
+#include '<stdio.h>'
 
 int main(void)
 {
