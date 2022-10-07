@@ -65,3 +65,62 @@ answer = (3*q - p*p) / 3;
 int와 main 사이, int와 height 사이, return과 0사이<br>
 
 <h2>:pencil2: Programming Projects</h2>
+
+**:pushpin: 1번**
+<pre>
+#include<stdio.h>
+
+int main(void)
+{
+    printf("       *\n");
+    printf("      *\n");
+    printf("     *\n");
+    printf("*   *\n");
+    printf(" * *\n");
+    printf("  *\n");
+    return 0;
+}
+</pre>
+**:pushpin: 2번**
+<pre>
+#include <stdio.h>
+#include <math.h>
+
+int main(void)
+{
+    float radius, volume;
+    radius = 10;
+    volume = M_PI * radius * radius * radius * (4.0f/3.0f);
+    
+    printf("volume: %f\n", volume);
+    return 0;
+}
+</pre>
+
+**:pushpin: 3번**
+<pre>
+#include <stdio.h>
+#include <math.h>
+
+int main(void)
+{
+    int radius;
+    float volume;
+    printf("Enter radius of the sphere: ");
+    scanf("%d", & radius);
+    volume = M_PI * radius * radius * radius * (4.0f/3.0f);
+    
+    printf("volume: %f\n", volume);
+    return 0;
+}
+</pre>
+
+**:pushpin: 4번**
+
+**:pushpin: 5번**
+
+**:pushpin: 6번**
+
+**:pushpin: 7번**
+
+**:pushpin: 8번**
