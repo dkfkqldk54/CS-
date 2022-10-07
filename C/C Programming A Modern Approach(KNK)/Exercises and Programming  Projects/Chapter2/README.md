@@ -70,7 +70,7 @@ int와 main 사이, int와 height 사이, return과 0사이<br>
 **:pushpin: 1번**
 
 <pre>
-#include '<stdio.h>'
+#include <<t>stdio.h>
 
 int main(void)
 {
@@ -86,8 +86,8 @@ int main(void)
 
 **:pushpin: 2번**
 <pre>
-#include <stdio.h>
-#include <math.h>
+#include <<t>stdio.h>
+#include <<t>math.h>
 
 int main(void)
 {
@@ -103,8 +103,8 @@ int main(void)
 **:pushpin: 3번**
 
 <pre>
-#include <stdio.h>
-#include <math.h>
+#include <<t>stdio.h>
+#include <<t>math.h>
 
 int main(void)
 {
@@ -122,7 +122,7 @@ int main(void)
 **:pushpin: 4번**
 
 <pre>
-#include<stdio.h>
+#include <<t>stdio.h>
 
 int main(void)
 {
@@ -140,6 +140,23 @@ int main(void)
 </pre>
 
 **:pushpin: 5번**
+
+<pre>
+#include <<t>stdio.h>
+
+int main(void)
+{
+    float x, answer;
+    
+    printf("Enter value of x");
+    scanf("%f", &x);
+    
+    answer = 3*x*x*x*x*x + 2*x*x*x*x - 5*x*x*x - x*x + 7*x -6;
+    printf("answer is: %.2f", answer);
+    
+    return 0;
+}
+</pre>
 
 **:pushpin: 6번**
 
