@@ -7,6 +7,10 @@
 - Variables and Assignment
 - Defining Names for constants
 - Identifiers
+
+<a href="#3">:pencil2: Chapter 3. Formatted Input/Output</a>
+- The printf function
+- The scanf function
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -139,3 +143,27 @@ unsigned void while
 </pre>
 다음 5가지는 C99에서 추가된 것임.<br>
 <pre>inline restrict _Bool _Comlex _Imaginary</pre>
+
+<h2><a id="3">:pencil2: Chapter 3. Formatted Input/Output</a></h2>
+
+**:pushpin: The printf function**
+
+printf는 format string을 출력함.<br>
+format string은 일반 문자와 변환 지정자(conversion specification) 두 가지를 포함함.<br>
+변환 지정자는 %d, %f와 같이 value를 넘길 때 쓰는 기호를 의미함.<br>
+
+**conversion specifications**<br>
+
+%m.pX(예: %10.2f)가 기본 포맷임.<br>
+m과 p는 정수이고 x는 문자인데, m과 p는 써도 되고 안 써도 됨.<br>
+m은 minimum field width의 약자고 %4d일 때 123이 들어오면 (공백)123으로 처리하고, %-4d일 때 123이 들어오면 123(공백)으로 처리한다. %2d와 같이 입력보다 작을 때는 알아서 width를 늘려서 123을 모두 출력한다.<br>
+p는 minimum number of digits로 123을 %.4d로 하면 0123이 출력된다. d에서 p의 기본값은 1이다.<br>
+x는 어떤 변환 지정자를 사용할지 결정한다.<br>
+d는 정수를 나타낼 때 쓰인다.<br>
+i는 십진법에서는 d와 동일하지만 8진법, 16진법을 나타낼 때도 쓰인다. 숫자 앞에 0을 붙이면 8진법, 0x를 붙이면 16진법으로 읽는다.<br>
+e는 실수에 지수를 곱한 형태로 수를 출력한다. p의 기본값은 6이며 p가 0이면 소수점이 출력되지 않음. 6545.123을 %.2e로 출력하면 6.55e+03이다.<br>
+g는 e와 f를 섞은 것이다. 6545.123123을 %6g로 출력하면 6545.12가 출력되고 %.2g는 6.5e+03이 출력된다. %.4g는 6545, %
+
+**:pushpin: The scanf function**
+
+
