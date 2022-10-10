@@ -9,8 +9,11 @@
 - Identifiers
 
 <a href="#3">:pencil2: Chapter 3. Formatted Input/Output</a>
-- The printf function
-- The scanf function
+- The printf function: introduce
+- The printf function: conversion specifications
+- The printf function: escape sequences
+- The scanf function: introduce
+- The scanf function: ordinary characters in format strings
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -146,13 +149,13 @@ unsigned void while
 
 <h2><a id="3">:pencil2: Chapter 3. Formatted Input/Output</a></h2>
 
-**:pushpin: The printf function**
+**:pushpin: The printf function: introduce**
 
 printf는 format string을 출력함.<br>
 format string은 일반 문자와 변환 지정자(conversion specification) 두 가지를 포함함.<br>
 변환 지정자는 %d, %f와 같이 value를 넘길 때 쓰는 기호를 의미함.<br>
 
-**conversion specifications**<br>
+**:pushpin: The printf function: conversion specifications**
 
 %m.pX(예: %10.2f)가 기본 포맷임.<br>
 m과 p는 정수이고 x는 문자인데, m과 p는 써도 되고 안 써도 됨.<br>
@@ -166,7 +169,7 @@ g는 e와 f를 섞은 것이다. 6545.123123을 %6g로 출력하면 6545.12가 �
 g는 소수점에 0이 계속 이어지는 trailing zeros는 무시하며, 소수점 아래 숫자가 없으면 digit을 넣지 않음.<br>
 숫자의 size를 예측할 수 없는 경우 유동적으로 출력하기에 좋은 변환 지정자임.<br>
 
-**Escape Sequences**<br>
+**:pushpin: The printf function: escape sequences**
 
 Alert(bell) \a<br>
 Back space \b<br>
@@ -177,7 +180,7 @@ print("\"Hello!\"") -> "Hello"<br>
 \을 출력하고 싶으면 \를 2번 쓰면 됨.<br>
 print("\\");<br> 
 
-**:pushpin: The scanf function**
+**:pushpin: The scanf function: introduce**
 
 scanf에서 %e, %f, %g는 상호교환해서 사용해도 괜찮음.<br>
 scanf는 put back 기능이 있음.<br>
@@ -187,7 +190,7 @@ int에 -20이 배정되고, 숫자 안에 .가 포함될 수 없기 때문에 pu
 .3이 배정되고, 숫자 안에 -가 포함될 수 없으니 put back한다.<br>
 -4.0e3이 배정되고, new line character가 들어올 수 없으니 put back한다.<br>
 
-**Ordinary characters in format strings**
+**:pushpin: The scanf function: ordinary characters in format strings**
 
 white space character는 다 무시함. 다른 문자가 나오기 전까지 읽다가 다른 문자가 나오면 put back하는 방식임. 따라서 1개가 있으나, 여러개가 있으나 하나도 없는 것이나 마찬가지임.<br>
 그 외의 문자들은 input으로 들어온 문자와 format string에 있는 문자를 비교해보고, 동일하면 input에 들어온 문자를 버리고 계속 읽어나감.<br>
