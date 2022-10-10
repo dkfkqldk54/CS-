@@ -179,4 +179,20 @@ print("\\");<br>
 
 **:pushpin: The scanf function**
 
+scanf에서 %e, %f, %g는 상호교환해서 사용해도 괜찮음.<br>
+scanf는 put back 기능이 있음.<br>
+scanf("%d%d%f%f", &i, &j, &x, &y);에서 i, j는 int고, x, y는 float일 때 1-20.3-4.0e3\n이 입력 데이터로 들어오는 경우<br>
+int에 1을 배정하고, 숫자 안에 -가 포함될 수 없기 때문에 put back한다.<br>
+int에 -20이 배정되고, 숫자 안에 .가 포함될 수 없기 때문에 put back한다.<br>
+.3이 배정되고, 숫자 안에 -가 포함될 수 없으니 put back한다.<br>
+-4.0e3이 배정되고, new line character가 들어올 수 없으니 put back한다.<br>
 
+**Ordinary characters in format strings**
+
+white space character는 다 무시함. 다른 문자가 나오기 전까지 읽다가 다른 문자가 나오면 put back하는 방식임. 따라서 1개가 있으나, 여러개가 있으나 하나도 없는 것이나 마찬가지임.<br>
+그 외의 문자들은 input으로 들어온 문자와 format string에 있는 문자를 비교해보고, 동일하면 input에 들어온 문자를 버리고 계속 읽어나감.<br>
+"%d/%d"에서 (공백)5/(공백)96이 들어오면 공백은 무시하고 5를 넣고, /는 버리고, 공백은 무시하고 96은 넣음.<br>
+그러나 (공백)5(공백)/(공백)96이 들어오면 가운데 있는 공백이 /와 매칭이 되지 않아서 뒤에 값은 배정이 안됨.<br>
+"%d\n"처럼 \n을 안에 넣어버리면 integer를 받은 후에 new line character를 무시하고 넘어가버리니까, 다음 int를 받을 때까지 프로그램이 대기중일 수 있음.<br>
+scanf("%d", &i);일 때 23foo를 넣으면 23은 저장되고, foo는 다음 scanf를 위해서 남겨둠.<br>
+foo만 들어오면 저장은 실패하고, foo만 다음 scanf를 위해 남겨둠.<br>
