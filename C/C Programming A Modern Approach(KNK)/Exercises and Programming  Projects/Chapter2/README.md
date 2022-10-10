@@ -209,7 +209,7 @@ int main(void)
 **:pushpin: 8번**
 
 <pre>
-#include <<t>stdio.h>
+#include \<stdio.h\>
 
 int main (void)
 {
