@@ -1278,4 +1278,24 @@ deleteMinItem(t):
 
 이진 검색 트리에서 모든 노드를 방문하는 것을 순회라고 함.
 
+<pre>
+preOrder(r):
+  if (r!=null)
+    r.visited = true
+    preOrder(r.left)
+    preOrder(r.right)
+    
+inOrder(r):
+  if (r!=null)
+    inOrder(r.left)
+    r.visited = true
+    inOrder(r.right)
+    
+postOrder(r):
+  if (r!=null)
+    postOrder(r.left)
+    postOrder(r.right)
+    r.visited = true
+</pre>
+
 **:pushpin: 이진 검색 트리의 구현**
