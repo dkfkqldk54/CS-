@@ -1182,12 +1182,11 @@ def bucketSort(A):
 
 **:pushpin: 이진 검색 트리 알고리즘과 구현: 검색**
 
-검색 알고리즘
 <pre>
 search(t, x):
   if (t=null||t.item=x)
     return t
-  else if (x<t.item)
+  else if (x < t.item)
     return search(t.left, x)
   else
     return search(t.right, x)
@@ -1198,10 +1197,65 @@ search(t, x):
 이진 검색 트리가 이상적으로 균형이 잡히면 최악의 경우에도 검색 시간은 Θ(log n)임.<br>
 가장 나쁘게 기울면 평균 검색 시간이 Θ(n)임.<br>
 평균 검색 시간은 Θ(log n)이며, 삽입은 실패하는 검색 후 상수 시간의 후처리를 하므로 점근적 수행 시간은 검색과 동일함.<br>
+
 <pre>
+insert(x):
+  root <- insertItem(root,x)
+  
+insertItem(t, x):
+  if (t=null)
+    r.item <- x; r.left <- null; r.right <- null;
+    return r
+  else if (x < t.item)
+    t.left <- insertItem(t.left, x)
+    return t
+  else
+    t.right <- insertItem(t.right, x)
+    return t
 </pre>
 
 **:pushpin: 이진 검색 트리 알고리즘과 구현: 삭제**
+
+case 1: r이 리프 노드인 경우(자식이 없는 경우)임. r이 삭제되어도 r의 아래쪽에는 영향을 미치지 않음. r의 부모 노드에서 r을 가리키고 있던 링크를 null 로 바꿔줘야 함.<br>
+case 2: r의 자식 노드가 1개인 경우. r의 부모 노드에서 r을 가리키고 있던 링크를 r의 자식을 가리키도록 바꿔주면 됨.<br>
+case 3: r의 자식 노드가 2개인 경우. 우선 자리에 옮겨놓아도 이진 검색 트리의 성질을 전혀 깨지 않는 원소를 찾음. 좌서브 트리의 원소들보다 크고, 우서브 트리의 원소들보다 작아야 하므로 트리 전체에 딱 2개 있음. 좌서브 트리에서 가장 큰 원소 혹은 우서브 트리에서 가장 작은 원소임. 해당 원소 s를 기준으로 하면 r을 삭제한 후 직후 원소와 바꾼 후 s의 부모가 s의 오른자식을 가리키도록 노드를 바꿔줌. s는 왼자식을 가질 수 없음.(우서브 트리에서 가장 작은 원소이기 때문임.)<br>
+
+<pre>
+delete(t, x):
+  if (t=null)
+    에러("item not found!")
+  else if (x = t.item)
+    t <- deleteNode(t)
+    return t
+  else if (x < t.item)
+    t.left <- delete(t.left, x)
+    return t
+  else
+    t.right <- delete(t.right, x)
+    return t
+ 
+deleteNode(t):
+  if (t.left = null && t.right = null)
+    return null
+  else if (t.left = null)
+    return t.right
+  else if (t.right = null)
+    return t.left
+  else
+    (minItem, node) <- deleteMinItem(t.right)
+    t.item <- minItem
+    t.right <- node
+    return t
+
+deleteMinItem(t):
+  if (t.left = null)
+    return (t.item, t.right)
+  else
+    (minItem, node) = deleteMinItem(t.left)
+    t.left <- node
+    return (minItem, t)
+</pre>
+
 **:pushpin: 이진 검색 트리의 성질**
 **:pushpin: 순회**
 **:pushpin: 이진 검색 트리의 구현**
