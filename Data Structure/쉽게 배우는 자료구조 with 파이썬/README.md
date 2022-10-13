@@ -1375,5 +1375,12 @@ def __deleteMinItem(self, tNode:TreeNode) -> tuple:
     (rtnItem, rtnNode) = self.__deleteMinItem(tNode.left)
     tNode.left = rtnNode
     return (rtnItem, tNode)
+    
+# 기타
+def isEmpty(self) -> bool:
+  return self.__root == self.NIL
+
+def clear(self):
+  self.__root = self.NIL
   
 </pre>
