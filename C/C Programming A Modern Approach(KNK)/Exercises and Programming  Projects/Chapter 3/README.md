@@ -36,8 +36,3 @@ j: .6이 j에 배정되고 공백은 float에 포함될 수 없으므로 put bac
 **:pushpin: 6번**
 
 scanf에 있는 %d/%d를 %d / %d로 바꿔준다.
-
-<h2>:pencil2: Programming Projects</h2>
-
-**:pushpin: 1번**
-
