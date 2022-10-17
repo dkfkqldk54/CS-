@@ -58,6 +58,14 @@
 - 이진 검색 트리 알고리즘과 구현: 삭제
 - 이진 검색 트리의 성질
 - 순회
+
+<a href="#11">:pencil2: Chapter 11. 균형 검색 트리</a>
+- AVL 트리 개요
+- AVL 트리 수선
+- AVL 트리 구현
+- 레드 블랙 트리 개요
+- 레드 블랙 트리 수선
+- 레드 블랙 트리 정리
   
 <h2><a id="2">:pencil2: Chapter 2. 재귀(자기호출)와 귀납적 사고</a></h2>
 
@@ -1264,3 +1272,64 @@ postOrder(r):
     postOrder(r.right)
     r.visited = true
 </pre>
+
+<h2><a id="11">:pencil2: Chapter 11. 균형 검색 트리</a></h2>
+
+균형 이진 검색 트리는 최악의 경우에도 이진 트리의 군형이 잘 맞도록 유지해서 작업들이 항상 O(log n) 시간을 보장함.<br>
+
+**:pushpin: AVL 트리 개요**
+
+AVL 트리는 트리 내의 어떤 노드도 좌서브 트리와 우서브 트리의 높이 차가 1보다 크지 않은 상태로 유지되는 이진 검색 트리임.<br>
+노드의 필드는 이진 검색 트리의 노드에 있는 item, left, right에 더하여 서브 트리의 높이인 height가 있음.<br>
+어떤 노드의 높이란 그 노드를 루트로 하는 서브 트리의 높이를 말함.<br>
+AVL 트리의 균형이 깨지는 서브 트리는 하나일 수도 있지만 둘 이상이 될 수도 있음.<br>
+여러 서브 트리에서 균형이 깨진 경우, 균형이 깨진 서브 트리 중 가장 낮은 곳에 있는 것부터 수선을 시작함.<br>
+
+**:pushpin: AVL 트리 수선**
+
+AVL 트리의 좌회전
+<pre>
+좌회전(t):
+  Rchild = t.right
+  RLchild = Rchild.left
+  Rchild.left = t
+  t.right = RLchild
+  Rchild.height = max(Rchild.right.height, Rchild.left.height) + 1
+  t.height = max(t.right.height, t.left.height) + 1
+</pre>
+
+AVL 트리의 우회전
+<pre>
+우회전(t):
+  Lchild = t.left
+  LRchild = Lchild.right
+  Lchild.right = t
+  t.left = LRchild
+  Lchild.height = max(Lchild.right.height, Lchild.left.height) + 1
+  t.height = max(t.left.height, t.right.height) + 1
+</pre>
+
+t를 루트로 하는 트리 수선 작업은 t의 네 손자 서브 트리 중 가장 깊은 것에 따라 다음 네 가지 유형으로 나뉨.<br>
+LL: t.left.left가 가장 깊음. t를 기준으로 우회전하여 해결함.<br>
+LR: t.left.right가 가장 깊음. t.left를 기준으로 좌회전 후 t를 기준으로 우회전하여 해결함.<br>
+RR: t.right.right가 가장 깊음. t를 기준으로 좌회전하여 해결함.<br>
+RL: t.right.left가 가장 깊음. t.right를 기준으로 우회전 후 t를 기준으로 좌회전하여 해결함.<br>
+때로는 이렇게 서브 트리 t의 균형을 해결한 결과로 t의 상위 트리에서 새롭게 균형이 깨질 수도 있음.<br>
+운이 나쁘면 아래쪽에서 생긴 균형 문제가 재귀적으로 루트까지 반복하여 생길 수 있음.<br>
+이런 일은 삭제 직후에만 발생하는데, 삭제 후 깊이가 얕아져서 수선 후 서브 트리 전체의 깊이가 낮아질 수 있어 상위 트리에서 균형이 깨질 수 있기 때문임.<br>
+삽입을 하면 깊이가 깊어져서 문제가 발생하는데, 이 때는 해당 타입에 대해 한 번만 수선하면 깊이가 얕아지므로 추가 문제가 발생하지 않음.<br>
+
+**:pushpin: AVL 트리 구현**
+
+핵심 원리는 삽입과 삭제 과정에서 높이에 변화가 생길 가능성이 있는 모든 곳에서 AVL 균형을 체크하고, 만일 균형이 깨지면 균형 맞추기 작업을 하는 것임.<br>
+None이 아닌 AVLNode 타입의 노드 NIL을 생성하여 모든 None 레퍼런스가 이 노드를 가리키게 하였음.<br>
+이는 서브 트리의 높이 계산을 위한 필드 height를 쉽게 처리하기 위해서임.<br>
+x가 None이면 x.height는 존재하지 않는 필드라 에러가 남.<br>
+NIL을 사용하면 노드 x가 None이어도 NIL.height가 존재하여 다른 노드들과 높이 관련 작업을 동일하게 처리할 수 있음.<br>
+NIL.height의 값은 0으로 초기화해두는데, 이런 방식으로 사용하는 노드를 흔히 경계 노드(sentinel)이라 함.<br>
+
+**:pushpin: 레드 블랙 트리 개요**
+
+**:pushpin: 레드 블랙 트리 수선**
+
+**:pushpin: 레드 블랙 트리 정리**
