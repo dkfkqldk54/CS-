@@ -1,29 +1,29 @@
 <h1>:green_book: C Programming A Modern Approach(KNK) 정리</h1>
 
 <a href="#2">:pencil2: Chapter 2. C Fundamentals</a>
-- C's Origin
-- Compiling and Linking
-- The General Form of a Simple Program
-- Variables and Assignment
-- Defining Names for constants
-- Identifiers
+- C의 기원
+- 컴파일링과 링킹
+- 프로그램 기본 형식
+- 변수와 할당
+- 상수에 이름 붙이기
+- 식별자
 
 <a href="#3">:pencil2: Chapter 3. Formatted Input/Output</a>
-- The printf function: introduce
-- The printf function: conversion specifications
-- The printf function: escape sequences
-- The scanf function: introduce
-- The scanf function: ordinary characters in format strings
+- printf: 개요
+- printf: 변환 지정자
+- printf: escape sequences
+- scanf: 개요
+- scanf: format string에 있는 일반 문자
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
-**:pushpin: C's Origin**
+**:pushpin: C의 기원**
 
 C는 1970년대 벨 연구소에서 개발된 프로그래밍 언어로 Ken Tompson, Dennis Ritchie 등이 만들었음.<br>
 당시 어셈블리어로 작성된 UNIX는 코드를 보수하거나 디버그하는 작업이 상당히 어려웠음.<br>
 이를 보완하기 위해 B를 개발하였으나 B는 UNIX에 적합한 언어가 아니었고, B를 업그레이드 한 버전인 C를 개발하게 됨.<br>
 
-**:pushpin: Compiling and Linking**
+**:pushpin: 컴파일링과 링킹**
 
 Preprocessing: #(directives)로 시작하는 커맨드를 처리함.<br>
 Compiling: 코드를 기계어로 번역해주는 작업을 의미함. 즉 객체 코드(컴파일러에 의해 기계가 읽을 수 있도록 번역된 프로그램)를 만들어줌.<br>
@@ -37,7 +37,7 @@ UNIX에서 C의 컴파일러로 보통 cc를 쓰는데 pun.c를 컴파일하고 
 컴파일러가 아니라 IDE(Integrated Development Environment)를 쓸 수도 있음.<br>
 IDE는 동일한 환경 안에서 편집, 컴파일, 링크, 실행, 디버그 등을 모두 수행할 수 있음.<br>
 
-**:pushpin: The General Form of a Simple Program**
+**:pushpin: 프로그램 기본 형식**
 
 C의 간단한 프로그램 폼은 아래와 같음.
 <pre>
@@ -74,7 +74,7 @@ Statement는 세미콜론으로 끝남. 이는 컴파일러에게 문장이 끝�
 C99은 //(adjacent slashes)로도 코멘트를 남기는데, 문장의 시작 부분에만 써주고 끝 부분에는 써주지 않아도 자동으로 끝맺음해줌.<br>
 두 줄 이상의 긴 코멘트는 /* */로 써주는 것이 좋음.<br>
 
-**:pushpin: Variables and Assignment**
+**:pushpin: 변수와 할당(Variables and Assignment)**
 
 **Types**<br>
 int와 float 등이 있음.<br>
@@ -121,7 +121,7 @@ scanf("%d", &i);
 scanf("%f", &x;
 </pre>
 
-**:pushpin: Defining Names for constants**
+**:pushpin: 상수에 이름 붙이기**
 
 자주 쓰는 상수에 이름을 붙여 쓰고 싶을 때는 macro definition을 사용하면 됨.<br>
 <pre>#define INCHES_PER_POUND 166</pre>
@@ -130,7 +130,7 @@ directive처럼 쓰며 마찬가지로 마지막에 세미콜론을 붙이지 �
 숫자 부분에 (1.0f/3.14f)와 같이 수식을 써도 되나, 괄호를 동반해야 함.<br>
 (1.0/3.14)가 아니라 (1.0f/3.14f)로 하는 이유는 전자는 0으로 인식되나 후자는 1/3.14로 인식되기 때문임.<br>
 
-**:pushpin: Identifiers**
+**:pushpin: 식별자**
 
 식별자는 문자, 숫자, 언더바로 쓸 수 있으며, 식별자의 시작은 문자, 언더바로만 가능함.<br>
 C는 case sensitive해서 소문자와 대문자를 달리 인식함. 따라서 job과 Job는 다른 식별자임.<br>
@@ -149,13 +149,13 @@ unsigned void while
 
 <h2><a id="3">:pencil2: Chapter 3. Formatted Input/Output</a></h2>
 
-**:pushpin: The printf function: introduce**
+**:pushpin: printf: 개요**
 
 printf는 format string을 출력함.<br>
 format string은 일반 문자와 변환 지정자(conversion specification) 두 가지를 포함함.<br>
 변환 지정자는 %d, %f와 같이 value를 넘길 때 쓰는 기호를 의미함.<br>
 
-**:pushpin: The printf function: conversion specifications**
+**:pushpin: printf: 변환 지정자**
 
 %m.pX(예: %10.2f)가 기본 포맷임.<br>
 m과 p는 정수이고 x는 문자인데, m과 p는 써도 되고 안 써도 됨.<br>
@@ -167,7 +167,7 @@ i는 십진법에서는 d와 동일하지만 8진법, 16진법을 나타낼 때�
 e는 실수에 지수를 곱한 형태로 수를 출력한다. p는 decimal point이후에 몇 개의 자리가 나오는지를 가리키며, 기본값은 6이다. p가 0이면 소수점이 출력되지 않음. 6545.123을 %.2e로 출력하면 6.55e+03이다.<br>
 g는 e와 f를 섞은 것이다. p는 significant digit(소수점 이하의 자리가 아님)이다. 6545.123123을 %6g로 출력하면 6545.12가 출력되고 %.2g는 6.5e+03이 출력된다. %.4g는 6545, %.7g는 6545.123이다.g는 소수점에 0이 계속 이어지는 trailing zeros는 무시한다. 숫자의 size를 예측할 수 없는 경우 유동적으로 출력하기에 좋은 변환 지정자임.<br>
 
-**:pushpin: The printf function: escape sequences**
+**:pushpin: printf: escape sequences**
 
 Alert(bell) \a<br>
 Back space \b<br>
@@ -178,7 +178,7 @@ print("\"Hello!\"") -> "Hello"<br>
 \을 출력하고 싶으면 \를 2번 쓰면 됨.<br>
 print("\\");<br> 
 
-**:pushpin: The scanf function: introduce**
+**:pushpin: scanf: 개요**
 
 scanf에서 %e, %f, %g는 상호교환해서 사용해도 괜찮음.<br>
 scanf는 put back 기능이 있음.<br>
@@ -188,7 +188,7 @@ int에 -20이 배정되고, 숫자 안에 .가 포함될 수 없기 때문에 pu
 .3이 배정되고, 숫자 안에 -가 포함될 수 없으니 put back한다.<br>
 -4.0e3이 배정되고, new line character가 들어올 수 없으니 put back한다.<br>
 
-**:pushpin: The scanf function: ordinary characters in format strings**
+**:pushpin: scanf: format string에 있는 일반 문자**
 
 white space character는 다 무시함. 다른 문자가 나오기 전까지 읽다가 다른 문자가 나오면 put back하는 방식임. 따라서 1개가 있으나, 여러개가 있으나 하나도 없는 것이나 마찬가지임.<br>
 그 외의 문자들은 input으로 들어온 문자와 format string에 있는 문자를 비교해보고, 동일하면 input에 들어온 문자를 버리고 계속 읽어나감.<br>
