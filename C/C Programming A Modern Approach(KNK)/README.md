@@ -19,27 +19,31 @@
 
 **:pushpin: C의 기원**
 
-C는 1970년대 벨 연구소에서 개발된 프로그래밍 언어로 Ken Tompson, Dennis Ritchie 등이 만들었음.<br>
-당시 어셈블리어로 작성된 UNIX는 코드를 보수하거나 디버그하는 작업이 상당히 어려웠음.<br>
-이를 보완하기 위해 B를 개발하였으나 B는 UNIX에 적합한 언어가 아니었고, B를 업그레이드 한 버전인 C를 개발하게 됨.<br>
+C는 1970년대 벨 연구소에서 개발된 프로그래밍 언어로 켄 톰슨, 데니스 리치 등이 만들었음.<br>
+당시 어셈블리어로 작성된 UNIX는 코드는 보수하거나 디버그하는 것이 상당히 어려웠음.<br>
+이를 보완하기 위해 B를 개발하였으나 B는 UNIX에 적합한 언어가 아니었고, B를 업그레이드 한 C를 개발하게 됨.<br>
 
 **:pushpin: 컴파일링과 링킹**
 
 Preprocessing: #(directives)로 시작하는 커맨드를 처리함.<br>
-Compiling: 코드를 기계어로 번역해주는 작업을 의미함. 즉 객체 코드(컴파일러에 의해 기계가 읽을 수 있도록 번역된 프로그램)를 만들어줌.<br>
+Compiling: 코드를 기계어로 번역해주는 작업. 즉 컴파일러에 의해 기계가 읽을 수 있도록 번역된 프로그램인 객체 코드를 만들어줌.<br>
 Linking: 객체 코드와 additional code를 조합시킴. additional code는 printf와 같은 라이브러리 함수를 포함함.<br>
 
-UNIX에서 C의 컴파일러로 보통 cc를 쓰는데 pun.c를 컴파일하고 링크할 때는 아래와 같이 쓸 수 있음.<br>
+**UNIX에서의 컴파일링과 링킹**<br>
+
+UNIX에서는 C의 컴파일러로 보통 cc를 쓰는데 pun.c를 컴파일링하고 링킹할 때는 아래와 같이 쓸 수 있음.<br>
 <pre>% cc pun.c</pre>
-컴파일, 링킹 작업이 끝난 뒤에는 a.out(assemler output)이라는 이름의 실행 파일을 자동으로 생성함.<br>
--o 옵션은 실행 파일의 이름을 정할 수 있도록 해주는 옵션임. pun.c를 pun으로 지정하고 싶을 때는 아래와 같이 작성함.<br>
+
+컴파일, 링킹 작업이 끝난 뒤에는 a.out(assembler output)이라는 이름의 실행 파일을 자동으로 생성함.<br>
+-o 옵션은 실행 파일의 이름을 정할 수 있도록 해주는데, pun.c를 pun으로 지정하고 싶을 때는 아래와 같이 작성함.<br>
 <pre>% cc -o pun pun.c</pre>
+
 컴파일러가 아니라 IDE(Integrated Development Environment)를 쓸 수도 있음.<br>
-IDE는 동일한 환경 안에서 편집, 컴파일, 링크, 실행, 디버그 등을 모두 수행할 수 있음.<br>
+IDE는 동일한 환경 안에서 편집, 컴파일링, 링킹, 실행, 디버그 등을 모두 수행할 수 있음.<br>
 
 **:pushpin: 프로그램 기본 형식**
 
-C의 간단한 프로그램 폼은 아래와 같음.
+C의 프로그램 기본 형식은 아래와 같음.
 <pre>
 directives
 
@@ -58,10 +62,10 @@ directives는 항상 #으로 시작하고, #은 directive임을 알리기 위함
 프로그램 안에 main 함수는 반드시 포함하고 있어야 함.<br>
 main도 값을 return하는데 return하는 값은 status code임.<br>
 status code는 OS에게 프로그램을 끝내도 된다는 신호를 줌.<br>
-main 앞에 int는 main 함수가 integer value를 return할 것이라고 알려주는 것임.<br>
-void는 main에 들어가는 인자가 없다는 것을 나타내는 것임.<br>
+main 앞에 int는 main 함수가 int를 return할 것이라고 알려주는 것임.<br>
+void는 main에 들어갈 인자가 없다는 것을 나타내는 것임.<br>
 return 0의 의미는 두 가지가 있음. 하나는 main 함수를 끝내겠다는 의미이고, 다른 하나는 main 함수는 0을 return 했다는 의미임.<br>
-만약 return이 없어도 프로그램은 끝나겠지만, 컴파일러가 경고 메세지를 보낼 수도 있음. int를 return해야 하는데 하지 않았기 때문임.<br>
+만약 return이 없어도 프로그램은 끝나겠지만, 컴파일러에 따라 경고 메시지를 보낼 수도 있음. int를 return해야 하는데 하지 않았기 때문임.<br>
 
 **Statements**<br>
 Statement는 세미콜론으로 끝남. 이는 컴파일러에게 문장이 끝났다는 것을 알려주기 위함임.<br>
@@ -74,11 +78,11 @@ Statement는 세미콜론으로 끝남. 이는 컴파일러에게 문장이 끝�
 C99은 //(adjacent slashes)로도 코멘트를 남기는데, 문장의 시작 부분에만 써주고 끝 부분에는 써주지 않아도 자동으로 끝맺음해줌.<br>
 두 줄 이상의 긴 코멘트는 /* */로 써주는 것이 좋음.<br>
 
-**:pushpin: 변수와 할당(Variables and Assignment)**
+**:pushpin: 변수와 할당**
 
 **Types**<br>
 int와 float 등이 있음.<br>
-float은 int보다 계산이 느린데, 이는 float이 라운딩을 통해서 근사치를 보여주고 있어서 그렇지 실제 값은 숫자가 더 길 수도 있기 때문임.<br>
+float은 int보다 계산이 느린데, 이는 float이 근사치를 보여주고 있어서 그렇지 실제 값은 더 많은 digit을 포함하고 있을 수 있기 때문임.<br>
 
 **Declarations**<br>
 변수는 사용되기 전에 선언되어야 하고 역시 끝에 세미콜론을 붙여야함.<br>
@@ -87,7 +91,7 @@ int height;
 float profit, loss;
 </pre>
 main 함수에서 declaration은 statements가 오기 전에 있어야함.<br>
-그러나 C99에서는 declaration -> statements -> declaration -> statements와 같은 순서로 사용할 수 있음.<br>
+그러나 C99에서는 declaration -> statements -> declaration -> statements와 같은 순서로 사용할 수 있음. 즉 statements에서 사용될 변수는 그 이전에만 선언되면 됨.<br>
 
 **Assignment**<br>
 <pre>
@@ -110,15 +114,15 @@ int에 float값을, float에 int 값을 할당할 경우에도 오류가 발생�
 int height = 8, lenght = 12;
 int height, length = 8;
 </pre>
-위와 같은 방식은 되지만 아래와 같은 방식은 안 됨.
-하나의 변수에는 하나의 initializer가 필요함.
+위와 같은 방식은 되지만 아래와 같은 방식은 안 됨.<br>
+하나의 변수에는 하나의 initializer가 필요함.<br>
 
 **Reading Input**<br>
 scanf, printf의 f는 formatted의 f임.<br>
 변수는 Type을 선언해야 하는데 scanf 안에서 &을 써줌으로서 이를 대신함. 정수와 실수의 경우 아래와 같이 표현하면 됨.<br>
 <pre>
 scanf("%d", &i);
-scanf("%f", &x;
+scanf("%f", &x);
 </pre>
 
 **:pushpin: 상수에 이름 붙이기**
@@ -145,7 +149,7 @@ signed sizeof static struct switch typedef union
 unsigned void while
 </pre>
 다음 5가지는 C99에서 추가된 것임.<br>
-<pre>inline restrict _Bool _Comlex _Imaginary</pre>
+<pre>inline restrict _Bool _Complex _Imaginary</pre>
 
 <h2><a id="3">:pencil2: Chapter 3. Formatted Input/Output</a></h2>
 
