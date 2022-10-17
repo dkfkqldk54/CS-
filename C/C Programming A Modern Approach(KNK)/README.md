@@ -163,22 +163,29 @@ format string은 일반 문자와 변환 지정자(conversion specification) 두
 
 %m.pX(예: %10.2f)가 기본 포맷임.<br>
 m과 p는 정수이고 x는 문자인데, m과 p는 써도 되고 안 써도 됨.<br>
-m은 minimum field width의 약자고 %4d일 때 123이 들어오면 (공백)123으로 처리하고, %-4d일 때 123이 들어오면 123(공백)으로 처리한다. %2d와 같이 입력보다 작을 때는 알아서 width를 늘려서 123을 모두 출력한다.<br>
+
+**m, p, x**<br>
+m은 minimum field width의 약자임. %4d일 때 123이 들어오면 (공백)123으로 처리하고, %-4d일 때 123이 들어오면 123(공백)으로 처리한다. %2d와 같이 입력보다 작을 때는 알아서 width를 늘려서 123을 모두 출력함.<br>
 p는 minimum number of digits로 123을 %.4d로 하면 0123이 출력된다. d에서 p의 기본값은 1이다.<br>
 x는 어떤 변환 지정자를 사용할지 결정한다.<br>
-d는 정수를 나타낼 때 쓰인다. p는 minimum number of digits to display를 나타낸다. 경우에 따라서 0이 추가적으로 붙을 수 있다.<br>
+
+**x의 종류**<br>
+d는 정수를 나타낼 때 쓰임.<br>
 i는 십진법에서는 d와 동일하지만 8진법, 16진법을 나타낼 때도 쓰인다. 숫자 앞에 0을 붙이면 8진법, 0x를 붙이면 16진법으로 읽는다.<br>
 e는 실수에 지수를 곱한 형태로 수를 출력한다. p는 decimal point이후에 몇 개의 자리가 나오는지를 가리키며, 기본값은 6이다. p가 0이면 소수점이 출력되지 않음. 6545.123을 %.2e로 출력하면 6.55e+03이다.<br>
+f는 실수를 나타낼 때 쓰임.<br>
 g는 e와 f를 섞은 것이다. p는 significant digit(소수점 이하의 자리가 아님)이다. 6545.123123을 %6g로 출력하면 6545.12가 출력되고 %.2g는 6.5e+03이 출력된다. %.4g는 6545, %.7g는 6545.123이다.g는 소수점에 0이 계속 이어지는 trailing zeros는 무시한다. 숫자의 size를 예측할 수 없는 경우 유동적으로 출력하기에 좋은 변환 지정자임.<br>
 
 **:pushpin: printf: escape sequences**
 
-Alert(bell) \a<br>
-Back space \b<br>
-New line \n<br>
-Horizontal tab \t<br>
+Alert(bell): \a<br>
+Back space: \b<br>
+New line: \n<br>
+Horizontal tab: \t<br>
+
 \을 시작 문자의 앞, 끝 문자의 앞에 넣어주면 "도 출력할 수 있음.<br>
 print("\"Hello!\"") -> "Hello"<br>
+
 \을 출력하고 싶으면 \를 2번 쓰면 됨.<br>
 print("\\");<br> 
 
@@ -186,18 +193,23 @@ print("\\");<br>
 
 scanf에서 %e, %f, %g는 상호교환해서 사용해도 괜찮음.<br>
 scanf는 put back 기능이 있음.<br>
-scanf("%d%d%f%f", &i, &j, &x, &y);에서 i, j는 int고, x, y는 float일 때 1-20.3-4.0e3\n이 입력 데이터로 들어오는 경우<br>
+
+**scanf("%d%d%f%f", &i, &j, &x, &y);<br>
+입력 데이터: 1-20.3-4.0e3\n<br>**
+
 int에 1을 배정하고, 숫자 안에 -가 포함될 수 없기 때문에 put back한다.<br>
 int에 -20이 배정되고, 숫자 안에 .가 포함될 수 없기 때문에 put back한다.<br>
 .3이 배정되고, 숫자 안에 -가 포함될 수 없으니 put back한다.<br>
 -4.0e3이 배정되고, new line character가 들어올 수 없으니 put back한다.<br>
+\n은 다음 scanf를 기다리면서 남아있는다.<br>
 
 **:pushpin: scanf: format string에 있는 일반 문자**
 
-white space character는 다 무시함. 다른 문자가 나오기 전까지 읽다가 다른 문자가 나오면 put back하는 방식임. 따라서 1개가 있으나, 여러개가 있으나 하나도 없는 것이나 마찬가지임.<br>
+white space character는 다 무시함. 그 이외의 문자가 나오기 전까지 읽다가, 이외의 문자가 나오면 put back하는 방식임. 따라서 white space character는 1개가 있으나, 여러개가 있으나 하나도 없는 것이나 마찬가지임.<br>
 그 외의 문자들은 input으로 들어온 문자와 format string에 있는 문자를 비교해보고, 동일하면 input에 들어온 문자를 버리고 계속 읽어나감.<br>
 "%d/%d"에서 (공백)5/(공백)96이 들어오면 공백은 무시하고 5를 넣고, /는 버리고, 공백은 무시하고 96은 넣음.<br>
 그러나 (공백)5(공백)/(공백)96이 들어오면 가운데 있는 공백이 /와 매칭이 되지 않아서 뒤에 값은 배정이 안됨.<br>
-"%d\n"처럼 \n을 안에 넣어버리면 integer를 받은 후에 new line character를 무시하고 넘어가버리니까, 다음 int를 받을 때까지 프로그램이 대기중일 수 있음.<br>
+(공백)/(공백)96은 다음 scanf가 올 때까지 기다리고 있음.<br>
+"%d\n"는 white space character랑 똑같이 처리되는데 integer를 받은 후에 white space character를 만나는데, 이렇게 되면 다음 scanf를 기다리게 됨. 따라서 입력할 것도 없는데 입력하라고 창이 나올 수가 있음.<br>
 scanf("%d", &i);일 때 23foo를 넣으면 23은 저장되고, foo는 다음 scanf를 위해서 남겨둠.<br>
 foo만 들어오면 저장은 실패하고, foo만 다음 scanf를 위해 남겨둠.<br>
