@@ -54,10 +54,12 @@ int main(void)
 </pre>
 
 **Directives**<br>
+
 <stdio.h>를 사용하는 이유는 C는 읽고 쓰는 명령어가 없기 때문임.<br>
 directives는 항상 #으로 시작하고, #은 directive임을 알리기 위함임.<br>
 
 **Functions**<br>
+
 한 줄로만 작성해야 하며, 반점 등은 들어가지 않음.<br>
 프로그램 안에 main 함수는 반드시 포함하고 있어야 함.<br>
 main도 값을 return하는데 return하는 값은 status code임.<br>
@@ -68,12 +70,15 @@ return 0의 의미는 두 가지가 있음. 하나는 main 함수를 끝내겠�
 만약 return이 없어도 프로그램은 끝나겠지만, 컴파일러에 따라 경고 메시지를 보낼 수도 있음. int를 return해야 하는데 하지 않았기 때문임.<br>
 
 **Statements**<br>
+
 Statement는 세미콜론으로 끝남. 이는 컴파일러에게 문장이 끝났다는 것을 알려주기 위함임.<br>
 
 **Printing Strings**<br>
+
 문장 끝에 \n(new line character)를 붙여줘야 함. 이를 붙이지 않으면 한 줄안에 여러 문장이 함께 출력됨.<br>
 
 **Comments**<br>
+
 코멘트 시작은 /*이고 끝은 */임.<br>
 C99은 //(adjacent slashes)로도 코멘트를 남기는데, 문장의 시작 부분에만 써주고 끝 부분에는 써주지 않아도 자동으로 끝맺음해줌.<br>
 두 줄 이상의 긴 코멘트는 /* */로 써주는 것이 좋음.<br>
@@ -81,10 +86,12 @@ C99은 //(adjacent slashes)로도 코멘트를 남기는데, 문장의 시작 �
 **:pushpin: 변수와 할당**
 
 **Types**<br>
+
 int와 float 등이 있음.<br>
 float은 int보다 계산이 느린데, 이는 float이 근사치를 보여주고 있어서 그렇지 실제 값은 더 많은 digit을 포함하고 있을 수 있기 때문임.<br>
 
 **Declarations**<br>
+
 변수는 사용되기 전에 선언되어야 하고 역시 끝에 세미콜론을 붙여야함.<br>
 <pre>
 int height;
@@ -94,6 +101,7 @@ main 함수에서 declaration은 statements가 오기 전에 있어야함.<br>
 그러나 C99에서는 declaration -> statements -> declaration -> statements와 같은 순서로 사용할 수 있음. 즉 statements에서 사용될 변수는 그 이전에만 선언되면 됨.<br>
 
 **Assignment**<br>
+
 <pre>
 height = 8;
 profit = 2150.48f;
@@ -102,11 +110,13 @@ float은 맨 마지막에 f를 붙이는데, f를 붙이지 않으면 오류가 
 int에 float값을, float에 int 값을 할당할 경우에도 오류가 발생할 수 있음.<br>
 
 **printing the value of a variable**<br>
+
 %d는 int, %f는 float을 위한 것임.<br>
 소수점 몇 번째 자리까지 나타내고 싶을 때는 %.2f와 같이 표현하면 됨.<br>
 <pre>printf("profit: %.2f\n", profit);</pre>
 
 **Initialization**<br>
+
 초기화 값은 declaration과 함께 사용할 수도 있음.<br>
 <pre>int height = 8;</pre>
 여기서 8을 initializer라고 함.<br>
@@ -118,6 +128,7 @@ int height, length = 8;
 하나의 변수에는 하나의 initializer가 필요함.<br>
 
 **Reading Input**<br>
+
 scanf, printf의 f는 formatted의 f임.<br>
 변수는 Type을 선언해야 하는데 scanf 안에서 &을 써줌으로서 이를 대신함. 정수와 실수의 경우 아래와 같이 표현하면 됨.<br>
 <pre>
@@ -165,11 +176,13 @@ format string은 일반 문자와 변환 지정자(conversion specification) 두
 m과 p는 정수이고 x는 문자인데, m과 p는 써도 되고 안 써도 됨.<br>
 
 **m, p, x**<br>
+
 m은 minimum field width의 약자임. %4d일 때 123이 들어오면 (공백)123으로 처리하고, %-4d일 때 123이 들어오면 123(공백)으로 처리한다. %2d와 같이 입력보다 작을 때는 알아서 width를 늘려서 123을 모두 출력함.<br>
 p는 minimum number of digits로 123을 %.4d로 하면 0123이 출력된다. d에서 p의 기본값은 1이다.<br>
 x는 어떤 변환 지정자를 사용할지 결정한다.<br>
 
 **x의 종류**<br>
+
 d: 정수를 나타낼 때 쓰임.<br>
 i: 십진법에서는 d와 동일하지만 8진법, 16진법을 나타낼 때도 쓰인다. 숫자 앞에 0을 붙이면 8진법, 0x를 붙이면 16진법으로 읽는다.<br>
 e: 실수에 지수를 곱한 형태로 수를 출력한다. p는 decimal point이후에 몇 개의 자리가 나오는지를 가리키며, 기본값은 6이다. p가 0이면 소수점이 출력되지 않음. 6545.123을 %.2e로 출력하면 6.55e+03이다.<br>
@@ -194,8 +207,10 @@ print("\\");<br>
 scanf에서 %e, %f, %g는 상호교환해서 사용해도 괜찮음.<br>
 scanf는 put back 기능이 있음.<br>
 
-**scanf("%d%d%f%f", &i, &j, &x, &y);<br>
-입력 데이터: 1-20.3-4.0e3\n<br>**
+**예시**<br>
+
+scanf("%d%d%f%f", &i, &j, &x, &y);<br>
+입력 데이터: 1-20.3-4.0e3\n<br>
 
 int에 1을 배정하고, 숫자 안에 -가 포함될 수 없기 때문에 put back한다.<br>
 int에 -20이 배정되고, 숫자 안에 .가 포함될 수 없기 때문에 put back한다.<br>
@@ -209,12 +224,15 @@ white space character는 다 무시함. 그 이외의 문자가 나오기 전까
 그 외의 문자들은 input으로 들어온 문자와 format string에 있는 문자를 비교해보고, 동일하면 input에 들어온 문자를 버리고 계속 읽어나감.<br>
 
 **예시1**<br>
+
 "%d/%d"에서 (공백)5/(공백)96이 들어오면 공백은 무시하고 5를 넣고, /는 버리고, 공백은 무시하고 96은 넣음.<br>
 그러나 (공백)5(공백)/(공백)96이 들어오면 가운데 있는 공백이 /와 매칭이 되지 않아서 뒤에 값은 배정이 안됨.<br>
 (공백)/(공백)96은 다음 scanf가 올 때까지 기다리고 있음.<br>
 
 **예시2**<br>
+
 "%d\n"는 white space character랑 똑같이 처리되는데 integer를 받은 후에 white space character를 만나는데, 이렇게 되면 다음 scanf를 기다리게 됨. 따라서 입력할 것도 없는데 입력하라고 창이 나올 수가 있음.<br>
 
 **예시3**<br>
+
 scanf("%d", &i);일 때 23foo를 넣으면 23은 저장되고, foo는 다음 scanf를 위해서 남겨둠. foo만 들어오면 저장은 실패하고, foo만 다음 scanf를 위해 남겨둠.<br>
