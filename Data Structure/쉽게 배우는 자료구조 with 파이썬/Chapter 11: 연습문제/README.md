@@ -45,13 +45,13 @@ LR과 RL이다.
 
 case2가 일어난 뒤에는 case1만 연쇄적으로 일어날 수 있으니, 이번 풀이에서는 case1만 일어난다고 가정하고 설명하겠다. case1에서 x가(x는 case1 상에서 검은색에서 빨간색이 되는 말단 노드임) 검은색일 때를 문제가 발생하기 전 '초기 상태'라고 정의하겠다. 이 초기 상태의 트리를 3개 쌓아올리겠다. p3은 위에 있는 트리의 x가 되고, p5는 또 그 위에 있는 트리의 x가 되는 식이다. 맨 꼭대기 노드에는 루트 노드인 p7이 있을 것이다. 맨 아래에 있는 트리의 x노드를 빨간색으로 바꾸게 되면 재귀적으로 수선이 일어난다. p에서 p7까지의 수선 과정에서 생기는 색의 변화는 다음과 같다.<br>
 
-p p2 p3 p4 p5 p6 p7<br>
-B R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B<br>
-R R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B<br>
-R B &nbsp;&nbsp;R &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B<br>
-R B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;R &nbsp;&nbsp;B<br>
-R B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R<br>
-R B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;B<br>
+p&nbsp; p2 p3 p4 p5 p6 p7<br>
+B&nbsp; R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B<br>
+R&nbsp; R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B<br>
+R&nbsp; B &nbsp;&nbsp;R &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B<br>
+R&nbsp; B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;R &nbsp;&nbsp;B<br>
+R&nbsp; B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R<br>
+R&nbsp; B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;R &nbsp;&nbsp;B &nbsp;&nbsp;B<br>
 
 **:pushpin: 10번**
 
