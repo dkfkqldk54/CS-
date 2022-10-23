@@ -512,3 +512,41 @@ _Bool 타입은 0과 1만 배정받을 수 있으며, 0이 아닌 값이 들어�
 또한 true와 false를 사용할 수 있게 되어 flag=false; 혹은 flag=true;로 지정할 수도 있음.<br>
 
 **:pushpin: switch문**
+
+switch문의 기본 형태는 다음과 같음.<br>
+<pre>
+switch (expression) {
+  case constant-expression: statements
+  ...
+  case constant-expression: statements
+  default: statements
+}
+</pre>
+
+**expression**<br>
+
+괄호 안에 있는 expression에는 정수가 들어가야 함. 문자 하나(character)도 정수 처리가 되지만, 실수나 문자열(string)은 안 됨.<br>
+constant expression에는 변수나 함수 call이 들어오면 안 됨. 5, 5+10은 되지만, n+10은 안 됨. 다만 n이 macro definition된 값이면 괜찮음.<br>
+정수 값만 들어가야 하는데, 역시 문자열은 안 되지만 문자는 가능함.<br>
+
+**statements**<br>
+
+statement는 몇 개든 들어가도 됨.<br>
+중괄호를 쓰지 않아도 되며, 마지막에는 보통 break를 붙임.<br>
+여러 케이스를 한 번에 묶고 싶을 때는 아래와 같이 적으면 됨.<br>
+
+<pre>
+case 4: case 3: case 2: case 1:
+  statements;
+</pre>
+
+**break**<br>
+
+실행된 case의 마지막 문장이 수행되면, 다음 case의 case label을 무시하고 해당 케이스의 첫 번째 문장부터 실행하기 시작함.<br>
+따라서 break가 없으면 해당 case 아래로 줄줄이 실행됨. default까지도.
+
+**switch 특성**<br>
+
+switch는 범위를 특정시키지는 못 함.<br>
+default는 반드시 마지막에만 있어야 하는 것이 아니며, 반드시 있어야 하는 것도 아님.<br>
+case에 맞는 값이 없으면 자연스럽게 switch문 다음 문장으로 넘어감.<br>
