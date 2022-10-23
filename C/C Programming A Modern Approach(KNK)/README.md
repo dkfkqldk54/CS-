@@ -25,7 +25,6 @@
 <a href="#5">:pencil2: Chapter 5. Selection Statements</a>
 - 논리식
 - if문
-- 조건식
 - Boolean 타입
 - 스위치문
   
@@ -408,7 +407,7 @@ a || b는 a와 b 둘 중 하나만 0이 아니어도 1임.<br>
 !는 uanry +, -와 같은 우선순위를 가지며 우결합성을 가짐.<br>
 &&, ||는 관계 연산자나 동등 연산자보다 우선순위가 낮으며 좌결합성을 가짐.<br>
 
-**short-circuit**<br>
+**Short-Circuit**<br>
 
 &&와 ||는 short-circuit이라는 특성을 가짐.
 short-circuit은 좌측 피연산자에서 결과를 확정지을 수 있으면 우측 피연산자로 이동하지 않는 것을 뜻함.<br>
@@ -417,8 +416,99 @@ i>0 && ++j>0에서도 좌측에서 먼저 끝나버리면 오른쪽에 있는 j�
 
 **:pushpin: if문**
 
-**:pushpin: 조건식**
+if문의 기본 형태는 if (expression) statement임.<br>
+statement에 한 줄이 아니라 여러 줄을 쓰고 싶을 때는 중괄호로 묶어줌.<br>
+중괄호를 쓰면 컴파일러는 이를 한 줄로 인식함.<br>
+else를 같이 쓰면 기본 형태는 if (expression) statement else statement임.<br>
+if문과 else문의 가독성을 높이기 위해서는 중괄호를 붙이는 것이 좋음.<br>
+<pre>
+if (expression) {
+  statements
+} else {
+  statements
+}
+</pre>
+else if를 활용할 수도 있음.<br>
+<pre>
+if (expression)
+  statement
+else if (expression)
+  statement
+else
+  statement
+</pre>
+
+**Dangling else 문제**<br>
+<pre>
+if (y!=0)
+  if (x!=0)
+    result = x/y;
+else
+  printf("Error");
+</pre>
+일반적으로 else문이 바깥 if문과 결합할 것이라고 생각하겠지만, 실제로는 안쪽에 있는 if문과 결합하게 됨.<br>
+C언어는 아직 else와 결합이 되지 않은 if문중 가장 가까운 것과 else를 결합시키기 때문임.<br>
+만약 바깥 if문과 결합시키고 싶으면 중괄호를 활용해야 함.<br>
+<pre>
+if (y!=0) {
+  if (x!=0)
+    result x/y;
+} else
+    printf("Error");
+</pre>
+
+**조건 연산자**<br>
+
+조건 연산자는 3개의 피연산자가 필요한 유일한 ternary 연산자이며, a ? b : c와 같이 사용함.<br>
+a, b, c에는 어떤 타입도 다 들어갈 수 있음.<br>
+조건 연산자는 대입 연산자보다는 우선순위가 높지만 그 외의 연산자보다는 우선순위가 낮음.<br>
+조건 연산자는 보통 가독성을 떨어뜨리기 때문에 잘 사용하지 않지만 다음과 같은 경우에는 유용함.<br>
+<pre>
+if (i>j)
+  return i;
+else
+  return j;
+
+/* short version */
+
+return i>j?i:j;
+</pre>
+조건 연산자의 피연산자 중에 정수와 실수가 같이 있는 경우에는 어떤 값이 나오든 실수로 처리됨. 결과값으로 정수가 나와도 실수로 처리됨.<br>
 
 **:pushpin: Boolean 타입**
+
+**Boolean Values in C89**<br>
+
+<pre>
+int flag;
+flag = 0;
+flag = 1;
+</pre>
+
+이와 같이 flag로 true인지 false인지 구분을 할 수 있지만 flag에 다른 숫자가 들어갈 수도 있다는 인상을 줌.<br>
+
+<pre>
+# define TRUE 1
+# define FALSE 0
+flag = FALSE;
+flag = TRUE;
+</pre>
+
+아까보다는 낫지만 flag가 boolean 타입이 아닌 int 타입이기 때문에 여전히 숫자가 들어갈 것 같은 느낌임.<br>
+
+<pre>
+# define BOOL int
+BOOL flag;
+</pre>
+
+flag에 BOOL 타입을 지정해주면 flag가 오직 boolean을 위해서만 쓰일 것 같은 인상을 줌.<br>
+하지만 여전히 0, 1외의 int 값이 배정될 수 있음.<br>
+
+**Boolean Values in C99**
+
+C99에서는 _Bool 타입이 있어서 _Bool flag;로 변수의 타입을 지정할 수 있음.<br>
+_Bool 타입은 0과 1만 배정받을 수 있으며, 0이 아닌 값이 들어오면 모두 1로 배정함.<br>
+<stdbool.h> 헤더를 추가하면 bool flag;로 변수 타입을 정할 수 있으며, 이는 _Bool flag;를 한 것과 똑같은 효과임.<br>
+또한 true와 false를 사용할 수 있게 되어 flag=false; 혹은 flag=true;로 지정할 수도 있음.<br>
 
 **:pushpin: 스위치문**
