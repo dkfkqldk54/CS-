@@ -26,7 +26,7 @@
 - 논리식
 - if문
 - Boolean 타입
-- 스위치문
+- switch문
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -511,4 +511,4 @@ _Bool 타입은 0과 1만 배정받을 수 있으며, 0이 아닌 값이 들어�
 <stdbool.h> 헤더를 추가하면 bool flag;로 변수 타입을 정할 수 있으며, 이는 _Bool flag;를 한 것과 똑같은 효과임.<br>
 또한 true와 false를 사용할 수 있게 되어 flag=false; 혹은 flag=true;로 지정할 수도 있음.<br>
 
-**:pushpin: 스위치문**
+**:pushpin: switch문**
