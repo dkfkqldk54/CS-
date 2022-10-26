@@ -580,8 +580,124 @@ for문의 기본 형태는 for (expr1; expr2; expr3) statement임.<br>
 for (i=10; i>0; i--)
   printf("T minus %d and counting \n", i);
 </pre>
+for문으로 while문을 구현하면 아래와 같음.<br>
+<pre>
+expr 1;
+while (expr 2) {
+  statement
+  expr 3;
+}
+</pre>
+for문 expr 2에 i--가 아니라 --i로 바꿔도 마찬가지의 결과를 도출하는데, 그 이유는 while로 옮긴 for문을 분석해보면 알 수 있음.<br>
+<pre>
+i = 10;
+while (i>0) {
+  printf("T minus %d and counting \n", i);
+  --i;
+}
+</pre>
+for문 안에 있는 expression 3가지를 항상 다 사용해야 하는 것은 아님.<br>
+expr 1은 바깥에서 선언될 수 있고, expr 3은 statement에서 대신 사용될 수 있음.<br>
+expr 2가 없으면 무한 루프에 빠지게 됨.<br>
+expr가 없더라도 두 개의 세미콜론은 반드시 필요하며, 이 경우 무한 while문과 같아짐.<br>
 
+**C99에서의 for문**<br>
+
+for문 expression에서도 declaration을 할 수 있음.<br>
+
+<pre>
+for (int i=0; i < n; i++) {
+  printf("%d", i);
+}
+printf("%d%, i);
+</pre>
+  
+이와 같이 for문 안에서 선언하면 루프 안에서만 접근이 되고, for문 밖에서는 접근이 안 됨.<br>
+따라서 바깥의 i는 선언도 안 된 상태이며, 만약 0으로 값이 배정되어 있으면 for문이 어떻게 돌아가든 0 그대로임.<br>
+만약 i값을 for문이 돌아간 뒤에도 유지하고 싶으면 declaration을 하지 않으면 됨.<br>
+선언은 1개만 가능한 건 아니고 int i=0, j=0;와 같이 여러 개도 가능함.<br>
+그러나 타입은 단 1가지만 있어야 함.<br>
+  
+**콤마 연산자**<br>
+  
+콤마가 있으면 for문의 expr1과 expr3에 두 개 이상의 expression을 넣을 수 있음.<br>
+expr1, expr2가 한 자리에 들어가면 expr1은 evaluated되고 버려지며, expr2는 evaluated되고 이 값이 해당 자리의 결과값이 됨.<br>
+예를 들어 i가 1이고 j가 5일 때, ++i, i+j가 들어오면 i는 2가 되고 i+j의 결과값인 7이 전체의 값으로 return됨.<br>
+콤마는 다른 연산자보다 우선순위가 낮음.<br>
+i=1, j=2, k=i+j는 ((i=1), (j=2)), (k=(i+j))임.<br>
+콤마가 있음으로써 여러 개의 문장을 하나의 문장처럼 사용할 수 있음.<br>
+콤마의 활용 예시는 다음과 같음.<br>
+<pre>
+sum = 0;
+for (i=1; i <= N; i++)
+  sum += i;
+  
+for (sum = 0, i = 1; i <= N; i++)
+  sum += i;
+</pre>
 
 **:pushpin: 탈출문**
+  
+**break문**<br>
+  
+break문은 loop문(while문, do문, for문)과 switch를 중단시킴.<br>
+break문은 while, do, for, switch문에 쓰일 때 break를 기준으로 가장 안쪽에 있는 것 하나만 중단시킬 수 있음.<br>
+즉, 2중 nested인 경우에는 1중만 벗길 수 있음.<br>
+  
+**continue문**<br>
+  
+continue는 while, do, for문과 같은 loop문에만 쓸 수 있고, switch문에는 쓸 수 없음.<br>
+continue는 break처럼 loop에서 빠져나오지는 않음.<br>
+대신 continue 이후의 문장을 skip하고 루프는 계속 돌게 만듬.<br>
+  
+**goto문**<br>
 
+goto문은 goto identifier;에 걸리면 identifier: statement가 있는 곳으로 빠져나오게 함.<br>
+<pre>
+for (d=2; d < n; d++)
+  if (k%d == 0)
+    goto done;
+  
+done:
+  if (d < n)
+    printf("%d is divisible by %d\n", n, d);
+  else
+    printf("%d is prime\n", n);
+</pre>
+
+goto문은 nested 루프를 한 번에 빠져나오기에도 좋음. 2중 3중이어도 빠져 나올 수 있음.<br>
+  
+**return**<br>
+  
+<pre>
+for (;;) {
+ switch () {
+  case 0: ...
+  case 1: ...
+  ...
+  case n: ...
+  default: ...
+ }
+}
+</pre>
+이런 경우에 braek를 하면 for문에 대한 탈출이 불가능한데, return을 쓰면 main 함수에 대해서 return이 이루어지므로 탈출이 가능함.<br>
+  
 **:pushpin: null문**
+  
+null statement는 세미콜론 하나로만 구성된 문장임.<br>
+null문이 유용하게 쓰일 때는 loop의 body를 비워서 돌릴 때임.<br>
+<pre>
+for (d=2; d < n; d++)
+  if (n%d == 0)
+    break;
+  
+for (d=2; d < n && n % d != 0; d++);
+</pre>
+  
+위 두 개의 for문은 같은 과정을 거쳐서 같은 결과를 도출함.<br>
+  
+**null문 적용사례**<br>
+  
+if문의 control expression 다음에 세미콜론을 찍으면 body는 조건에 관계없이 1번 실행됨.<br>
+while문 control expression 다음에 세미콜론을 찍으면 무한 루프가 돌거나, 무한 루프가 돌지 않을 경우에 body가 1번만 실행됨.<br>
+for문의 경우에도 control expression이 다 돌고, body가 1번만 실행됨.<br>
