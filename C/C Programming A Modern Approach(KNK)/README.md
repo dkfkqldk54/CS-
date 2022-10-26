@@ -27,6 +27,12 @@
 - if문
 - Boolean 타입
 - switch문
+
+<a href="#6">:pencil2: Chapter 6. Loops</a>
+- while문, do문
+- for문
+- 탈출문
+- null문
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -550,3 +556,32 @@ case 4: case 3: case 2: case 1:
 switch는 범위를 특정시키지는 못 함.<br>
 default는 반드시 마지막에만 있어야 하는 것이 아니며, 반드시 있어야 하는 것도 아님.<br>
 case에 맞는 값이 없으면 자연스럽게 switch문 다음 문장으로 넘어감.<br>
+
+<h2><a id="6">:pencil2: Chapter 6. Loops</a></h2>
+
+**:pushpin: while문, do문**
+
+**while문**<br>
+
+while문의 기본 형태는 while (expression) statement임.<br>
+statement에 2개 이상 넣고 싶은 경우에는 중괄호로 감싸줌.<br>
+문장이 1개만 있어도 중괄호로 감싸주어도 됨.<br>
+expression 안에 non-zero 값을 넣고 계속 루프를 돌릴 수도 있음.<br>
+
+**do문**<br>
+
+do문의 기본 형태는 do statement while (expression);임.<br>
+역시 마찬가지로 statement에 중괄호를 쓸 수 있음.<br>
+
+**:pushpin: for문**
+
+for문의 기본 형태는 for (expr1; expr2; expr3) statement임.<br>
+<pre>
+for (i=10; i>0; i--)
+  printf("T minus %d and counting \n", i);
+</pre>
+
+
+**:pushpin: 탈출문**
+
+**:pushpin: null문**
