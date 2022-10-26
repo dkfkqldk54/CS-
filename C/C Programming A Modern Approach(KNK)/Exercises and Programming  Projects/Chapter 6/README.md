@@ -46,10 +46,22 @@ while (i >= 1) {
 
 **:pushpin: 10번**
 
+continue 자리를 goto identifier:로 대체해주고, 반복문 statement의 맨 아래 혹은 맨 위에 identifier:를 써줌. 
+
 **:pushpin: 11번**
+
+20
 
 **:pushpin: 12번**
 
+for (d = 2; d * d < n; d++)
+  if (n % d == 0)
+    break;
+
 **:pushpin: 13번**
 
+for (n = 0 ; m > 0 ; n++, m = 2);
+
 **:pushpin: 14번**
+
+첫 줄의 ;를 제거한다.
