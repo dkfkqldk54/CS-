@@ -36,7 +36,14 @@
 ![제목 없음](https://user-images.githubusercontent.com/63328796/199647004-23ec74d0-d919-4a53-812b-1e106e8f3aa5.jpg)
 
 **:pushpin: 8번**
+
+2번
+
 **:pushpin: 9번**
+
+1. 3번<br>
+2. 5개<br>
+
 **:pushpin: 10번**
 
 **:pushpin: 11번**
