@@ -54,6 +54,15 @@
 2. 1<br>
 
 **:pushpin: 12번**
+
+프림<br>
+![프림 1](https://user-images.githubusercontent.com/63328796/199694122-7a045f59-9cec-4b0a-a934-a28e488eb3bb.jpg)
+![프림 2](https://user-images.githubusercontent.com/63328796/199694161-17304cb4-fa98-4863-9d12-8fbaba055ede.jpg)
+
+크루스칼<br>
+![크루스칼 1](https://user-images.githubusercontent.com/63328796/199694220-289be6b1-842a-4e55-a138-59580a5a5af1.jpg)
+![크루스칼 2](https://user-images.githubusercontent.com/63328796/199694254-170724be-409a-4cad-8790-86cc32926fc1.jpg)
+
 **:pushpin: 13번**
 **:pushpin: 14번**
 **:pushpin: 15번**
