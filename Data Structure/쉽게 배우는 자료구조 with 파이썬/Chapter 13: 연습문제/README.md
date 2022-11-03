@@ -46,6 +46,8 @@
 
 **:pushpin: 10번**
 
+최대 14, 최소 6<br>
+
 **:pushpin: 11번**
 **:pushpin: 12번**
 **:pushpin: 13번**
