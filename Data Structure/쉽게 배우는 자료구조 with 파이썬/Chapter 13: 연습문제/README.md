@@ -73,6 +73,7 @@
 
 (a) 4번<br>
 (b) ![das](https://user-images.githubusercontent.com/63328796/199927117-40802d77-56b2-4e5b-9af2-9b3229177165.jpg)<br>
+(c) cost가 변했다는 것은 cost가 더 낮은 간선이 발견되었다는 뜻이다. 이 간선을 heap에 추가하고 percolateUp 해주는 작업이 O(log V)의 시간이 걸리는 것이다.
 
 **:pushpin: 16번**
 
@@ -85,6 +86,9 @@
 ![다익스트라2](https://user-images.githubusercontent.com/63328796/199942011-656b1dcd-b617-4260-8aa5-96ec5d09d984.jpg)
 
 **:pushpin: 18번**
+
+![18](https://user-images.githubusercontent.com/63328796/199953216-b3ba4737-fbfa-41f3-91f4-3d0632c18d2f.jpg)
+
 **:pushpin: 19번**
 **:pushpin: 20번**
 
