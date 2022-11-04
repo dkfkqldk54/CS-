@@ -64,10 +64,20 @@
 ![크루스칼 2](https://user-images.githubusercontent.com/63328796/199694254-170724be-409a-4cad-8790-86cc32926fc1.jpg)
 
 **:pushpin: 13번**
+
 **:pushpin: 14번**
+
+10개
+
 **:pushpin: 15번**
 
+(a) 4번<br>
+(b) ![das](https://user-images.githubusercontent.com/63328796/199927117-40802d77-56b2-4e5b-9af2-9b3229177165.jpg)<br>
+
 **:pushpin: 16번**
+
+42
+
 **:pushpin: 17번**
 **:pushpin: 18번**
 **:pushpin: 19번**
