@@ -37,6 +37,7 @@
 <a href="#7">:pencil2: Chapter 7. Basic Types</a>
 - 정수 타입 
 - 실수 타입
+- 문자 타입
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -837,3 +838,45 @@ double에서는 e, f, g앞에 l을 붙임.<br>
 long double에서는 e, f, g앞에 L을 붙임.<br>
 scanf와 printf 모두 동일함.<br>
   
+**:pushpin: 문자 타입**
+  
+char의 값은 컴퓨터마다 다를 수 있음. 이는 컴퓨터마다 다른 character set을 갖기 때문임.<br>
+가장 유명한 character set은 ASCII임. ASCII는 7비트로 128개의 문자를 나타내는데, 46-57은 0-9를, 65-88은 A-Z를 나타냄.<br>
+이를 256개의 문자로 확장시킨 것이 Latin-1인데, 서유럽과 아프리카 언어를 추가한 버전임.<br>
+char는 ASCII 코드에 지정된 1개의 글자는 뭐든 들어갈 수 있음. 예를 들어 char='a'; char='0'; char=' '; 등임.<br>
+''로 감싸야 하고 ""는 안 됨.<br>
+
+**character의 연산**<br>
+  
+C는 character를 int로 취급함.<br>
+<pre>
+char ch;
+  
+ch = 65; /* ch is now 'A' */
+ch = ch + 1; /* ch is now 'B' */
+ch++; /* ch is now 'C' */
+</pre>
+character는 당연히 비교할 수도 있음.<br>
+소문자를 대문자로 바꾸는 코드는 아래와 같음.<br>
+<pre>
+if ('a' <= ch && ch <= 'z')
+  ch = ch -'a' + 'A';
+</pre>
+  
+**signed and unsigned characters**<br>
+  
+char는 int로 취급되기 때문에 역시 signed와 unsigned가 있음. signed는 -128-127, unsigned는 0-255임.<br>
+C standard는 char가 signed여야 하는지 unsinged여야 하는지 따로 규정해놓지 않음. 따라서 컴파일러마다 처리하는 방식이 다름.<br>
+사실 signed인지 unsigned인지는 중요하지 않지만 이를 따로 지정해주고 싶으면 signed char a; unsinged char a;와 같이 써줌.<br>
+C89에서는 character types, interger types, enumerated types를 묶어서 integral types로 생각함.<br>
+C99에서는 integral types란 말을 쓰지 않고, integer types를 확대해서 character types와 enumerated types를 묶어서 생각함.<br>
+  
+**Arithmetic Types in C89**<br>
+  
+Integral Types: char, signed integer types(char, short int, int, long int), unsigned integer types(char, short int, int, long int), enumerated types<br>
+Floating Types: float, double, long double<br>
+  
+**Arithmetic Types in C99**<br>
+  
+Integer Types: char, sigend integer types both standard(char, short int, int, long int, long long int) and extended, unsigned integer types both standard(char, short int, int, long int, long long int, _Bool) and extended, enumerated types<br>
+Floating Types: real floating types(float, double, long double), complex types(float_Complex, double_Complex, long double_Complex)<br>
