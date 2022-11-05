@@ -896,4 +896,42 @@ escape sequence 뿐만 아니라 trigraph sequence(삼중자)도 문자를 대�
 #, [, \, ], ^, {, |, } 등이 있는데 예를 들어 ??<는 {, ??>는 }임.<br>
 삼중자는 키보드 위에 표현하고 싶은 문자가 없는 경우 이를 대체하여 사용하기 위해 존재함.<br>
 
-**ch
+**Character Handling Functions**<br>
+
+library function을 쓰면 쉬운데 대표적으로 toupper가 있음.<br>
+ch = toupper(ch)를 해주면 ch가 소문자면 대문자로 바꿔주고, 아니면 ch가 그대로 나옴.<br>
+#include <ctype.h>를 추가해주면 사용이 가능함.<br>
+
+**scanf와 printf**<br>
+
+<pre>
+scanf("%c", &ch);
+printf("%c", ch);
+</pre>
+
+숫자와는 달리 %c를 받기 전에 들어오는 공백은 무시하지 않음. (공백)문자가 들어오는 경우 ch에 공백이 들어감.<br>
+white space를 무시하기 위해서는 scanf(" %c", &ch);로 써줘야함.<br>
+
+**getchar와 putchar**<br>
+
+putchar는 printf와 비슷하며 putchar(ch);로 씀.<br>
+getchar는 scanf와 비슷하며, 마찬가지로 white space를 무시하지 않음.<br>
+getchar는 char가 아니라 int를 리턴함. 따라서 int 타입으로 저장되어야 함.<br>
+putchar와 getchar는 printf와 scanf보다 빠른데, printf와 scanf는 int 말고도 여러 타입의 변수를 쓰고 있기 때문임.<br>
+getchar와 putchar는 반복문을 돌릴 때도 좋음. getchar 그 자체가 값을 리턴하기 때문임.<br>
+<pre>
+do {
+  scanf("%c", &ch);
+} while (ch != '\n');
+
+while (getchar() != '\n')
+</pre>
+do while 반복문과 while 반복문은 같은 결과를 도출함.<br>
+scanf와 getchar를 같이 쓸 때는 주의해야 함. scanf는 입력으로 받은 값의 나머지를 다 남기는 특성이 있기 때문임.<br>
+<pre>
+printf("Enter an integer: ");
+scanf("%d", &i);
+printf("Enter a command: ");
+command = getchar();
+</pre>
+숫자를 입력하고 엔터를 누르면, 엔터의 \n이 command에 담김.<br>
