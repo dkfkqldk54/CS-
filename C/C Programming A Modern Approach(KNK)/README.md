@@ -33,6 +33,9 @@
 - for문
 - 탈출문
 - null문
+
+<a href="#7">:pencil2: Chapter 7. Basic Types</a>
+- 정수 타입 
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -701,3 +704,74 @@ for (d=2; d < n && n % d != 0; d++);
 if문의 control expression 다음에 세미콜론을 찍으면 body는 조건에 관계없이 1번 실행됨.<br>
 while문 control expression 다음에 세미콜론을 찍으면 무한 루프가 돌거나, 무한 루프가 돌지 않을 경우에 body가 1번만 실행됨.<br>
 for문의 경우에도 control expression이 다 돌고, body가 1번만 실행됨.<br>
+
+<h2><a id="7">:pencil2: Chapter 7. Basic Types</a></h2>
+
+**:pushpin: 정수 타입** 
+
+정수 타입에는 signed와 unsigned가 있음.<br>
+signed integer는 가장 왼쪽의 비트가 0또는 1인데, 0은 양수 혹은 0, 1은 음수를 뜻함.<br>
+부호를 나타내는 sign이 비트에 포함되므로 16비트 signed integer는 2^15-1=32,767까지 표현할 수 있음.<br>
+반면 unsigned integer는 부호를 나타내는 비트가 없으므로 16비트는 2^16-1=65,525까지 표현할 수 있음.<br>
+unsigned integer는 시스템 프로그래밍, low 레벨, 기계 종속적 어플리케이션에 할당됨.<br>
+
+**int의 6가지 타입**<br>
+
+<pre>
+short int<br>
+unsigned short int<br>
+int<br>
+unsigned int<br>
+long int<br>
+unsigned long int<br>
+</pre>
+
+unsigned long이나 long unsigned나 의미는 똑같음. 즉 순서는 상관이 없음.<br>
+int를 생략하여 사용할 수도 있음.<br>
+16비트 컴퓨터에서는 short int와 int는 16비트, long int는 32비트임.<br>
+32비트 컴퓨터에서는 short int가 16비트, int와 long int가 32비트임.<br>
+64비트 컴퓨터에서는 short int가 16비트, int가 32비트, long int가 64비트임.<br>
+이는 C standard에서 정한 사항은 아니며 컴파일러마다 다를 수 있음.<br>
+타입별 range를 알기 위해서는 <limits.h> 헤더를 쓸 수 있음. <limits.h>에서는 macro로 각 타입별 min 값과 max의 값을 정의해놓음.<br>
+
+**C99에서의 int타입**<br>
+
+C99은 long long int와 unsigned long long int를 지원함.<br>
+long long은 64비트 이상의 환경에서만 사용이 가능함.<br>
+long long int는 -2^63에서 2^63-1까지, unsigned long long int는 0에서 2^64-1까지 표현할 수 있음.<br>
+C99에서 standard signed integer types는 unsigned short int, unsigned int, unsigned long int, unsigned long long int와 unsigned char, _Bool이 있음.<br>
+standard는 아니지만 extended integer types도 있음. extended integer types는 signed와 unsigned 둘 다 있으며, 128비트 정수까지 지원함.<br>
+
+**정수형 상수**<br>
+
+decimal, octal, hexadecimal 총 3가지가 있음.<br>
+octal은 0으로 시작하고, hexadecimal은 0x로 시작함.<br>
+hexadecimal에서 영어 철자는 소문자이든 대문이자이든 상관없음.<br>
+어떤 진법을 사용하든 간에 컴퓨터는 이를 2진수로 인식하고 처리하며, 따라서 섞어서 사용하는 것도 가능함.<br>
+octal과 hexadecimal은 low level 프로그램에 유용함.<br>
+10진법과 다르게 8진법, 16진법은 long 타입은 숫자 뒤에 L, unsigned는 U를 붙임.<br>
+L과 U를 둘 다 붙일 수도 있으며, 순서는 상관이 없음.<br>
+
+**C99에서의 정수형 상수**<br>
+
+C99에서 정수형 상수 long long int는 LL혹은 ll로 끝나야함. 이 때, 두 개의 철자간 대소문자는 동일해야함.<br>
+U혹은 u를 더하면 unsigned가 됨.<br>
+접미사를 붙이지 않는 10진수 정수형 상수는 int, long int, long long int 중 값을 표현할 수 있는 가장 작은 타입을 선택해야 함.<br>
+그러나 8진수, 16진수는 int, long int, long long int, unsinged를 붙이거나 안 붙이는 등 6가지 타입 모두 선택이 가능함.<br>
+접미사에 u가 붙으면 u가 붙은 3가지 유형만 가능해짐.<br>
+l로 끝나면 long int, long long int 둘 중 하나만 가능해짐.<br>
+6가지 유형 중 하나로 표현하기에 너무 큰 상수는 extended inter type으로 배정해줄 수 있음.<br>
+
+**integer 오버플로우**<br>
+
+계산을 하다보면 해당 타입이 표현할 수 있는 수보다 큰 수가 나올 수 있음.<br>
+signed인지 unsigned인지에 따라 결과가 다름.<br>
+signed인 경우 오버플로우 발생시 어떤 결과가 나올지 defined되어, 예상과 다른 결과가 나오거나 프로그램이 충돌할 수 있음.<br>
+unsigned의 경우 해당 타입이 가질 수 있는 비트 수 n을 이용하여 2^n으로 나눈 나머지를 결과값으로 나타냄. 즉 65,535+1의 결과는 0임.<br>
+
+**타입별 format string**
+
+unsigned된 10진수는 u, 8진수는 o, 16진수는 x를 사용함.<br>
+short 타입은 d, u, o, x앞에 h를 붙임.<br>
+long 타입은 d, u, o, x앞에 l를 붙임.<br>
+C99에서 long long 타입은 d, u, o, x 앞에 ll을 붙임.<br>
