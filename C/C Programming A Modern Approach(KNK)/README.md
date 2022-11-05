@@ -790,3 +790,50 @@ long double은 컴퓨터마다 length가 달라서 따로 기재하지 않겠음
 single precision(32 bits)와 double precision(64 bits) 두 가지가 있음.<br>
 실수는 sign, exponent, fraction 총 3가지 부분으로 구성되어 있음.<br>
 single precision은 exponent가 8비트, fraction이 23비트로 구성되어 있어 최대 3.40*10^38까지 표현할 수 있음.<br>
+single extended precision과 double extended precision도 있음.<br>
+각각에 몇 비트가 허용되는지 기준이 있는 건 아니지만, 전자는 최소 43비트, 후자는 최소 79비트로 정해놓음.<br>
+IEEE standard를 따르지 않는 컴퓨터에는 이 기준이 적용되지 않음.<br>
+일부 컴퓨터에서는 float이 double이랑 같은 범위, double이 long double이랑 같은 범위를 표현할 수도 있음.<br>
+<float.h> 헤더를 floating type들의 특성을 macro로 확인해볼 수 있음.<br>
+C99에서는 float, double, long double은 real floating tyeps라고 하고, float_complex, double_complex, long double_complex는 complex tyep라고 함.<br>
+  
+**실수의 표현은 어떻게 할까?**<br>
+  
+13은 1101로 표현할 수 있고, 0.75는 0.5 + 0.25이므로 0.11로 표현할 수 있음.<br>
+0.3은 0.01001100110011....(0011)의 무한 반복인데 이렇게 2진수로 표현하지 못 하는 소수가 발생함.<br>
+컴퓨터에서는 어쩔 수 없이 표현할 수 있는 가장 근사치의 값이 저장됨.<br>
+이 때, 고정 소수점 방법과 부동 소수점 방법을 사용할 수 있음.<br>
+  
+**고정 소수점**<br>
+  
+정수를 표현하는 비트 수와 소수를 표현하는 비트 수를 미리 정해놓고 해당 비트만큼만 사용해서 숫자를 표현함.<br>
+실수 표현에 4바이트(32비트)를 사용하고 그 중 부호 1비트, 정수 16빝, 소수 15비트를 사용해놓은 시스템에서는 263.3을 (0)0000000100000111.010011001100110으로 표현함.<br>
+정수를 표현하는 bit를 늘리면 큰 숫자를 표현할 수 있지만, 정밀한 숫자를 표현하기 힘듬.<br>
+소수를 표현하는 bit를 늘리면 정밀한 숫자르 표현할 수 있지만 큰 숫자를 표현하기 힘듬.<br>
+따라서 소수점을 고정하지 않고 유동적으로 활용할 수 있도록 부동 소수점이 필요한 것임.<br>
+  
+**부동 소수점**<br>
+  
+263.3은 100000111.010011001100110..인데 부호 1비트, 지수(exponent) 8비트, 가수(fraction) 23비트인 경우 이를 진수 부동 소수점 방식으로 변환하면 1.00000111010011001100110... * 2^8으로 표현할 수 있음.<br> 
+부호 비트(1비트): 0(양수) 
+지수 비트(8비트): 2^8의 8을 지수라고 하고 지수 비트 부분에 기록하는데 127+지수의 형식으로 기록함. 따라서 10000111(127+8=135)임.<br>
+가수 비트(23비트): 00000111010011001100110
+
+**floating constant**<br>
+  
+57.0 57. 57.0e0 57E0 5.7e1 5.7e+1 .57e2 570e-1 이 숫자들은 모두 다 같은 constant를 가르킴.<br>
+floating constant는 소수점 혹은 exponent를 반드시 포함해야 함.<br>
+exponent는 E나 e로 쓰고, +나 -는 e다음에 쓰며 붙일 때도 있고 안 붙일 때도 있음.<br>
+floating constant는 default로 double-precision number로 저장됨.<br>
+double은 float으로 전환이 가능한데 single precision이 필요할 때에는 끝에 f나 F를 붙이고, long double로 쓰고 싶으면 l이나 L을 붙임.<br>
+C99에서 16진수의 floating constant를 표현하고 싶으면 맨 앞에 0x나 0X를 붙임.<br>
+  
+**타입별 format string**<br>
+  
+single precision에서는 그대로 %e, %f, %g를 쓰면 됨.<br>
+double에서는 e, f, g앞에 l을 붙임.<br>
+이건 scanf에서만 붙이고, printf에서는 붙이지 않음.<br>
+그러나 C99에서는 printf에서도 붙여도 문제가 없음.<br>
+long double에서는 e, f, g앞에 L을 붙임.<br>
+scanf와 printf 모두 동일함.<br>
+  
