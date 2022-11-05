@@ -36,6 +36,7 @@
 
 <a href="#7">:pencil2: Chapter 7. Basic Types</a>
 - 정수 타입 
+- 실수 타입
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -775,3 +776,17 @@ unsigned된 10진수는 u, 8진수는 o, 16진수는 x를 사용함.<br>
 short 타입은 d, u, o, x앞에 h를 붙임.<br>
 long 타입은 d, u, o, x앞에 l를 붙임.<br>
 C99에서 long long 타입은 d, u, o, x 앞에 ll을 붙임.<br>
+
+**:pushpin: 실수 타입**
+  
+실수 타입은 다음 3가지로 나눠짐. float(single precision floating point), double(double precision floating point), long double(extended precision floating point).<br>
+C는 각각이 얼마나 정확한지 기준을 세우지는 않음. 따라서 컴퓨터마다 다른 방식으로 precision을 저장할 수도 있음.<br>
+IEEE standard에 따르면 float은 가장 작은 양수는 1.17549 * 10^(-38), 가장 큰 수는 3.40282 * 10^38까지 표현할 수 있으며, precision을 나타내는 digit은 6개임.<br>
+double은 가장 작은 양수는 2.22507 * 10^(-308), 가장 큰 수는 1.79769 * 10^(308)까지 표현할 수 있으며, precision을 나타내는 digit은 15개임.<br>
+long double은 컴퓨터마다 length가 달라서 따로 기재하지 않겠음.<br>
+  
+**IEEE Floating Point Standard**<br>
+  
+single precision(32 bits)와 double precision(64 bits) 두 가지가 있음.<br>
+실수는 sign, exponent, fraction 총 3가지 부분으로 구성되어 있음.<br>
+single precision은 exponent가 8비트, fraction이 23비트로 구성되어 있어 최대 3.40*10^38까지 표현할 수 있음.<br>
