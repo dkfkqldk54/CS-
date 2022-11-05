@@ -880,3 +880,20 @@ Floating Types: float, double, long double<br>
   
 Integer Types: char, sigend integer types both standard(char, short int, int, long int, long long int) and extended, unsigned integer types both standard(char, short int, int, long int, long long int, _Bool) and extended, enumerated types<br>
 Floating Types: real floating types(float, double, long double), complex types(float_Complex, double_Complex, long double_Complex)<br>
+  
+**Escape Sequences**<br>
+  
+escape sequences는 character escape와 numeric escape 두 가지가 있음.<br>
+character escapes는 Alert(\a), Backspace(\b), Form feed(\f), New line(\n), Carriage return(\r), Horizontal tab(\t), Vertical tab(\v), Backslash(\\), Question mark(\?), Single quote(\'), Double quout(\")이 있음.<br>
+character escapes는 편리하지만, ASCII characterset에 있는 모든 문자를 다 표현할 수는 없음.<br>
+반면에 numeric escapes를 쓰면 ASCII characterset에 있는 어떤 문자도 다 표현할 수가 있음.<br>
+nemeric escape는 octal이나 hexadecimal로 표현함.<br>
+octal은 \다음에 octal 숫자를 쓰고 3개의 digit까지 허용됨. unsigned character를 기준으로 377까지 되는 것임. octal이라고 해서 반드시 0으로 시작해야 하는 것은 아니고, 0은 있어도 되고 없어도 됨. \33과 \033은 같음.<br>
+hexadecimal은 \x 다음에 hexadecimal 숫자를 씀. 마찬가지로 unsigned character의 경우 \xFF가 최대임. x는 소문자여야 하고, hexadecimal 숫자에 있는 알파벳은 소문자여도 되고, 대문자여도 됨.<br>
+escape sequence를 character constant로 쓰고 싶을 때는 char a = '\33'과 같이 ''를 사용해줌.<br>
+escape sequence를 macro하게 사용하는 방법도 있음. #define ESC '\33'<br>
+escape sequence 뿐만 아니라 trigraph sequence(삼중자)도 문자를 대신할 수 있음.<br>
+#, [, \, ], ^, {, |, } 등이 있는데 예를 들어 ??<는 {, ??>는 }임.<br>
+삼중자는 키보드 위에 표현하고 싶은 문자가 없는 경우 이를 대체하여 사용하기 위해 존재함.<br>
+
+**ch
