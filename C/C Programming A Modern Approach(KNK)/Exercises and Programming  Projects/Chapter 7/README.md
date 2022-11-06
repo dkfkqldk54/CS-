@@ -32,7 +32,17 @@
 
 **:pushpin: 7번**
 
+(a) \10<br>
+(b) \12<br>
+(c) \15<br>
+(d) \11<br>
+
 **:pushpin: 8번**
+
+(a) \x08<br>
+(b) \x0a<br>
+(c) \x0d<br>
+(d) \x09<br>
 
 **:pushpin: 9번**
 
