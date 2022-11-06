@@ -778,6 +778,15 @@ unsigned된 10진수는 u, 8진수는 o, 16진수는 x를 사용함.<br>
 short 타입은 d, u, o, x앞에 h를 붙임.<br>
 long 타입은 d, u, o, x앞에 l를 붙임.<br>
 C99에서 long long 타입은 d, u, o, x 앞에 ll을 붙임.<br>
+o와 x가 unsigned int를 다루지만 signed int도 다룰 수 있음.<br>
+다만 signed int가 양수여야 함. 이는 signed int도 unsigned int처럼 다루기 때문에 맨 앞 비트가 0이면 문제가 없고, 1이면 값이 엄청 커지기 때문임.<br>
+그럼에도 불구하고 -를 출력하고 싶으면 직접적으로 할 수 있는 방법은 없고 if문을 추가해줘야 함.<br>
+<pre>
+  if (i<0)
+    printf("-%x", -i);
+  else
+    printf("%x", i);
+</pre>
 
 **:pushpin: 실수 타입**
   
@@ -828,7 +837,18 @@ floating constant는 소수점 혹은 exponent를 반드시 포함해야 함.<br
 exponent는 E나 e로 쓰고, +나 -는 e다음에 쓰며 붙일 때도 있고 안 붙일 때도 있음.<br>
 floating constant는 default로 double-precision number로 저장됨.<br>
 double은 float으로 전환이 가능한데 single precision이 필요할 때에는 끝에 f나 F를 붙이고, long double로 쓰고 싶으면 l이나 L을 붙임.<br>
+  
+**16진수에서의 floating constant**<br>
+  
 C99에서 16진수의 floating constant를 표현하고 싶으면 맨 앞에 0x나 0X를 붙임.<br>
+숫자 뒤에는 p나 P가 붙고, 그 뒤에는 exponent가 따라옴.<br>
+exponent는 sign을 포함하고 있으며, float으로 바꾸고 싶을 때는 f나 F, long double로 바꾸고 싶을 때는 l이나 L로 끝맺음.<br>
+0x1.Bp3은 1.6865 * 2^3 = 13.5임.<br>
+B는 1101을 나타내어 0.6875임.<br>
+hexadecimal floating constant는 높은 precision이 필요할 때 쓰임.<br>
+이는 hexadecimal이 2진수 체계에 들어맞기 때문임.<br>
+그에 반해 10진수는 2진수로 바꿀 때 rounding을 하면서 미세한 오차가 발생함.<br>
+<float.h>에 있는 양극의 macro 값들을 정의할 때도 유리한데, 10진수보다는 16진수로 표현하는 것이 더 편하기 때문임.<br> 
   
 **타입별 format string**<br>
   
