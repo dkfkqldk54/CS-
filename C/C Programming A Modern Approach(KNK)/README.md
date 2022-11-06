@@ -38,6 +38,7 @@
 - 정수 타입 
 - 실수 타입
 - 문자 타입
+- 형변환
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -937,3 +938,33 @@ printf("Enter a command: ");
 command = getchar();
 </pre>
 숫자를 입력하고 엔터를 누르면, 엔터의 \n이 command에 담김.<br>
+
+**:pushpin: 형 변환**
+
+컴퓨터는 bit가 다르거나 type이 다르면 산술 연산을 할 수가 없음.<br>
+그러나 C는 bit가 다르거나 tyep이 달라도 계산을 할 수가 있는데, 이는 피연산자의 type을 변환시켜서 하드웨어가 expression을 evaluate 할 수 있게 되기 때문임.<br>
+예를 들어 16비트 short와 32비트 int를 계산할 때는 short를 32비트로 바꾸고, int와 float을 계산할 때는 int를 float으로 바꿈.<br>
+프로그래머 개입없이 컴파일러가 알아서 하는 변환을 implicit conversions라고 함.<br>
+반면 프로그래머가 개입하는 변환을 explicit conversions라고 하는데, 이는 cast operatore(변환 연산자)를 통해 이루어짐.<br>
+
+**The Usual Arithmetic Conversions**<br>
+
+The Usual Arithmetic Conversions는 대부분의 2항 연산자에게 적용이 됨.<br>
+두 개의 피연산자를 모두 수용할 수 있는 type 중 가장 narrow한 것으로 형을 전환함.<br>
+narrow하다는 것은 적은 수의 byte를 수용할 수 있다는 의미임.<br>
+The Usual Arithmetic Conversions는 2가지 종류가 있음.<br>
+
+1. 피연산자 둘 중 하나가 실수<br>
+
+ㅇㅇ
+
+**promotion**<br>
+
+promotion은 narrow한 타입을 다른 피연산자의 타입으로 바꾸는 것을 의미함.<br>
+integral promotion(정수 승격)은 원래 타입이 가질 수 있는 값을 초과할 수 있는 경우에 unsigned int로 바꾸는 것을 의미함.<br>
+char와 short int는 거의 대부분 unsigned int로 바뀜.
+<pre>
+char a, b;
+printf("%d %d", sizeof(a), sizeof(b)); /* 1 1 */
+printf("%d", sizeof(a+b)); /* 4 */
+</pre>
