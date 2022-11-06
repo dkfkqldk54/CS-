@@ -39,6 +39,8 @@
 - 실수 타입
 - 문자 타입
 - 형변환
+- typedef
+- sizeof
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -1093,3 +1095,53 @@ i = j * j;
 j * j가 1,000,000이고 i가 long이니까 overflow가 일어나지 않을 것 같지만 일어남.<br>
 j*j가 return될 때 int형이기 때문에 1,000,000을 받아낼 수가 없기 때문임.<br>
 따라서 j앞에 (long)을 붙여주면 overflow가 일어나지 않음.<br>
+
+**:pushpin: typedef**
+
+<pre>
+#define BOOL int
+typedef int Bool;
+</pre>
+
+BOOL을 정의하기 위해 macro definition을 썼지만, typedef를 쓸 수도 있음.<br>
+typedef에서는 정의하고자 하는 타입을 맨 마지막에 써줌.<br>
+맨 앞에만 대문자로 써주는 것이 관례임.<br>
+typedef를 하고 나면 컴파일러가 타입 목록에 해당 타입을 등록시켜줘서 변수 선언, casting 등 다른 타입과 똑같이 써줄 수 있음.<br>
+<pre>
+Bool flag;
+</pre>
+물론 int랑 같은 기능을 가짐.<br>
+
+**typedef의 장점**<br>
+
+<pre>
+typedef float Dollars;
+Dollars cash_in, cash_out;
+
+float cash_in, cash_out;
+</pre>
+전자가 후자보다 이해하기가 쉬움.<br>
+수정하기도 쉬움.<br>
+float을 double로 바꾸고 싶을 때 typedef double Dollars;를 쓰면 Dollars로 정의한 다른 변수들도 모두 double로 바뀌게 됨<br>
+
+**typedef의 약점**<br>
+
+프로그램 이식성에 있어서 typedef는 중요한데, 타입이 가지고 있는 범위가 컴퓨터마다 다르기 때문임.<br>
+0-50,000의 범위를 가지고 있는 q가 있다고 가정하자.
+<pre>
+typedef int Quantity;
+Quantity q;
+</pre>
+int로 다 담을 수 없는 컴퓨터로 옮겼을 때는 typedef long Quantity;로 type을 바꿔주면 됨.<br>
+그러나 scanf나 printf에 있는 %d를 %ld로 바꿀 수는 없어서 모든 문제가 다 해결되는 것은 아님.<br>
+C 라이브러리에서는 implementation마다 다른 type의 이름을 정하기 위해 typedef를 사용함.<br>
+이런 경우 이름의 끝이 _t로 끝남.<br>
+<pre>
+typedef long int ptrdiff_t;
+typedef unsigned long int size_t;
+typedef int wchar_t;
+</pre>
+C99에서는 <stdint.h> 헤더를 쓰면 bit에 따른 int를 정의한 typedef가 있음.<br>
+int32_t는 32비트에서의 signed integer를 표현하기 위함임.<br>
+
+**:pushpin: sizeof**
