@@ -71,4 +71,12 @@ double
 
 **:pushpin: 14번**
 
+float이 int가 가질 수 있는 최댓값보다 크게 될 경우 fraction part를 구할 수 없게 된다.
+
 **:pushpin: 15번**
+
+<pre>
+typedef char Int8;
+typedef char Int16;
+typedef char Int32;
+</pre>
