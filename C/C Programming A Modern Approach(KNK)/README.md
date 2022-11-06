@@ -885,6 +885,7 @@ Floating Types: real floating types(float, double, long double), complex types(f
   
 escape sequences는 character escape와 numeric escape 두 가지가 있음.<br>
 character escapes는 Alert(\a), Backspace(\b), Form feed(\f), New line(\n), Carriage return(\r), Horizontal tab(\t), Vertical tab(\v), Backslash(\\), Question mark(\?), Single quote(\'), Double quout(\")이 있음.<br>
+원래 새로운 줄로 바꾸기 위해서는 CR+LF가 필요하지만, C는 UNIX 계통의 언어이므로 LF(\n)만으로 줄바꿈을 표현함.<br>
 character escapes는 편리하지만, ASCII characterset에 있는 모든 문자를 다 표현할 수는 없음.<br>
 반면에 numeric escapes를 쓰면 ASCII characterset에 있는 어떤 문자도 다 표현할 수가 있음.<br>
 nemeric escape는 octal이나 hexadecimal로 표현함.<br>
@@ -894,6 +895,7 @@ escape sequence를 character constant로 쓰고 싶을 때는 char a = '\33'과 
 escape sequence를 macro하게 사용하는 방법도 있음. #define ESC '\33'<br>
 escape sequence 뿐만 아니라 trigraph sequence(삼중자)도 문자를 대신할 수 있음.<br>
 #, [, \, ], ^, {, |, } 등이 있는데 예를 들어 ??<는 {, ??>는 }임.<br>
+컴파일러는 ??가 string에 들어가면 trigraph의 입력이 시작된다고 받아들이는데, trigraph가 시작되는 것이 아니라고 알리기 위해 두 번째 ? 대신 \?를 넣는다.<br>
 삼중자는 키보드 위에 표현하고 싶은 문자가 없는 경우 이를 대체하여 사용하기 위해 존재함.<br>
 
 **Character Handling Functions**<br>
