@@ -961,7 +961,8 @@ int랑 float 계통이 같이 쓰이면 float 계통으로 통일하고, float �
 
 2. 피연산자에 실수가 없는 경우<br>
 int -> unsigned int -> long int -> unsigned long int<br>
-character나
+character나 short int가 없다고 가정했을 때 저기 중 높은 타입으로 통일됨.<br>
+long int와 unsinged int가 32비트로 동일한 길이를 가질 때, 둘이 같이 있는 경우 unsigned long int로 바꿈.<br>
 
 **Promotion**<br>
 
