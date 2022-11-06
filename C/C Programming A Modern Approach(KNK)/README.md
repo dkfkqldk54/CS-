@@ -856,8 +856,10 @@ hexadecimal floating constant는 높은 precision이 필요할 때 쓰임.<br>
   
 single precision에서는 그대로 %e, %f, %g를 쓰면 됨.<br>
 double에서는 e, f, g앞에 l을 붙임.<br>
-이건 scanf에서만 붙이고, printf에서는 붙이지 않음.<br>
-그러나 C99에서는 printf에서도 붙여도 문제가 없음.<br>
+이건 scanf에서만 붙이고, printf에서는 붙이지 않아도 됨.<br>
+이는 scanf는 변수를 저장할 때 타입을 명시한 대로 저장해주지만, printf는 float을 자동으로 double로 바꾸기 때문임.<br>
+따라서 printf는 float과 double을 구분할 수 없음.<br>
+C99에서는 printf에서도 l을 붙일 것을 권고하지만 실제로 작동되는 방식은 C89과 동일함.<br>
 long double에서는 e, f, g앞에 L을 붙임.<br>
 scanf와 printf 모두 동일함.<br>
   
@@ -1144,4 +1146,34 @@ typedef int wchar_t;
 C99에서는 <stdint.h> 헤더를 쓰면 bit에 따른 int를 정의한 typedef가 있음.<br>
 int32_t는 32비트에서의 signed integer를 표현하기 위함임.<br>
 
+**typedef와 macro의 차이**<br>
+
+typedef가 macro보다 더 강력함.<br>
+<pre>
+#define PTR_TO_INT int *
+typedef int * ptr_to_int;
+
+PTR_TO_INT a,b;
+ptr_to_int c,d;
+</pre>
+macro에서는 a만 포인터가 되고 b는 int가 됨. 반면에 typedef에서는 c와 d 둘다 포인터로 지정됨.<br>
+또한, typedef는 변수랑 똑같이 scope rule이 적용되어서 함수 내부에서 지정해준 내용은 함수 외부에서는 모르지만, macro는 어디서나 적용이 됨.<br>
+
 **:pushpin: sizeof**
+
+sizeof는 특정 tyep이 저장되는데 바이트 수를 얼마나 차지하는지 확인하기 위한 연산자임.<br>
+sizeof(type-name)이 general form이며, 괄호 안에는 constants, variables, expression이 들어갈 수 있음.<br>
+결과값으로 unsigned int가 나오고, 해당 타입에 필요한 바이트 수가 return됨. 예를 들어 sizeof(char)는 1임.<br>
+sizeof i처럼 괄호를 써주지 않아도 되지만, sizeof는 unary 연산자이기 때문에 sizeof i+j는 sizeof (i) + j랑 똑같음. 따라서 괄호를 써주는 것이 더 명확함.<br>
+sizeof의 값은 size_t라는 implementation defined type임.<br>
+sizeof를 printf하기 전에 unsigned int에서 unsigned long int로 cast하고 출력하는 것이 더 안전함.(C89 기준 unsigned long int는 가장 큰 int 타입이기 때문임.)<br>
+<pre>
+printf("size of int i: %lu\n", (unsigned long) sizeof (int));
+</pre>
+C99에서 size_t에 unsigned long보다 큰 값이 배정될 수 있음.<br>
+따라서 printf에서 따로 cast해주지 않아도 size_t의 값을 바로 보여줄 수 있는 방법이 있는데, conversion에 z를 넣는 것임.<br>
+<pre>
+printf("size of int: %zu\n", sizeof(int));
+</pre>
+sizeof의 값이 뭐가 될 것인지는 컴파일러가 판단하는데, C99에서는 한 가지 판단하기 어려운 케이스가 있음.<br>
+가변 길이 배열의 사이즈임. 가변 길이 배열은 프로그램이 실행되면서 안에 있는 원소의 수가 계속 바뀌기 때문임.<br>
