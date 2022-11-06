@@ -891,6 +891,7 @@ if ('a' <= ch && ch <= 'z')
 **signed and unsigned characters**<br>
   
 char는 int로 취급되기 때문에 역시 signed와 unsigned가 있음. signed는 -128-127, unsigned는 0-255임.<br>
+char에서 overflow가 발생할 경우 처음부터 다시 돌아서 더해줌. 예를 들어 char = 128;을 배정해놓으면 실제로 저장되는 값은 -128이고, char = 130;은 -126임.<br>
 C standard는 char가 signed여야 하는지 unsinged여야 하는지 따로 규정해놓지 않음. 따라서 컴파일러마다 처리하는 방식이 다름.<br>
 사실 signed인지 unsigned인지는 중요하지 않지만 이를 따로 지정해주고 싶으면 signed char a; unsinged char a;와 같이 써줌.<br>
 C89에서는 character types, interger types, enumerated types를 묶어서 integral types로 생각함.<br>
