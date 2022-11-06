@@ -46,11 +46,19 @@
 
 **:pushpin: 9번**
 
+int
+
 **:pushpin: 10번**
+
+unsigned int
 
 **:pushpin: 11번**
 
+double
+
 **:pushpin: 12번**
+
+double
 
 **:pushpin: 13번**
 
