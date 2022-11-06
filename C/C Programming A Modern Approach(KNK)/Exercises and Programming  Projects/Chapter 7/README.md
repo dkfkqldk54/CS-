@@ -62,6 +62,13 @@ double
 
 **:pushpin: 13번**
 
+(a) -3, int<br>
+(b) 7, long<br>
+(c) 6.5f, float<br>
+(d) 3.75, double<br>
+(e) -1.0, double<br>
+(f) 6, int<br>
+
 **:pushpin: 14번**
 
 **:pushpin: 15번**
