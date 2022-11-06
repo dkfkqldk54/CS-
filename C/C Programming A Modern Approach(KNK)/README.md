@@ -956,9 +956,14 @@ The Usual Arithmetic Conversions는 2가지 종류가 있음.<br>
 
 1. 피연산자 둘 중 하나가 실수<br>
 
-ㅇㅇ
+float -> double -> long double<br>
+int랑 float 계통이 같이 쓰이면 float 계통으로 통일하고, float 계통끼리 같이 있어도 더 높은 형으로 변환됨.<br>
 
-**promotion**<br>
+2. 피연산자에 실수가 없는 경우<br>
+int -> unsigned int -> long int -> unsigned long int<br>
+character나
+
+**Promotion**<br>
 
 promotion은 narrow한 타입을 다른 피연산자의 타입으로 바꾸는 것을 의미함.<br>
 integral promotion(정수 승격)은 원래 타입이 가질 수 있는 값을 초과할 수 있는 경우에 unsigned int로 바꾸는 것을 의미함.<br>
