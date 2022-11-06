@@ -964,6 +964,13 @@ int -> unsigned int -> long int -> unsigned long int<br>
 character나 short int가 없다고 가정했을 때 저기 중 높은 타입으로 통일됨.<br>
 long int와 unsinged int가 32비트로 동일한 길이를 가질 때, 둘이 같이 있는 경우 unsigned long int로 바꿈.<br>
 
+**signed와 unsigned가 같이 쓰일 때**<br>
+
+signed와 unsigned가 같이 쓰일 때는 signed가 unsigned로 바뀜.<br>
+int인 -10과 unsigned인 10을 비교할 때 i<u는 1이 아님.<br>
+i를 unsigned로 바꿀 때 unsigned int가 가질 수 있는 최댓값인 4,294,967,295에 더해 4,294,967,285가 되기 때문에 0이 됨.<br>
+따라서 unsigned는 가능하면 적게 사용하는 것이 좋음.<br>
+
 **Promotion**<br>
 
 promotion은 narrow한 타입을 다른 피연산자의 타입으로 바꾸는 것을 의미함.<br>
@@ -974,3 +981,95 @@ char a, b;
 printf("%d %d", sizeof(a), sizeof(b)); /* 1 1 */
 printf("%d", sizeof(a+b)); /* 4 */
 </pre>
+
+**Conversion During Assignment**<br>
+
+대입을 할 때는 Teh Usual Arithmetic conversion이 적용이 안 됨.<br>
+대입 시에는 오른쪽 피연산자의 타입을 왼쪽 피연산자의 타입에 맞춤.<br>
+<pre>
+char c;
+int i;
+float f;
+double d;
+
+i = c; /* c is converted to int */
+f = i; /* i is converted to float */
+d = f; /* f is converted to double */
+</pre>
+
+int 타입에 float 값을 집어넣으면 값이 잘림.<br>
+
+<pre>
+int i;
+
+i = 842.97; /* i is now 842 */
+i = -842.97; /* i is now -842 */
+</pre>
+
+narrow한 타입에 소화할 수 없는 범위의 값을 집어넣으면 오류가 생김.<br>
+
+<pre>
+c = 10000;
+i = 1.0e20;
+f = 1.0e100;
+</pre>
+
+f = 3.141592f;와 같이 부동소수점 상수에 f를 추가하는 것이 좋음.
+f를 추가하지 않으면 우변이 double로 처리되어 경고 메시지가 출력될 수 있음.<br>
+
+**Implicit Conversions in C99**<br>
+
+C99은 _Bool, long long types, extended integer types, complex types가 있어서 C89이랑 약간 다름.<br>
+integer conversion rank는 아래와 같음.<br>
+1. long long int, unsigned long long int<br>
+2. long int, unsigned long int<br>
+3. int, unsigned int<br>
+4. short int, unsigned short int<br>
+5. char, signed char, unsigned char<br>
+6. _Bool<br>
+
+extended integer types와 enumerated types는 제외한 순위임.<br>
+C89이 integral promotions였다면, C99은 integer promotion임.<br>
+integer promotions는 int와 unsigned int보다 순위가 낮은 타입은 int 혹은 unsigned int로 변환됨.<br>
+
+**The Usual Arithmetic Conversion in C99**<br>
+
+1. 둘 중 하나가 실수인 경우<br>
+
+둘 중 하나라도 complex type인 경우를 제외하고서는 C89과 동일함.<br>
+
+2. 둘 중 하나라도 실수인 경우<br>
+
+integer promotion을 실행하고, 두 피연산자가 type이 같아지면 끝.<br>
+그렇지 않으면 다음 rule를 적용함.<br>
+
+- 둘 다 signed이거나 unsigned인 경우. 낮은 rank를 가진 피연산자를 높은 rank를 가진 피연산자의 타입으로 바꿔줌.<br>
+- unsigned의 rank가 signed보다 크거나 같으면 signed를 unsigned의 tyep에 맞춰줌.<br>
+- signed가 unsigned의 값을 다 표현할 수 있으면 unsigned를 signed의 tyep에 맞춰줌.<br>
+- 위 셋 모두가 다 아니면 signed 피연산자의 타입에 부합하는 unsigned type으로 둘 다 바꿔줌.<br>
+
+**casting**<br>
+
+implicit conversions를 넘어서 tyep conversion을 하고 싶을 때는 cast를 사용함.<br>
+기본 포맷은 (type-name) expression임. 
+<pre>
+float f, frac_part;
+frac_part = f - (int) f;
+</pre>
+f의 소수점 이하 자리를 뽑아내기 위한 코드임.<br>
+(int) f는 int로 바뀌었다가 0를 수행하기 전 float이 되어서 계산됨.<br>
+<pre>
+float quotient;
+int dividend, divisor;
+
+quotient = dividend / divisor;
+</pre>
+이러면 제대로 된 fraction을 얻을 수가 없으므로 dividend 혹은 divisor 앞에 (float)을 붙여야 함. 둘 중 하나만 붙여도 나머지는 자동으로 형 변환이 됨.<br>
+<pre>
+long i;
+int j = 1000;
+i = j * j;
+</pre>
+j * j가 1,000,000이고 i가 long이니까 overflow가 일어나지 않을 것 같지만 일어남.<br>
+j*j가 return될 때 int형이기 때문에 1,000,000을 받아낼 수가 없기 때문임.<br>
+따라서 j앞에 (long)을 붙여주면 overflow가 일어나지 않음.<br>
