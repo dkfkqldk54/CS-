@@ -21,7 +21,14 @@
 
 **:pushpin: 5번**
 
+(b)
+
 **:pushpin: 6번**
+
+(a) char<br>
+(b) short<br>
+(c) short<br>
+(d) 16비트에서는 long, 32비트 이상에서는 int<br>
 
 **:pushpin: 7번**
 
