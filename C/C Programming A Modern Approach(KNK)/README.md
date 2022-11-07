@@ -1063,7 +1063,7 @@ integer promotions는 int와 unsigned int보다 순위가 낮은 타입은 int �
 
 둘 중 하나라도 complex type인 경우를 제외하고서는 C89과 동일함.<br>
 
-2. 둘 중 하나라도 실수인 경우<br>
+2. 실수가 없는 경우<br>
 
 integer promotion을 실행하고, 두 피연산자가 type이 같아지면 끝.<br>
 그렇지 않으면 다음 rule를 적용함.<br>
