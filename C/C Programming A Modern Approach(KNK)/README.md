@@ -718,7 +718,7 @@ for문의 경우에도 control expression이 다 돌고, body가 1번만 실행�
 signed integer는 가장 왼쪽의 비트가 0또는 1인데, 0은 양수 혹은 0, 1은 음수를 뜻함.<br>
 부호를 나타내는 sign이 비트에 포함되므로 16비트 signed integer는 2^15-1=32,767까지 표현할 수 있음.<br>
 반면 unsigned integer는 부호를 나타내는 비트가 없으므로 16비트는 2^16-1=65,525까지 표현할 수 있음.<br>
-unsigned integer는 시스템 프로그래밍, low 레벨, 기계 종속적 어플리케이션에 할당됨.<br>
+unsigned integer는 시스템 프로그래밍, low 레벨, 기계 종속적 어플리케이션에서  쓰임.<br>
 
 **int의 6가지 타입**<br>
 
