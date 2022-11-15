@@ -763,16 +763,16 @@ L과 U를 둘 다 붙일 수도 있으며, 순서는 상관이 없음.<br>
 C99에서 정수형 상수 long long int는 LL혹은 ll로 끝나야함. 이 때, 두 개의 철자간 대소문자는 동일해야함.<br>
 U혹은 u를 더하면 unsigned가 됨.<br>
 접미사를 붙이지 않는 10진수 정수형 상수는 int, long int, long long int 중 값을 표현할 수 있는 가장 작은 타입을 선택해야 함.<br>
-그러나 8진수, 16진수는 int, long int, long long int, unsinged를 붙이거나 안 붙이는 등 6가지 타입 모두 선택이 가능함.<br>
+그러나 8진수, 16진수는 int, long int, long long int에 unsinged를 붙이거나 안 붙이는 등 6가지 타입 모두 선택이 가능함.<br>
 접미사에 u가 붙으면 u가 붙은 3가지 유형만 가능해짐.<br>
 l로 끝나면 long int, long long int 둘 중 하나만 가능해짐.<br>
-6가지 유형 중 하나로 표현하기에 너무 큰 상수는 extended inter type으로 배정해줄 수 있음.<br>
+6가지 유형 중 하나로 표현하기에 너무 큰 상수는 extended inter type을 배정해줄 수 있음.<br>
 
 **integer 오버플로우**<br>
 
 계산을 하다보면 해당 타입이 표현할 수 있는 수보다 큰 수가 나올 수 있음.<br>
 signed인지 unsigned인지에 따라 결과가 다름.<br>
-signed인 경우 오버플로우 발생시 어떤 결과가 나올지 defined되어, 예상과 다른 결과가 나오거나 프로그램이 충돌할 수 있음.<br>
+signed인 경우 오버플로우 발생시 어떤 결과가 나올지 undefined되어, 예상과 다른 결과가 나오거나 프로그램이 충돌할 수 있음.<br>
 unsigned의 경우 해당 타입이 가질 수 있는 비트 수 n을 이용하여 2^n으로 나눈 나머지를 결과값으로 나타냄. 즉 65,535+1의 결과는 0임.<br>
 
 **타입별 format string**
@@ -795,7 +795,7 @@ o와 x가 unsigned int를 다루지만 signed int도 다룰 수 있음.<br>
   
 실수 타입은 다음 3가지로 나눠짐. float(single precision floating point), double(double precision floating point), long double(extended precision floating point).<br>
 C는 각각이 얼마나 정확한지 기준을 세우지는 않음. 따라서 컴퓨터마다 다른 방식으로 precision을 저장할 수도 있음.<br>
-IEEE standard에 따르면 float은 가장 작은 양수는 1.17549 * 10^(-38), 가장 큰 수는 3.40282 * 10^38까지 표현할 수 있으며, precision을 나타내는 digit은 6개임.<br>
+IEEE standard에 따르면 float에서 가장 작은 양수는 1.17549 * 10^(-38), 가장 큰 수는 3.40282 * 10^38까지 표현할 수 있으며, precision을 나타내는 digit은 6개임.<br>
 double은 가장 작은 양수는 2.22507 * 10^(-308), 가장 큰 수는 1.79769 * 10^(308)까지 표현할 수 있으며, precision을 나타내는 digit은 15개임.<br>
 long double은 컴퓨터마다 length가 달라서 따로 기재하지 않겠음.<br>
   
@@ -808,7 +808,7 @@ single extended precision과 double extended precision도 있음.<br>
 각각에 몇 비트가 허용되는지 기준이 있는 건 아니지만, 전자는 최소 43비트, 후자는 최소 79비트로 정해놓음.<br>
 IEEE standard를 따르지 않는 컴퓨터에는 이 기준이 적용되지 않음.<br>
 일부 컴퓨터에서는 float이 double이랑 같은 범위, double이 long double이랑 같은 범위를 표현할 수도 있음.<br>
-<float.h> 헤더를 floating type들의 특성을 macro로 확인해볼 수 있음.<br>
+<float.h> 헤더로 floating type들의 특성을 macro로 확인해볼 수 있음.<br>
 C99에서는 float, double, long double은 real floating tyeps라고 하고, float_complex, double_complex, long double_complex는 complex tyep라고 함.<br>
   
 **실수의 표현은 어떻게 할까?**<br>
