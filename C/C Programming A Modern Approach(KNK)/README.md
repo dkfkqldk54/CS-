@@ -744,7 +744,8 @@ int를 생략하여 사용할 수도 있음.<br>
 C99은 long long int와 unsigned long long int를 지원함.<br>
 long long은 64비트 이상의 환경에서만 사용이 가능함.<br>
 long long int는 -2^63에서 2^63-1까지, unsigned long long int는 0에서 2^64-1까지 표현할 수 있음.<br>
-C99에서 standard signed integer types는 unsigned short int, unsigned int, unsigned long int, unsigned long long int와 unsigned char, _Bool이 있음.<br>
+C99에서 standard unsigned integer types는 unsigned short int, unsigned int, unsigned long int, unsigned long long int와 unsigned char, _Bool이 있음.<br>
+C99에서 standard signed integer types는 short int, int, long int, long long int, signed char가 있음.
 standard는 아니지만 extended integer types도 있음. extended integer types는 signed와 unsigned 둘 다 있으며, 128비트 정수까지 지원함.<br>
 
 **정수형 상수**<br>
