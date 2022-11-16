@@ -1010,7 +1010,7 @@ printf("%d", sizeof(a+b)); /* 4 */
 
 **Conversion During Assignment**<br>
 
-대입을 할 때는 Teh Usual Arithmetic conversion이 적용이 안 됨.<br>
+대입을 할 때는 The Usual Arithmetic conversion이 적용이 안 됨.<br>
 대입 시에는 오른쪽 피연산자의 타입을 왼쪽 피연산자의 타입에 맞춤.<br>
 <pre>
 char c;
