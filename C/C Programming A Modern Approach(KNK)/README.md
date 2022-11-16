@@ -41,6 +41,11 @@
 - 형변환
 - typedef
 - sizeof
+
+<a href="#8">:pencil2: Chapter 8. Arrays</a>
+- 1차원 배열
+- 다차원 배열
+- 가변 길이 배열
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -1179,3 +1184,62 @@ printf("size of int: %zu\n", sizeof(int));
 </pre>
 sizeof의 값이 뭐가 될 것인지는 컴파일러가 판단하는데, C99에서는 한 가지 판단하기 어려운 케이스가 있음.<br>
 가변 길이 배열의 사이즈임. 가변 길이 배열은 프로그램이 실행되면서 안에 있는 원소의 수가 계속 바뀌기 때문임.<br>
+
+<h2><a id="8">:pencil2: Chapter 8. Arrays</a></h2>
+
+**:pushpin: 1차원 배열**
+
+array는 같은 type을 가진 데이터들의 집합임.<br>
+int a[10];과 같이 array는 array에 들어갈 원소의 type과 수로 정의함.<br>
+타입은 어떤 타입이 들어와도 상관이 없고, 배열의 길이는 integer constant면 다 괜찮음.<br>
+배열의 길이는 중간에 수정될 수 있는데, 이는 macro definition을 통해 이루어짐.<br>
+<pre>
+# define N 10
+...
+int a[10]
+</pre>
+
+**Array Subscripting**<br>
+
+배열의 원소에 접근하는 것을 subscripting 혹은 indexing 이라고 함.<br>
+원소의 index는 항상 0부터 시작함.<br>
+배열의 어떤 원소가 T타입이라면, 나머지 원소도 T타입으로 다루어짐.<br>
+C에서는 subscript하는 범위에 제한을 두지 않아서, 범위가 넘어가버릴 수도 있음.<br>
+범위가 넘어가면 예상치 못한 오류가 나타날 수 있음.<br>
+
+<pre>
+int a[10], i;
+
+for (i=1; i<=10; i++)
+  a[i] = 0;
+</pre>
+일부 컴파일러에서 i=10일 때 배열에 10을 위한 공간이 없어서 0으로 다시 돌아가서 무한 루프에 걸릴 수 있음.<br>
+
+<pre>
+a[i+j*10] = 0;
+</pre>
+위와 같이 integer expression으로 subscript 할 수도 있음.<br>
+
+<pre>
+i = 0;
+while (i<N)
+  a[i] = b[i++];
+  
+for (i=0; i<N; i++)
+  a[i] = b[i];
+</pre>
+위와 같이 적으면 i의 연산 순서에 대한 오류 때문에 undefined behavior가 발생할 수 있음.<br>
+따라서 아래와 같이 subscript에 있는 increment를 따로 빼서 적어주는 것이 좋음.<br>
+
+**Array Initialization**<br>
+
+array initializer는 constant expression이 들어있는 리스트임.<br>
+<pre>
+int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+int a[10] = {1, 2, 3, 4, 5, 6} /* 실제 결과는 {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} */
+</pre>
+
+
+**:pushpin: 다차원 배열**
+
+**:pushpin: 가변 길이 배열**
