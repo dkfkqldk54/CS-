@@ -1163,7 +1163,7 @@ macro에서는 a만 포인터가 되고 b는 int가 됨. 반면에 typedef에서
 
 **:pushpin: sizeof**
 
-sizeof는 특정 tyep이 저장되는데 바이트 수를 얼마나 차지하는지 확인하기 위한 연산자임.<br>
+sizeof는 특정 type이 저장되는데 바이트 수를 얼마나 차지하는지 확인하기 위한 연산자임.<br>
 sizeof(type-name)이 general form이며, 괄호 안에는 constants, variables, expression이 들어갈 수 있음.<br>
 결과값으로 unsigned int가 나오고, 해당 타입에 필요한 바이트 수가 return됨. 예를 들어 sizeof(char)는 1임.<br>
 sizeof i처럼 괄호를 써주지 않아도 되지만, sizeof는 unary 연산자이기 때문에 sizeof i+j는 sizeof (i) + j랑 똑같음. 따라서 괄호를 써주는 것이 더 명확함.<br>
