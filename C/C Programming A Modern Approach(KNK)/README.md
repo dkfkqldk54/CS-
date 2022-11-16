@@ -1318,4 +1318,13 @@ double ident[2][2] = { [0][0] = 1.0, [1][1] = 1.0 };
 
 **random 함수**<br>
 
+<time.h>의 time 함수는 1970년 1월 1월 0시 0분 0초 이후 경과된 초를 반환함.<br>
+<stdlib.h>의 srand 함수는 C의 random number generator를 초기화시키는데 seed값에 따라서 초기화시킴.<br>
+<stdlib.h>의 rand 함수는 random number generator에 따라서 random number를 생성함.<br>
+
+<pre>
+srand( (unsigend) time(NULL) );
+rand();
+</pre>
+
 **:pushpin: 가변 길이 배열**
