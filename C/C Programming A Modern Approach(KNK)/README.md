@@ -971,7 +971,7 @@ command = getchar();
 그러나 C는 bit가 다르거나 tyep이 달라도 계산을 할 수가 있는데, 이는 피연산자의 type을 변환시켜서 하드웨어가 expression을 evaluate 할 수 있게 되기 때문임.<br>
 예를 들어 16비트 short와 32비트 int를 계산할 때는 short를 32비트로 바꾸고, int와 float을 계산할 때는 int를 float으로 바꿈.<br>
 프로그래머 개입없이 컴파일러가 알아서 하는 변환을 implicit conversions라고 함.<br>
-반면 프로그래머가 개입하는 변환을 explicit conversions라고 하는데, 이는 cast operatore(변환 연산자)를 통해 이루어짐.<br>
+반면 프로그래머가 개입하는 변환을 explicit conversions라고 하는데, 이는 cast operator(변환 연산자)를 통해 이루어짐.<br>
 
 **The Usual Arithmetic Conversions**<br>
 
