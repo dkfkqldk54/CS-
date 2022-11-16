@@ -1249,6 +1249,45 @@ array의 길이를 빼먹으면 initializer의 길이로 결정이 됨.<br>
 int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 </pre>
 
+**Designated Initializers**<br>
+
+<pre>
+int a[15] = {0, 0, 29, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 48};
+int a[15] = { [2] = 29, [9] = 7, [14] = 48 };
+</pre>
+designator를 이용하면 위를 아래와 같이 표현할 수 있음.<br>
+순서는 상관이 없으며 지정한 수 외에는 다 0으로 채워짐.<br>
+괄호 안에 있는 숫자는 n개의 원소를 가지고 있는 array의 경우 0부터 n-1까지만 허용이 됨.<br>
+array의 길이가 정의되지 않은 경우에는 designator 중 가장 큰 수를 기준으로 array의 길이가 결정이 됨.<br>
+
+<pre>
+int a[10] = {5, 1, 9, [4] = 3, 7, 2, [8] = 6};
+</pre>
+0번, 1번, 2번이 5, 1, 9이고 4번이 3, 5번이 7, 6번이 2, 8번이 6이란 뜻임.<br>
+<pre>
+int a[] = {4, 9, 1, 8, [0] = 5, 7};
+int a[] = {5, 7, 1, 8}; 
+</pre>
+둘 다 같은 표현이며, 배열의 길이는 4임.<br>
+
+**Using the sizeof Operator with Arrays**<br>
+
+a[10]일 때 sizeof(a)는 40임.<br>
+이는 각 원소를 4바이트로 가정하기 때문임.<br>
+sizeof(a) / sizeof(a[0])는 array의 길이를 나타냄.<br>
+<pre>
+for (i=0; i < sizeof(a)/sizeof(a[0]); i++)
+  a[i] = 0;
+</pre>
+이 때 sizeof(a) / sizeof(a[0])는 unsigned int이고 i는 int라서 오류가 발생할 수 있음.<br>
+이를 위해 casting을 활용해서 (int) (sizeof(a) / sizeof(a[0]))와 같이 써줄 수 있음.<br>
+macro를 활용할 수도 있음. 
+<pre>
+#define SIZE ((int) (sizeof(a) / sizeof(a[0]))
+for (i=0l i < SIZE; i++)
+  a[i] = 0;
+</pre>
+
 
 **:pushpin: 다차원 배열**
 
