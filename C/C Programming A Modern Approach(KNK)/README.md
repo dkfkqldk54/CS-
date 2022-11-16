@@ -1070,8 +1070,8 @@ integer promotion을 실행하고, 두 피연산자가 type이 같아지면 끝.
 그렇지 않으면 다음 rule를 적용함.<br>
 
 - 둘 다 signed이거나 unsigned인 경우. 낮은 rank를 가진 피연산자를 높은 rank를 가진 피연산자의 타입으로 바꿔줌.<br>
-- unsigned의 rank가 signed보다 크거나 같으면 signed를 unsigned의 tyep에 맞춰줌.<br>
-- signed가 unsigned의 값을 다 표현할 수 있으면 unsigned를 signed의 tyep에 맞춰줌.<br>
+- unsigned의 rank가 signed보다 크거나 같으면 signed를 unsigned의 type에 맞춰줌.<br>
+- signed가 unsigned의 값을 다 표현할 수 있으면 unsigned를 signed의 type에 맞춰줌.<br>
 - 위 셋 모두가 다 아니면 signed 피연산자의 타입에 부합하는 unsigned type으로 둘 다 바꿔줌.<br>
 
 **casting**<br>
