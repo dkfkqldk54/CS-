@@ -1222,10 +1222,10 @@ a[i+j*10] = 0;
 
 <pre>
 i = 0;
-while (i<N)
+while (i < N)
   a[i] = b[i++];
   
-for (i=0; i<N; i++)
+for (i=0; i < N; i++)
   a[i] = b[i];
 </pre>
 위와 같이 적으면 i의 연산 순서에 대한 오류 때문에 undefined behavior가 발생할 수 있음.<br>
@@ -1237,6 +1237,16 @@ array initializer는 constant expression이 들어있는 리스트임.<br>
 <pre>
 int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 int a[10] = {1, 2, 3, 4, 5, 6} /* 실제 결과는 {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} */
+</pre>
+
+이 특성을 이용하여 0으로 가득찬 array를 손쉽게 만들 수 있음.<br>
+<pre>
+int a[10] = {0);
+</pre>
+initializer를 비우는 건 안 됨. 그래서 0을 넣어준 것임.<br>
+array의 길이를 빼먹으면 initializer의 길이로 결정이 됨.<br>
+<pre>
+int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 </pre>
 
 
