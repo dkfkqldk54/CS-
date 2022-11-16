@@ -1328,3 +1328,27 @@ rand();
 </pre>
 
 **:pushpin: 가변 길이 배열**
+
+<pre>
+scanf("%d", &n);
+int a[n];
+</pre>
+VLA(Variable length array, 가변 길이 배열)은 컴파일 할 때가 아니라 프로그램 실행 중에 계산이 됨.<br>
+괄호 안에 3*i + 5와 같이 expression이 들어가도 됨.<br>
+multidimensional로 사용해도 됨.<br>
+VLA은 static storage duration(정적 기억 존속 시간)은 아님.<br>
+정적 기억 존속 시간은 프로그램이 실행되는 전체 시간 동안 존속되는 것을 의미함.<br>
+또한 initializer를 가질 수 없음.<br>
+
+**배열의 복사**<br>
+
+<pre>
+a = b; /* a and b are arrays */
+
+for (i = 0; i < N; i++)
+  a[i] = b[i];
+</pre>
+위는 illegal 아래는 legal임.<br>
+for문보다 더 빨리 보사하는 방법은 <sting.h>의 memcpy(memory copy)를 사용하는 것임.<br>
+memcpy는 byte를 옮기는 low level function임.<br>
+memcpy(a, b, sizeof(a));<br>
