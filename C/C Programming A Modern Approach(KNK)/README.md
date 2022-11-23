@@ -46,6 +46,14 @@
 - 1차원 배열
 - 다차원 배열
 - 가변 길이 배열
+
+<a href="#9">:pencil2: Chapter 9. Functions</a>
+- 함수의 정의 및 호출
+- 함수 선언
+- Arguments
+- return문
+- 프로그램 종료
+- 재귀
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -1352,3 +1360,90 @@ for (i = 0; i < N; i++)
 for문보다 더 빨리 복사하는 방법은 <sting.h>의 memcpy(memory copy)를 사용하는 것임.<br>
 memcpy는 byte를 옮기는 low level function임.<br>
 memcpy(a, b, sizeof(a));<br>
+
+<h2><a id="9">:pencil2: Chapter 9. Functions</a></h2>
+
+**:pushpin: 함수의 정의 및 호출**
+
+<pre>
+double average(double a, double b)
+{
+  return (a+b)/2;
+}
+</pre>
+average 앞에 있는 double은 return 타입임.<br>
+double a, double b와 같이 parameter 앞에는 각각 따로 따로 타입을 명시해줘야 함.<br>
+함수의 호출은 average(x,y)와 같이 씀.<br>
+함수 호출 시 x/2, y/3등 argument expression이 들어갈 수 있음.<br>
+함수는 main 함수 이전에 정의되어야 함.<br>
+
+<pre>
+void print_count(int n)
+{
+  printf("T minus %d and counting\n", n);
+}
+</pre>
+void는 값을 return하지 않을 때 쓰는 return 타입임.<br>
+body에 return이 없어도 되며, 쓰일 때는 print_count(i)와 같이 단독으로 쓰임.<br>
+
+<pre>
+void print_pun(void)
+{
+  printf("To C, or not to C: that is the question.\n");
+}
+</pre>
+parameter 자리에 void가 들어가는 것은 argument를 받지 않겠다는 뜻임.<br>
+출력할 때는 print_pun();과 같이 씀.<br>
+argument가 없어도 ()는 적어줘야 함.<br>
+
+**general form**<br>
+
+<pre>
+return-type function-name (parameters)
+{
+  declarations
+  statements
+}
+</pre>
+array를 return 할 수는 없음.<br>
+return type을 명시하지 않았을 경우 C89에서는 int로 설정하고, C99에서는 illegal임.<br>
+return type을 윗줄에 적어도 되는데, 이는 unsigned long int와 같이 return type이 길 경우 유용함.<br>
+함수 내에서 선언된 변수는 함수 외부에서 수정하거나 접근하지 못 함.<br>
+C89에서 declaration은 무조건 statement 앞에 나와야 했으나, C99에서는 해당 변수를 쓰기 전까지만 선언되면 상관없음.<br>
+
+<pre>
+void print_pun(void)
+{
+}
+</pre>
+함수를 아예 비워둘 수도 있는데, 나중에 채워넣을 함수를 표시하기 위해서 유용함.<br>
+
+**function calls**<br>
+
+()가 생략되면 function call이 되지 않음. 함수 이름만 쓰면 포인터를 가리키는 것에 불과하여 아무 효과가 없지만 legal이긴 함.<br>
+호출된 후에 값이 어딘가에 저장되지 않을 경우, 그 값은 버려지게 되는데 이를 명시적으로 표시하기 위해서 void로 casting 해줌.<br>
+
+<pre>
+(void) printf("Hi");
+</pre>
+
+**:pushpin: 함수 선언**
+
+
+
+**:pushpin: Arguments**
+
+
+
+**:pushpin: return문**
+
+
+
+**:pushpin: 프로그램 종료**
+
+
+
+**:pushpin: 재귀**
+
+
+
