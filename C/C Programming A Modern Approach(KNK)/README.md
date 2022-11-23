@@ -1619,7 +1619,24 @@ main 함수에서도 return이 없으면 오류가 생기는데 return 0;을 해
 
 **:pushpin: 프로그램 종료**
 
+main 함수에도 return 타입이 있어야 함.<br>
+main의 return 타입은 int임.<br>
+이전 C 프로그램에서는 main 앞에 있는 int를 관행적으로 생략할 수 있었지만, C99에서는 그럴 수 없음.<br>
+괄호 안에 있는 void를 생략하는 것은 legal임.<br>
+main은 status code를 return함.<br>
+이상이 없는 경우 0, 이상이 있는 경우 0이 아닌 숫자를 return함.<br>
 
+**the exit function**<br>
+
+exit은 main에서 return과 비슷함.<br>
+<pre>
+exit(0); /* moral termination return 0; */
+exit(EXIT_SUCCESS); /* 위와 같은 값 */
+exit(EXIT_FAILURE); /* abnormal termination return 1; */
+</pre>
+
+EXIT_SUCCESS와 EXIT_FAILURE는 <stdlib.h>에 marcro로 정의되어 있음.<br>
+return은 main에 있을 때만 프로그램을 종료시키고, exit은 어느 함수에서 부르든 프로그램을 종료시킴.<br>
 
 **:pushpin: 재귀**
 
