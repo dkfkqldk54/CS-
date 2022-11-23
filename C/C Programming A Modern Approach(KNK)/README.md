@@ -1429,7 +1429,38 @@ void print_pun(void)
 
 **:pushpin: 함수 선언**
 
+함수 정의가 반드시 main 함수에 선행되어야 하는 것은 아님.<br>
+뒤에 써줄 수도 있지만 main 함수에서 해당 함수를 먼저 마주칠 경우에는 아무 정보가 없는 상태임.<br>
+implicit declaration으로 return 타입이 int일 것이라고 가정하고, argument는 default argument promotion으로 처리함.<br>
+나중에 함수의 return type이 double인 것이 밝혀지는 등 implicit declaration이 정해놓은 것과 다르다는 것이 확인되면 오류가 남.<br>
 
+**function declaration**<br>
+
+함수를 main 함수에 선행해서 적어주는 것이 베스트이겠지만 불가능한 경우 function declaration을 활용함.<br>
+
+<pre>
+double average(double a, double b); /* declaration */
+
+int main(void)
+{
+  double x, y;
+  
+  printf("Enter three numbers: ");
+  scanf("%lf%lf", &x, &y);
+  printf("Average of %g and %g: %g\n", x, y, average(x,y));
+  
+  return 0;
+}
+
+double average(double a, double b) /* definition */
+{
+  return (a+b) / 2;
+}
+</pre>
+function declaration은 괄호 안이 비어있는 올드 버전(C89 이전)이 있는데, 이를 제외한 것이 function prototypes임.<br>
+function prototype은 argument가 몇 개 들어가야 하는지, 타입이 뭔지, return 타입이 뭔지 다 명시해줌.<br>
+argument의 이름은 명시해주지 않고, 타입만 명시해줘도 됨.<br>
+argument의 이름을 정하지 않음으로써 macro와 이름이 겹쳐서 생기는 불상사 등을 방지할 수 있음.<br>
 
 **:pushpin: Arguments**
 
