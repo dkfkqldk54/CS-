@@ -1603,7 +1603,19 @@ total = sum_array( (int []) {2*i, i+j, j*k}, 3);
 
 **:pushpin: return문**
 
+<pre>
+return expression;
+</pre>
 
+return n>=0?n:0;와 같이 사용해주는 것도 가능함.<br>
+expression 타입이 return 타입과 일치하지 않는 경우, expression 타입이 return 타입으로 implicitly converted됨.<br>
+return 타입이 void인 것은 return;와 같음.<br>
+void 타입에서 return을 반드시 쓸 필요는 없음.<br>
+body의 마지막 문장 수행 후에 자동으로 return이 됨.<br>
+non-void는 C89에서는 return이 실패했는데 혹은 return 할 것이 없는데도 return 값을 활용하려고 하면 undefined behavior가 발생함.<br>
+몇몇 컴파일러는 control reaches end of non void function이라는 오류 메시지를 전송함.<br>
+C99에서는 non-void 함수에서 return expression이 없으면 아예 illegal임.<br>
+main 함수에서도 return이 없으면 오류가 생기는데 return 0;을 해주면 해결이 되고, C99에서는 자동으로 0을 return해줘서 오류가 생기지 않음.<br>
 
 **:pushpin: 프로그램 종료**
 
