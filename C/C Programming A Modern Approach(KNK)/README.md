@@ -1464,7 +1464,142 @@ argument의 이름을 정하지 않음으로써 macro와 이름이 겹쳐서 생
 
 **:pushpin: Arguments**
 
+parameter는 함수를 정의할 때 쓰이는 말이고, argument는 함수를 호출할 때 쓰이는 말임.<br>
+parameter는 argumen의 값을 복사해서 쓰므로, argument에 영향을 미칠 수 없음.<br>
 
+**argument conversions**<br>
+
+argument의 type이 parameter의 type과 일치하지 않아도 함수 호출이 가능함.<br>
+prototype이 function call 이전에 있는 경우에는 parameter 타입에 맞게 argument 타입이 converted됨.<br>
+function call 이전에 prototype이 없으면 default argument promotions가 진행됨.<br>
+float은 double로, char와 short는 int로 바뀜.(C99의 integral promotions와 동일함.)<br>
+
+<pre>
+#include <stdio.h>
+
+int main(void)
+{
+  double x = 3.0;
+  printf("Square: %d\n", square(x));
+  return 0;
+}
+
+int square(int x)
+{
+  return n*n;
+}
+</pre>
+x는 double이므로 double이 double로 바뀌는 것은 아무 의미가 없고, int가 아니므로 함수 호출에 실패함.<br>
+따라서 casting으로 타입을 바꿔줄 필요가 있음.<br>
+<pre>
+printf("Square: %d\n", square((int) x);
+</pre>
+그러나 C99에서는 애당초 declaration이나 definition이 없으면 에러가 뜸.<br>
+
+**array arguments**<br>
+
+array는 타입만 맞으면 수는 비워놔도 됨.<br>
+<pre>
+int f(int a[])
+{
+  ...
+}
+</pre>
+
+array의 size를 활용하기 위해서 sizeof(a)/sizeof(a[0])을 활용하고 싶겠지만 적용하기 어려울 때도 있음.<br>
+<pre>
+int sum_array(int a[], int n)
+{
+  int i, sum = 0;
+  for (i=0; i < n; i++)
+    sum += a[i]
+   return sum;
+}
+</pre>
+위와 같이 사이즈를 parameter에 넣어서 사용하는 것이 좋음.<br>
+그러나 size가 array의 size에 맞는지, 안 맞는지는 확인할 수 없음.<br>
+array의 size보다 작은 경우에는 큰 문제가 되지 않지만, 넘치는 경우에는 에러가 발생할 수 있음.<br>
+
+<pre>
+void store_zeros(int a[], int n)
+{
+  int i;
+  for (i=0; i < n; i++)
+    a[i] = 0;
+}
+store_zeros(b, 100);
+</pre>
+다른 변수와 다르게 배열은 함수로 인해 값이 변할 수 있음.<br>
+<pre>
+int sum_two_dimensional_array(int a[][len], int n)
+{
+  ...
+}
+</pre>
+
+1차원 배열과 다르게 다차원 배열의 경우 첫 번째 dimension 칸만 비워놓을 수 있음.<br>
+C는 배열을 row-major order로 저장해놓는데, row를 몇 칸 단위로 끊을 지 미리 정해놔야 원소를 저장하는 포인터를 지정해줄 수 가 있어서 그런 것임.<br>
+
+**(C99) Variable Length Array Parameters**
+
+int sum_array(int a[], int n)은 n이 array의 사이즈일 것이란 보장이 없음.<br>
+int sum_array(int n, int a[n])은 n이 array의 사이즈임.<br>
+int sum_array(int a[n], int n)은 틀린 문장으로 배열의 크기를 선언하기 전에 n이 먼저 정의되어야 함.<br>
+
+<pre>
+int sum_array(int n, int a[n]);
+int sum_array(int n, int a[*]);
+int sum_array(int, int [*]);
+int sum_array(int n, int a[]);
+int sum_array(int, int a[]);
+</pre>
+위 prototype들은 다 똑같은 의미임.<br>
+*는 앞의 숫자가 size라는 것을 명시적으로 보여주기 위해서 써주는 것이지 별 의미는 없음.<br>
+숫자에 이름을 붙이지 않으면 들어온 순서대로 size에 들어감.<br>
+
+<pre>
+int concatenate(int m, int n, int a[m], int b[n], int[m+n]);
+</pre>
+size에 expression이 들어가도 됨.<br>
+VLA를 사용하면 다차원 배열의 크기도 미리 정하지 않아도 됨.<br>
+
+<pre>
+int sum(int n, int m, int a[n][m]);
+int sum(int n, int m, int a[*][*]);
+int sum(int n, int m, int a[][m]);
+int sum(int n, int m, int a[][*]);
+</pre>
+모두 같은 표현임.<br>
+
+**static**<br>
+
+<pre>
+int sum_array(int a[static 3], int n);
+</pre>
+static 3은 array의 길이가 최소 3은 된다는 것을 의미함.<br>
+multidimensional array의 경우 static은 첫 번째 괄호에만 쓸 수 있음.<br>
+
+**compound literals**<br>
+
+<pre>
+int b[] = {3, 0, 3, 4, 1};
+total = sum_array(b, 5);
+
+total = sum_array( (int []) {3, 0, 3, 4, 1}, 5);
+</pre>
+
+위와 아래는 같은 표현이고, 아래는 compound literal을 활용한 것임.<br>
+compound literal을 쓰면 array b를 따로 생성해주지 않아도 됨.<br>
+array의 길이를 명시해주지 않으면 들어있는 원소의 개수에 맞춰 생성됨.<br>
+initializer를 다 채워주지 않으면 나머지는 0으로 생성됨.<br>
+(int [5]) {3, 2}은 (int [5]) {3, 2, 0, 0, 0}과 같음.<br>
+
+<pre>
+total = sum_array( (int []) {2*i, i+j, j*k}, 3);
+</pre>
+
+원소에는 expression이 들어가도 됨.<br>
+배열을 고정시켜 놓고 싶으면 (const int[])와 같이 const를 붙여서 사용함.<br>
 
 **:pushpin: return문**
 
