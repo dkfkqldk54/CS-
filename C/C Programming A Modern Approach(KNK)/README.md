@@ -1236,7 +1236,7 @@ for (i=0; i < N; i++)
 array initializer는 constant expression이 들어있는 리스트임.<br>
 <pre>
 int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-int a[10] = {1, 2, 3, 4, 5, 6} /* 실제 결과는 {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} */
+int a[10] = {1, 2, 3, 4, 5, 6} /* 실제 결과는 {1, 2, 3, 4, 5, 6, 0, 0, 0, 0} */
 </pre>
 
 이 특성을 이용하여 0으로 가득찬 array를 손쉽게 만들 수 있음.<br>
@@ -1284,7 +1284,7 @@ for (i=0; i < sizeof(a)/sizeof(a[0]); i++)
 macro를 활용할 수도 있음. 
 <pre>
 #define SIZE ((int) (sizeof(a) / sizeof(a[0]))
-for (i=0l i < SIZE; i++)
+for (i=0; i < SIZE; i++)
   a[i] = 0;
 </pre>
 
@@ -1318,7 +1318,7 @@ double ident[2][2] = { [0][0] = 1.0, [1][1] = 1.0 };
 
 **random 함수**<br>
 
-<time.h>의 time 함수는 1970년 1월 1월 0시 0분 0초 이후 경과된 초를 반환함.<br>
+<time.h>의 time 함수는 1970년 1월 0시 0분 0초 이후 경과된 초를 반환함.<br>
 <stdlib.h>의 srand 함수는 C의 random number generator를 초기화시키는데 seed값에 따라서 초기화시킴.<br>
 <stdlib.h>의 rand 함수는 random number generator에 따라서 random number를 생성함.<br>
 
@@ -1349,6 +1349,6 @@ for (i = 0; i < N; i++)
   a[i] = b[i];
 </pre>
 위는 illegal 아래는 legal임.<br>
-for문보다 더 빨리 보사하는 방법은 <sting.h>의 memcpy(memory copy)를 사용하는 것임.<br>
+for문보다 더 빨리 복사하는 방법은 <sting.h>의 memcpy(memory copy)를 사용하는 것임.<br>
 memcpy는 byte를 옮기는 low level function임.<br>
 memcpy(a, b, sizeof(a));<br>
