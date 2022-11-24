@@ -146,6 +146,8 @@ int main(void) {
 
 **:pushpin: 7번**
 
+모두 legal.
+
 **:pushpin: 8번**
 
 **:pushpin: 9번**
