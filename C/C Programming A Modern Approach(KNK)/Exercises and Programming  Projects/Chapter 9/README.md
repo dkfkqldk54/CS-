@@ -88,6 +88,7 @@ int main(void) {
 
 **:pushpin: 5번**
 
+<pre>
 #include <stdio.h>
 
 int num_digits(int n)
@@ -112,6 +113,7 @@ int main(void) {
 
   return 0;
 }
+</pre>
 
 **:pushpin: 6번**
 
