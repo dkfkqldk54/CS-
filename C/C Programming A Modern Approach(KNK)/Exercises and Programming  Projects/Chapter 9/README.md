@@ -26,6 +26,13 @@ int check(int x, int y, int n)
 
 **:pushpin: 3번**
 
+<pre>
+int gcd(int m, int n)
+{
+  return n==0 ? m : gcd(n, m%n);
+}
+</pre>
+
 **:pushpin: 4번**
 
 **:pushpin: 5번**
