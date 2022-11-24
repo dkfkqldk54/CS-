@@ -17,6 +17,11 @@ int main(void) {
 
 **:pushpin: 2번**
 
+int check(int x, int y, int n)
+{
+  return (0<=x && x<=(n-1) && 0<=y && y <= (n-1)) ? 1 : 0;
+}
+
 **:pushpin: 3번**
 
 **:pushpin: 4번**
