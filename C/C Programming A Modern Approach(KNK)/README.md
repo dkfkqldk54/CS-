@@ -1465,7 +1465,7 @@ argument의 이름을 정하지 않음으로써 macro와 이름이 겹쳐서 생
 **:pushpin: Arguments**
 
 parameter는 함수를 정의할 때 쓰이는 말이고, argument는 함수를 호출할 때 쓰이는 말임.<br>
-parameter는 argumen의 값을 복사해서 쓰므로, argument에 영향을 미칠 수 없음.<br>
+parameter는 argument의 값을 복사해서 쓰므로, argument에 영향을 미칠 수 없음.<br>
 
 **argument conversions**<br>
 
