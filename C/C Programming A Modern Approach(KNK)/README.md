@@ -54,6 +54,11 @@
 - return문
 - 프로그램 종료
 - 재귀
+
+<a href="#10">:pencil2: Chapter 10. Program Organization</a>
+- 지역 변수
+- 전역 변수
+- block과 scope
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -1713,3 +1718,45 @@ int split(int a[], int low, int high)
 }
 </pre>
 
+<h2><a id="10">:pencil2: Chapter 10. Program Organization</a></h2>
+
+**:pushpin: 지역 변수**
+
+함수 내에서 선언된 변수를 지역 변수라고 함.<br>
+지역 변수는 automatic storage duration임. 따라서 enclosing function이 호출될 때 공간이 할당되었다가 return될 때 반납됨.<br>
+지역 변수는 block scope임. 지역 변수를 선언한 줄부터 enclosing function이 끝나는 지점까지가 적용 범위임. C99에서는 변수의 선언이 뒷줄에서 이루어질 수 있으므로 scope의 범위가 줄어들 수 있음.<br>
+block scope는 자신만의 값을 가지지 않아서 다른 함수 내에서 동일한 이름의 지역 변수를 써도 됨.<br>
+parameter도 똑같이 automatic storage duration, block scope임.<br>
+
+**static storage duration**<br>
+
+지역 변수 앞에 static을 붙이면 static storage duration이 됨.<br>
+enclosing function이 return되어도 자원이 해제되지 않고 프로그램이 실행되는 동안은 자신만의 값을 유지함.<br>
+따라서 다시 동일한 함수를 호출할 경우 해당 자원을 활용할 수 있음.<br>
+그러나 static 지역 변수도 block scope이므로 다른 함수에서는 invisible함.<br>
+이를 이용해 다른 함수가 접근하지 못 하도록 데이터를 숨기는 데 쓸 수도 있음.<br>
+
+**:pushpin: 전역 변수**
+
+external variable(외적 변수) 혹은 global variable(전역 변수)라고 함.<br>
+static storage duration임.<br>
+선언된 지점부터 파일이 끝나는 지점까지 적용되는 file scope임.<br>
+
+**:pushpin: block과 scope**
+
+compound statement는 {statements} 뿐만 아니라 {declarations statements}로도 쓰일 수 있음.<br>
+<pre>
+/* block 예시 */
+if (i>j) {
+  int temp = i;
+  i = j;
+  j = temp;
+}
+</pre>
+block에서 선언된 변수는 automatic storage duration, block scope임.<br>
+static을 붙이면 static storage duration으로 만들 수 있음.<br>
+
+**scope**<br>
+
+file scope나 enclosing function 안에 있는 변수가 block 안에서 같은 이름으로 선언된 경우, block에 있는 함수가 바깥에 있는 변수를 잠시 숨김.<br>
+블록을 벗어나면 바깥에 있는 변수가 다시 사용됨.<br>
