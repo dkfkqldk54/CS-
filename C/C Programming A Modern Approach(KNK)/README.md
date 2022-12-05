@@ -63,9 +63,9 @@
 <a href="#11">:pencil2: Chapter 11. Pointers</a>
 - 포인터 변수
 - 주소와 indirection operator
-- 포인터 할당
 - 포인터 argument
-  
+- return에 포인터
+
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
 **:pushpin: C의 기원**
@@ -1837,6 +1837,72 @@ printf("%d", *p) /* wrong */
 포인터 변수를 초기화시키지 않고 사용하면 undefined behavior가 생김.<br>
 또한 포인터 변수를 초기화시키지 않고, *p에 값을 배정하면 임의의 주소에 할당되어 있는 값을 변경시킬 수 있어 오류가 발생함.<br>
 
-**:pushpin: 포인터 할당**
+**포인터 할당**<br>
+    
+C에서는 같은 타입일 경우 copy pointer의 할당을 허용함.<br>
+<pre>
+int i, j, *p, *q;
+p = &i;
+q = p;
+</pre>
+    
+포인터를 copy하는 것은 몇개든 가능함.<br>
 
 **:pushpin: 포인터 argument**
+
+함수에서 argument는 parameter로부터 복사되어 쓰이기 때문에 값을 변경시킬 수 없음.<br>
+그러나 포인터를 이용하면 변경시킬 수 있음.<br>
+<pre>
+void decompose(double x, long *int_part, double *frac_part)
+{
+  *int_part = (long) x;
+  *frac_part = x - *int_part;
+}
+    
+/* 함수의 선언을 다음과 같이 해도 됨 */
+void decompose(double, long *, double *);
+</pre>
+    
+실제로 함수에 넣어서 쓸 때는 &연산자를 붙어서 사용해야 함.<br>
+    
+<pre>
+decompose(3.14159, &i, &d);
+
+</pre>
+    
+scanf도 포인터 변수를 argument로 쓰는 예임.<br>
+    
+<pre>
+scanf("%d", &i);
+p = &i;
+scanf("%d", p);
+</pre>
+
+둘은 같은 의미임.<br>
+    
+**Using const to Protect Arguments**<br>
+    
+보통 f(&x);를 쓸 때는 f가 x의 값을 변경하려고 한다 생각하겠지만 아닐 수 있음.<br>
+argument의 값을 복사해서 쓰는 것보다 포인터로 접근하는게 더 빠르기 때문에 쓰는 경우도 있음.<br>
+argument로 들어온 값을 변경시키고 싶지 않으면 아래와 같이 쓰면 됨.<br>
+<pre>
+void f(const int *p)
+{
+  *p = 0; /* wrong */    
+}
+</pre>
+    
+p는 constant interger를 가리키는 포인터이므로 *p의 값은 바뀔 수 없음.<br>
+그러나 p = &j;와 같이 p자체를 바꾸는 것은 가능함. const를 p앞에 놓으면 *p=0은 legal이고 p=&j는 illegal임.<br>
+    
+**:pushpin: return에 포인터**
+    
+<pre>
+int *max(int *a, int *b)
+{
+  if (*a > *b)
+    return a;
+  else
+    return b;
+}
+</pre>
