@@ -59,6 +59,12 @@
 - 지역 변수
 - 전역 변수
 - block과 scope
+
+<a href="#11">:pencil2: Chapter 11. Pointers</a>
+- 포인터 변수
+- 주소와 indirection operator
+- 포인터 할당
+- 포인터 argument
   
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -1760,3 +1766,32 @@ static을 붙이면 static storage duration으로 만들 수 있음.<br>
 
 file scope나 enclosing function 안에 있는 변수가 block 안에서 같은 이름으로 선언된 경우, block에 있는 함수가 바깥에 있는 변수를 잠시 숨김.<br>
 블록을 벗어나면 바깥에 있는 변수가 다시 사용됨.<br>
+
+<h2><a id="11">:pencil2: Chapter 11. Pointers</a></h2>
+
+**:pushpin: 포인터 변수**
+
+메인 메모리는 바이트 단위로 나누어져 있음.<br>
+각각의 바이트들은 고유의 주소를 가지고 있음.<br>
+각각의 변수들은 메모리 안에서 1개 혹은 여러 개의 바이트를 차지하고 있음.<br>
+변수가 시작되는 첫 번째 바이트의 주소가 바로 변수의 주소임.<br>
+주소는 숫자 하나로 표현되는데, 범위는 숫자 하나로 가리킬 수가 없음.<br>
+이처럼 포인터 변수가 항상 주소만을 나타내는 것만은 아닌데, word의 경우 6비트짜리 character로 나뉠 수도 있고, 9비트짜리 character로 나뉠 수도 있음. 이 경우에 포인터 변수는 주소와 character의 위치 모두를 포함하는 개념임.<br>
+
+**Declaring Pointer Variables**<br>
+
+포인터 변수 앞에는 *를 붙임.<br>
+int *p; 는 p가 포인터 변수이고, int 타입의 object를 가리킬 수 있음을 나타냄.<br>
+variable이 아니라 object라 쓴 이유는 포인터가 변수 뿐만 아니라 메모리의 특정 부분도 가리킬 수 있기 때문임.<br>
+<pre>
+int i, j, a[10], b[20], *p, *q;
+</pre>
+이처럼 포인터 변수는 다른 변수와 같이 선언될 수 있음.<br>
+특정 타입으로 선언되면 해당 타입의 object만 가리킬 수 있음.<br>
+타입에 제한은 없으며, 포인터 변수로 포인터 변수를 가리킬 수도 있음.<br>
+
+**:pushpin: 주소와 indirection operator**
+
+**:pushpin: 포인터 할당**
+
+**:pushpin: 포인터 argument**
