@@ -1805,6 +1805,37 @@ int *p;
 
 포인터 변수를 선언하는 것은 특정 object를 가리키는 것이 아니라, 포인터 변수를 위한 공간을 만들어 놓는 것임.<br>
     
+<pre>
+int i, *p;
+....
+p = &i;
+    
+int i, *p = &i;
+</pre>
+    
+포인터 변수를 초기화 할 때는 연산자를 이용하여 변수의 주소를 할당해줌.<br>
+선언과 동시에 초기화해줄 수도 있는데, 이 때 *는 indirection 연산자가 아니라 p의 타입을 나타냄.<br>
+    
+**The Indirection Operator**<br>
+    
+<pre>
+int i, *p;
+....
+p = &i;
+j = *&i;
+</pre>
+
+여기서 *p는 i와 똑같음. *p는 i의 alias(가명)으로 *p가 변경되면 i도 따라서 변경됨.<br>
+*는 &의 reverse로 *&i는 i와 같으므로 j에는 i가 할당됨.<br>
+    
+<pre>
+int *p;
+printf("%d", *p) /* wrong */
+*p = 1; /* wrong */
+</pre>
+    
+포인터 변수를 초기화시키지 않고 사용하면 undefined behavior가 생김.<br>
+또한 포인터 변수를 초기화시키지 않고, *p에 값을 배정하면 임의의 주소에 할당되어 있는 값을 변경시킬 수 있어 오류가 발생함.<br>
 
 **:pushpin: 포인터 할당**
 
