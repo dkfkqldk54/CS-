@@ -8,11 +8,12 @@
 
 bool straight, flush, four, three;
 int pairs;
+int hands[NUM_CARDS][2];
 
 void read_cards(void);
 void analyze_hand(void);
 void print_result(void);
-void duplicated_card(int rank, int suit, int cards_read, int hand[NUM_CARDS][2]);
+bool duplicated_card(int rank, int suit, int cards_read, int hand[NUM_CARDS][2]);
 
 int main(void)
 {
@@ -68,7 +69,7 @@ void read_cards(void)
 
     if (bad_card)
       printf("Bad card; ignored.\n");
-    else if (duplicated_card(rank, suit, cards_read, hand))
+    else if (duplicated_card(rank, suit, cards_read, hands))
       printf("Duplicate card; ignored.\n");
     else {
       hands[cards_read][0] = rank;
@@ -78,10 +79,10 @@ void read_cards(void)
   }
 }
 
-void duplicated_card(int rank, int suit, int cards_read, int hand[][2])
+bool duplicated_card(int rank, int suit, int cards_read, int hands[][2])
 {
   for (int i=0; i < cards_read; i++) {
-    if (hand[i][0] == rank && hand[i][1] == suit)
+    if (hands[i][0] == rank && hands[i][1] == suit)
       return true;
   }
   return false;
@@ -89,8 +90,7 @@ void duplicated_card(int rank, int suit, int cards_read, int hand[][2])
 
 void analyze_hand(void)
 {
-  int num_consec = 0;
-  int rank, suit;
+  int rank, suit, matches;
 
   straight = false;
   flush = false;
@@ -101,30 +101,61 @@ void analyze_hand(void)
   /* flush 확인 */
   int flush_check = 0;
   for (int i = 0; i < NUM_CARDS; i++)
-    if (hand[i][1] == hand[0][1]) flush_check++;
+    if (hands[i][1] == hands[0][1]) flush_check++;
   if (flush_check == NUM_CARDS) flush = true;
 
-  /* 선택 정렬: 아직 만드는 중이고, 스트레이트를 어떻게 적용할지 고민 중임*/
+  /* 선택 정렬 */
   for (int i = 0; i < NUM_CARDS; i++) {
-    int smallest = hand[0][0];
-    for (int j = 0; j < NUM_CARDS; j++) {
-      
+    int smallest = i;
+    for (int j = i + 1; j < NUM_CARDS; j++) {
+      if (hands[smallest][0] > hands[j][0])
+        smallest = j;
+    }
+    int temp = hands[i][0];
+    hands[i][0] = hands[smallest][0];
+    hands[smallest][0] = temp;
+    temp = hands[i][1];
+    hands[i][1] = hands[smallest][1];
+    hands[smallest][1] = temp;
+  }
+  
+  /* straight */
+  for (int i = 0; i < 9; i++) {
+    bool checker = true;
+    for (int j = 0; j < 5; j++) {
+      if (hands[j][0] != i+j)
+        checker = false;
+    }
+    if (checker) 
+      straight = true;
+  }  
+
+  if (hands[0][0] == 0 && hands[1][0] == 9 && hands[2][0] == 10 && hands[3][0] == 11 && hands[4][0] == 12)
+    straight = true;
+  else if (hands[0][0] == 0 && hands[1][0] == 1 && hands[2][0] == 10 && hands[3][0] == 11 && hands[4][0] == 12)
+    straight = true;
+  else if (hands[0][0] == 0 && hands[1][0] == 1 && hands[2][0] == 2 && hands[3][0] == 11 && hands[4][0] == 12)
+    straight = true;
+  else if (hands[0][0] == 0 && hands[1][0] == 1 && hands[2][0] == 2 && hands[3][0] == 3 && hands[4][0] == 12)
+    straight = true;
+
+  /* four, three, pair*/
+
+  int card = 0;
+  while (card < NUM_CARDS) {
+    rank = hands[card][0];
+    matches = 0;
+    do {
+      card++;
+      matches++;
+    } while (card < NUM_CARDS && hands[card][0] == rank);
+    switch (matches) {
+      case 2: pairs++; break;
+      case 3: three = true; break;
+      case 4: four = true; break;
     }
   }
-  rank = 0;
-  while (num_in_rank[rank] == 0) rank++;
-  for (; rank < NUM_RANKS && num_in_rank[rank] > 0; rank++)
-    num_consec++;
-  if (num_consec == NUM_CARDS) {
-    straight = true;
-    return;
-  }
-
-  for (rank = 0; rank < NUM_RANKS; rank++) {
-    if (num_in_rank[rank] == 4) four = true;
-    if (num_in_rank[rank] == 3) three = true;
-    if (num_in_rank[rank] == 2) pairs++;
-  }
+  
 }
 
 void print_result(void)
