@@ -1791,6 +1791,20 @@ int i, j, a[10], b[20], *p, *q;
 타입에 제한은 없으며, 포인터 변수로 포인터 변수를 가리킬 수도 있음.<br>
 
 **:pushpin: 주소와 indirection operator**
+    
+변수의 주소를 찾기 위해서는 & 연산자를 사용함.<br>
+&X는 X가 저장되어 있는 메모리에서 X의 주소를 가리킴.<br>
+object에 접근하기 위해서는 *(indirection) 연산자를 사용해야 함.<br>
+*p는 p가 가리키고 있는 object를 나타냄.<br>
+    
+**The Address Operator**<br>
+    
+<pre>
+int *p;
+</pre>
+
+포인터 변수를 선언하는 것은 특정 object를 가리키는 것이 아니라, 포인터 변수를 위한 공간을 만들어 놓는 것임.<br>
+    
 
 **:pushpin: 포인터 할당**
 
