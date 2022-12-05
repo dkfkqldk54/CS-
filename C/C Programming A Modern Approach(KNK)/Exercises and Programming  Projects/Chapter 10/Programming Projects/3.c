@@ -130,15 +130,6 @@ void analyze_hand(void)
       straight = true;
   }  
 
-  if (hands[0][0] == 0 && hands[1][0] == 9 && hands[2][0] == 10 && hands[3][0] == 11 && hands[4][0] == 12)
-    straight = true;
-  else if (hands[0][0] == 0 && hands[1][0] == 1 && hands[2][0] == 10 && hands[3][0] == 11 && hands[4][0] == 12)
-    straight = true;
-  else if (hands[0][0] == 0 && hands[1][0] == 1 && hands[2][0] == 2 && hands[3][0] == 11 && hands[4][0] == 12)
-    straight = true;
-  else if (hands[0][0] == 0 && hands[1][0] == 1 && hands[2][0] == 2 && hands[3][0] == 3 && hands[4][0] == 12)
-    straight = true;
-
   /* four, three, pair*/
 
   int card = 0;
