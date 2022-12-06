@@ -36,6 +36,23 @@ void split_time(long total_sec, int *hr, int *min, int *sec)
 
 **:pushpin: 6번**
 
+<pre>
+void find_two_largest(int a[], int n, int *largest, int *second_largest)
+{
+  *largest = a[0];
+  *second_largest = a[0];
+
+  for (int i = 1; i < n; i++) {
+    if (a[i] > *largest) {
+      *second_largest = *largest;
+      *largest = a[i];
+    } else if (a[i] > *second_largest) {
+      *second_largest = a[i];
+    }
+  }
+}
+</pre>
+
 **:pushpin: 7번**
 
 **:pushpin: 8번**
