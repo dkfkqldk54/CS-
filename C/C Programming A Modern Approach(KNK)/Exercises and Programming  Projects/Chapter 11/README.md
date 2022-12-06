@@ -101,3 +101,18 @@ void split_date(int day_of_year, int year, int *month, int *day)
 </pre>
 
 **:pushpin: 8번**
+
+<pre>
+int *find_largest(int a[], int n)
+{
+  int i, largest_index;
+
+  largest_index = 0;
+  for (i=0; i < n; i++) {
+    if (a[largest_index] < a[i])
+      largest_index = i;
+  }
+
+  return &a[largest_index];
+}
+</pre>
