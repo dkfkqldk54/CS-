@@ -25,6 +25,15 @@ void swap(int *p, int *q)
 
 **:pushpin: 5번**
 
+<pre>
+void split_time(long total_sec, int *hr, int *min, int *sec)
+{
+  *hr = total_sec / 3600;
+  *min = total_sec / 60 - *hr * 60;
+  *sec = total_sec % 60;
+}
+</pre>
+
 **:pushpin: 6번**
 
 **:pushpin: 7번**
