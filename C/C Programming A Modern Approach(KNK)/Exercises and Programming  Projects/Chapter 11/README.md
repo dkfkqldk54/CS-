@@ -10,6 +10,8 @@ e, f, i<br>
 
 **:pushpin: 3번**
 
+함수 body에 있는 sum과 avg 앞에 *를 붙임.<br>
+
 **:pushpin: 4번**
 
 **:pushpin: 5번**
