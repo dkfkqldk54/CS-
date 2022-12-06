@@ -14,6 +14,15 @@ e, f, i<br>
 
 **:pushpin: 4번**
 
+<pre>
+void swap(int *p, int *q)
+{
+  int temp = *p;
+  *p = *q;
+  *q = temp;
+}
+</pre>
+
 **:pushpin: 5번**
 
 **:pushpin: 6번**
