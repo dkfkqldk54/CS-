@@ -1905,4 +1905,32 @@ int *max(int *a, int *b)
   else
     return b;
 }
+
+int *p, i, j;
+p = max(&i, &j);
 </pre>
+
+max는 i혹은 j의 주소를 return함.<br>
+따라서 p는 i나 j을 가리키는 포인터임.<br>
+함수는 argument로 들어온 포인터 뿐만 아니라 전역변수 혹은 static으로 감싸진 지역변수를 가리킬 수 있음.<br>
+
+<pre>
+int *f(void)
+{
+  int i;
+  ...
+  return &i;
+}
+</pre>
+
+그러나 automatic 지역 변수는 return 하면 안 됨.<br>
+i는 f를 return 하자마자 없어지는 변수이기 때문임.<br>
+
+<pre>
+int *find_middle(int a[], int n)
+{
+  return &a[n/2];
+}
+</pre>
+
+배열의 원소를 가리키는 포인터 변수를 return할 수도 있음.<br>
