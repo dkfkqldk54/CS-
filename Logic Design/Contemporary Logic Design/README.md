@@ -1,8 +1,8 @@
 <h1>:green_book: Contemporary Logic Design</h1>
 
 <a href="#1">:pencil2: 1. Introduction</a>
--Logic Design
--Computation: Switches, Relays, and Circuits
+-Logic Design<br>
+-Computation: Switches, Relays, and Circuits<br>
 
 <h2><a id="1">1. Introduction</a></h2>
 
