@@ -66,6 +66,11 @@
 - 포인터 argument
 - return에 포인터
 
+<a href="#12">:pencil2: Chapter 12. Pointers and Arrays</a>
+- 포인터 산술
+- 배열에서의 포인터 활용
+- 포인터와 다차원 배열
+
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
 **:pushpin: C의 기원**
@@ -1934,3 +1939,67 @@ int *find_middle(int a[], int n)
 </pre>
 
 배열의 원소를 가리키는 포인터 변수를 return할 수도 있음.<br>
+
+<h2><a id="12">:pencil2: Chapter 12. Pointers and Arrays</a></h2>
+
+**:pushpin: 포인터 산술**
+
+p = &a[i]일 때 q = p + j로 q가 a[i+j]를 가리키도록 할 수 있음. 또한 더하기 뿐만 아니라 빼는 것도 가능함.<br>
+포인터끼리 빼는 것도 가능함. p = &a[i]; q = &a[j]; p-q는 i-j임.<br>
+이 때 배열의 원소를 지목하고 있지 않은 포인터로 산술을 하면 undefined behavior가 발생할 수 있음.<br>
+같은 배열을 사용하지 않는 원소들끼리의 산술도 마찬가지로 undefined behavior를 일으킬 수 있음.<br>
+
+**Comparing Pointers**<br>
+
+포인터끼리도 관계 연산(<, <=, >, >=)과 동등 연산(==, !=)이 가능함.<br>
+<pre>
+int a[] = {3, 0, 3, 4, 1};
+int *p = &a[0];
+
+int *p = (int []) {3, 0, 3, 4, 1};
+</pre>
+
+compound literal을 쓰면 위 두 문장을 아래로 축약할 수 있음.<br>
+p는 동일하게 배열의 첫번째 원소를 가리킴.<br>
+
+**:pushpin: 배열에서의 포인터 활용**
+
+<pre>
+#define N 10
+...
+int a[N], sum, *p;
+...
+sum = 0;
+for (p = &a[0]; p < &a[N]; p++)
+  sum += *p;
+</pre>
+a[N]이 실제로 존재하지는 않지만 (0부터 N-1까지이므로) legal임.<br>
+루프는 &a[0]부터 &a[N-1]까지 돌고, &a[N]이 되는 순간 종료됨.<br>
+
+<pre>
+int a[10];
+*a = 7; /* stores 7 in a[0] */
+*(a+1) = 12; /* stores 12 in a[1] */
+</pre>
+배열의 이름은 배열의 첫 번째 원소를 가리키는 포인터임.
+
+<pre>
+for (p = &a[0]; p < &a[N]; p++)
+  sum += *p;
+  
+for (p = a; p < a+N; p++)
+  sum += *p;
+</pre>
+이를 이용하면 위의 식을 아래 식으로 쓸 수 있음.<br>
+
+<pre>
+while (*a != 0)
+  a++; /* wrong */
+p = a
+while (*p != 0)
+  p++; /* legal */
+</pre>
+배열의 이름에 새로운 값을 부여하는 것은 안 되지만 a를 다른 포인터 변수에 복사해서 쓰는 건 가능함.<br>
+
+**:pushpin: 포인터와 다차원 배열**
+
