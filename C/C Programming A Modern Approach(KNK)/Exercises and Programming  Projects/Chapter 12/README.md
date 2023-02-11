@@ -161,6 +161,7 @@ void init_ident(int n, double ident[n][n]) {
     }
   }
 }
+</pre>
 
 **:pushpin: 14번**
 
@@ -183,7 +184,80 @@ printf(".");
 
 **:pushpin: 16번**
 
+int find_largest(int a[], int n)
+{
+  int *p=a, largest=*p;
+  for (p = a; p < a+n; p++)
+    if (largest < *p) largest = *p;
+  return largest;
+}
+
+<pre>
+int i;
+
+for (i = 0; i < 7; i++)
+  printf("day %d: %d\n", i+1, find_largest(temperatures[i], 24));
+</pre>
+
+
 **:pushpin: 17번**
 
+<pre>
+int sum_two_dimensional_array(const int a[][LEN], int n)
+{
+  int *p = *a, sum = 0;
+  
+  while(p++ < *a + n*LEN)
+    sum += *p;
+      
+  return sum;
+}
+</pre>
+
 **:pushpin: 18번**
+
+int evaluate_position(char board[8][8])
+{
+  int sum = 0;
+  int *p;
+  for (p = board; p < board + 8 * 8; p++)
+  {
+    switch(*p) {
+      case 'Q':
+        sum += 9;
+        break;
+      case 'R':
+        sum += 5;
+        break;
+      case 'B':
+        sum += 3;
+        break;
+      case 'N':
+        sum += 3;
+        break;
+      case 'P':
+        sum += 1;
+        break;
+      case 'q':
+        sum -= 9;
+        break;
+      case 'r':
+        sum -= 5;
+        break;
+      case 'b':
+        sum -= 3;
+        break;
+      case 'n':
+        sum -= 3;
+        break;
+      case 'p':
+        sum -= 1;
+        break;
+      default:
+        break;
+    }
+  }
+  return sum;
+}
+
 
