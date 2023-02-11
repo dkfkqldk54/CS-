@@ -61,13 +61,65 @@ int sum_array(const int a[], int n)
 
 **:pushpin: 7번**
 
+<pre>
+bool search(const int a[], int n, int key)
+{
+  int *p;
+  
+  for (p = &a[0]; p < &a[n]; p++)
+    if (*p == key) return true;
+  return false;  
+}
+</pre>
+
 **:pushpin: 8번**
+
+<pre>
+void store_zeros(int a[], int n)
+{
+  int *p;
+  
+  for (p = &a[0]; p < &a[n]; p++)
+    *p = 0;
+}
+</pre>
 
 **:pushpin: 9번**
 
+<pre>
+double inner_product(const double *a, const double *b, int n)
+{
+  int i;
+  double sum = 0;
+  
+  while (i++ < n)
+    sum += *a++ * *b++;
+
+  return sum;
+}
+</pre>
+
 **:pushpin: 10번**
 
+<pre>
+int *find_middle(int a[], int n)
+{
+  return a + n/2;
+}
+</pre>
+
 **:pushpin: 11번**
+
+<pre>
+int find_largest(int a[], int n)
+{
+  int *p=a, largest=*p;
+  for (p = a; p < a+n; p++)
+    if (largest < *p) largest = *p;
+  return largest;
+}
+</pre>
+
 
 **:pushpin: 12번**
 
