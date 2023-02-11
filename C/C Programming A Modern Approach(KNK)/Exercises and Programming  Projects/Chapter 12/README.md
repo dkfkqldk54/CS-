@@ -123,11 +123,63 @@ int find_largest(int a[], int n)
 
 **:pushpin: 12번**
 
+<pre>
+void find_two_largest(const int *a, int n, int *largest, int *second_largest)
+{
+  int *p = a;
+  int *largest = *second_largest = *a;
+  
+  while (p++ < a + n)
+  {
+    if (*p > *largest) {
+        *second_largest = *largest;
+        *largest = *p;
+    } else if (*p > *second_largest)
+      *second_largest = *p;
+  }
+}
+</pre>
+
 **:pushpin: 13번**
+
+<pre>
+#define N 10
+
+void init_ident(int n, double ident[n][n]) {
+  double *p;
+  int count = 0;
+  
+  for (p = &ident[0][0]; p < &ident[0][0] + n*n; p++)
+  {
+    if (count == 0) {
+      *p = 1.0;
+      count = N;
+    }
+    else {
+      *p = 0.0;
+      count--;
+    }
+  }
+}
 
 **:pushpin: 14번**
 
+<pre>
+bool has32 = search(temperatures, 7*24, 32);
+</pre>
+
 **:pushpin: 15번**
+
+<pre>
+int *p = temperatures[i];
+  
+printf("Today's temperature is");
+  
+while (p++ < a[i+1])
+  printf(" %d", *p);
+  
+printf(".");
+</pre>
 
 **:pushpin: 16번**
 
