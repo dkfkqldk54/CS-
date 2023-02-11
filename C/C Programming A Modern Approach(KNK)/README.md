@@ -70,6 +70,7 @@
 - 포인터 산술
 - 배열에서의 포인터 활용
 - 포인터와 다차원 배열
+- 포인터와 가변 길이 배열
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -2003,3 +2004,79 @@ while (*p != 0)
 
 **:pushpin: 포인터와 다차원 배열**
 
+C의 n차원 array는 row-major order이므로 1차원으로 펼쳐서 생각해볼 수 있음.<br>
+
+<pre>
+int row, col;
+...
+for (row = 0; row < NUM_ROWS; row++)
+  for (col = 0; col < NUM_COLS; col++)
+    a[row][col] = 0;
+    
+int *p;
+...
+for (p = &a[0][0]; p < &a[NUM_ROWS-1][NUM_COLS-1]; p++)
+  *p = 0;
+</pre>
+
+위 식과 아래 식은 동일함.<br>
+
+**Processing the Rows of a Multidimensional Array**<br>
+
+p = &a[i][0];와 p = a[i];는 같음.<br>
+a[i]는 *(a+i)와 같음.<br>
+따라서 &a[i][0]는 &(*a[i] + 0)과 같고 이는 &*a[i]이니 a[i]임.<br>
+
+<pre>
+
+int a[NUM_ROWS][NUM_COLS], *p, i;
+...
+for (p = a[i]; p < a[i] + NUM_COLS; p++)
+  *p = 0;
+  
+</pre>
+
+이와 같은 방식으로 활용해줄 수 있음.<br>
+
+**Processing the Columns of a Multidimensional Array**<br>
+
+<pre>
+int a[NUM_ROWS][NUM_COLS], (*p)[NUM_COLS], i;
+...
+for ( p = &a[0]; p < &a[NUM_ROWS]; p++)
+  (*p)[i] = 0;
+</pre>
+
+*p[NUM_COLS]는 포인터가 들어있는 array를 가리키며, (*p)는 array를 가리키는 포인터임.<br>
+p++를 진행하면 &a[0], &a[1], ..., &a[NUM_ROWS-1]까지 진행됨.<br>
+a[0]은 0번째 row 전체를 의미함.<br>
+(*p)[i]는 해당 row에 있는 i번째 원소를 의미하지만, *p[i]는 *(p[i])여서 의미가 다름.<br>
+
+**Using the Name off a Multidimensional Array as a Pointer**<br>
+
+int a[NUM_ROWS][NUM_COLS];일 때 a는 a[0][0]을 가리키지 않음.<br>
+a[0]을 가리키는데 이는 1번 row 전체를 의미하는 1차원 배열임.<br>
+따라서 a의 타입은 int(*)[NUM_COLS]임.<br>
+
+**:pushpin: 포인터와 가변 길이 배열**
+
+<pre>
+void f(int m, int n)
+{
+  int a[m][n], (*p)[n];
+  p = a;
+  ...
+}
+</pre>
+
+p를 variably modified type이라고 함.<br>
+(*p)[m]으로 선언해도 되지만 n과 m이 정확히 일치할 때만 제대로 컴파일 됨.<br>
+m과 n이 다르면 undefined behavior가 발생함.<br>
+variably modified type은 함수의 body나 function proto type에서 정의되어야 하는 제약이 있음.<br>
+
+<pre>
+Q&A
+포인터 p에 j를 더하면 실제 주소가 j만큼 더해지는 것은 아님.
+int 타입은 4바이트이므로 j*4만큼, double은 8바이트이므로 j*8만큼 더해짐.
+*a와 a[]은 동일한 표현임.
+</pre>
