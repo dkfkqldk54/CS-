@@ -2144,4 +2144,49 @@ string literal이 null character를 포함하고 있어서 그럴 뿐만 아니�
 반면 character constant는 int 타입임.<br>
 
 **:pushpin: String 변수**
-    
+
+<pre>
+#define STR_LEN 80
+...
+char str[STR_LEN+1];
+</pre>
+
+string을 저장할 때는 string의 길이보다 1을 더해서 여유를 두는데, 이는 null character를 위한 공간임.<br>
+반드시 STR_LEN만큼 다 채운다는 건 아니지만, null_character를 위해 남겨두었다는 것을 명시적으로 표시한 것이기도 함.<br>
+string의 길이는 null character가 어디있는지를 파악하는 걸로 찾는 것이 가장 빠름.<br>
+
+**Initializing a String Variable**<br>
+
+<pre>
+char date1[8] = "June 14";
+</pre>
+이 경우에 June 14\0으로 저장되어 있음.<br>
+string literal이 아니라 string variable이며 {'J', 'u', 'n', 'e', ' ', '1', '4', '\0')와 같음.<br>
+
+<pre>
+char date2[9] = "June 14";
+</pre>
+이 경우에는 남은 공간에 null character가 채워짐.<br>
+
+<pre>
+char date3[7] = "June 14";
+</pre>
+원래 공간이 부족하면 illegal인데, null character만 빼고 딱 맞아 떨어지면 illegal은 아님.<br>
+그렇지만 string으로 활용할 수는 없음.<br>
+
+<pre>
+char date4[] = "June 14";
+</pre>
+length를 명시해주지 않은 경우 알아서 8을 계산해서 넣어줌.<br>
+8이 가변 길이라고 생각할 수도 있는데 그건 아니고 8로 길이가 고정됨.<br>
+
+**Character Arrays versus Character Pointers**<br>
+
+<pre>
+char date[] = "June 14";
+char *date = "June 14";
+</pre>
+
+array 버전은 수정할 수 있고, pointer 버전은 수정할 수 없음.<br>
+array 버전의 date는 array의 이름이지만, pointer 버전은 단순 date의 포인터임. 따라서 다른 곳을 가리킬 수도 있음.<br>
+
