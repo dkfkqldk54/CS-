@@ -72,6 +72,9 @@
 - 포인터와 다차원 배열
 - 포인터와 가변 길이 배열
 
+<a href="#13">:pencil2: Chapter 13. Strings</a>
+- String Literals
+
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
 **:pushpin: C의 기원**
@@ -2080,3 +2083,61 @@ Q&A
 int 타입은 4바이트이므로 j*4만큼, double은 8바이트이므로 j*8만큼 더해짐.
 *a와 a[]은 동일한 표현임.
 </pre>
+
+<h2><a id="13">:pencil2: Chapter 13. Strings</a></h2>
+
+**:pushpin: String Literals**
+
+string literal은 ""로 닫혀진 문자열임.<br>
+반면 character constant(문자형 상수)는 ''로 닫혀 있으며 단일 문자로 이루어짐.<br>
+string literal은 character constant처럼 escape sequence도 포함할 수 있음.<br>
+octal이나 hexadecimal escape도 포함될 수 있으나 자주 쓰이지는 않음.<br>
+
+<pre>
+printf("When you come to a fork, \
+take it.");
+
+printf("When you come to a fork, " "take it."); 
+</pre>
+
+한 줄로 끝내기 어려울만큼 긴 string literal은 마지막에 \(백슬래쉬)를 붙이고, 바로 다음 줄에 이어서 쓰면 여러 줄로 나눠서 쓸 수 있음.<br>
+그러나 바로 다음 첫 번째 자리에 이어서 써야하므로 indent의 통일성을 깰 수 있음.<br>
+이를 방지하고 싶으면 ""를 연달아 쓰면 됨.<br>
+
+**How string literals are stored**<br>
+
+C는 string literal을 character array로 취급함.<br>
+n길이의 string literal은 n+1 바이트의 메모리를 가지고 있는데, 이는 마지막에 null character가 포함되어 있기 때문임.<br>
+null character는 바이트를 구성하고 있는 비트가 모두 0이고 \0을 의미함. 이는 아스키 코드 상에서도 0이며, 아스키 코드 상으로 48인 숫자 0과는 다름.<br>
+"abc"는 abc\0, ""는 \0으로 저장되어 있음.<br>
+그 자체로 array이므로 포인터 취급을 당함. 그래서 char * 타입임.<br>
+printf("abc");는 abc의 주소를 printf로 전달한다는 의미임.<br>
+
+**Operations on String Literals**<br>
+
+<pre>
+char *p;
+p = "abc";
+</pre>
+
+이는 abc를 copy하는 것이 아니라 abc를 담고 있는 메모리를 가리키고 있다는 뜻임.<br>
+
+<pre>
+char ch;
+ch = "abc"[1];
+</pre>
+
+이와 같이 subscript하는 용도로도 쓸 수 있음.<br>
+
+<pre>
+char *p = "abc";
+*p = 'd'; /*** wrong ***/
+</pre>
+
+string literal을 수정하면 undefined behavior가 발생할 수 있음.<br>
+string literal은 읽기 전용 메모리에 저장되어 수정할 수 없기 때문임.<br>
+
+**string literals versus character constants**<br>
+문자가 1개만 있는 string literal도 character constant와는 다름.<br>
+string literal이 null character를 포함하고 있어서 그럴 뿐만 아니라, 포인터 타입이기 때문임.<br>
+반면 character constant는 int 타입임.<br>
