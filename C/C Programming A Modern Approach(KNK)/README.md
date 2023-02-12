@@ -74,6 +74,7 @@
 
 <a href="#13">:pencil2: Chapter 13. Strings</a>
 - String Literals
+- String 변수
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -2141,3 +2142,6 @@ string literal은 읽기 전용 메모리에 저장되어 수정할 수 없기 �
 문자가 1개만 있는 string literal도 character constant와는 다름.<br>
 string literal이 null character를 포함하고 있어서 그럴 뿐만 아니라, 포인터 타입이기 때문임.<br>
 반면 character constant는 int 타입임.<br>
+
+**:pushpin: String 변수**
+    
