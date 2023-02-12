@@ -75,6 +75,7 @@
 <a href="#13">:pencil2: Chapter 13. Strings</a>
 - String Literals
 - String 변수
+- String 읽기, 쓰기
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -2190,3 +2191,56 @@ char *date = "June 14";
 array 버전은 수정할 수 있고, pointer 버전은 수정할 수 없음.<br>
 array 버전의 date는 array의 이름이지만, pointer 버전은 단순 date의 포인터임. 따라서 다른 곳을 가리킬 수도 있음.<br>
 
+**:pushpin: String 읽기, 쓰기**
+
+**Writing strings Using printf and puts**<br>
+
+<pre>
+char str[] = "Are we having fun yet?";
+printf("%s\n", str);
+</pre>
+
+결과는 Are we having fun yet?임.<br>
+printf는 \0을 찾을 때까지 하나씩 출력함.<br>
+
+<pre>
+printf("%.6s\n", str);
+</pre>
+
+결과는 Are we임.<br>
+%ms면 m개 글자를 무조건 출력해줌.<br>
+m개보다 많으면 전부 출력해주고, m개보다 적으면 오른쪽에 글씨가 쏠림.<br>
+m앞에 -를 붙이면 왼쪽으로 쏠림.<br>
+
+<pre>
+printf("%10.1s\n, str);
+</pre>
+결과는 (공백9칸)A임.<br>
+%m.ps에서 p만큼 글자가 출력됨.<br>
+
+**Reading Strings Using scanf and gets**<br>
+
+<pre>
+scnaf("%s", str);
+</pre>
+str이 이미 포인터이므로 &이 필요없음.<br>
+scanf는 white space를 다 뛰어넘음.<br>
+다음 white space가 오기 전까지 저장하고, 마지막에는 null character를 추가함.<br>
+string이 white space로 분절되어 있으면 full line을 다 가져올 수가 없음.<br>
+따라서 gets가 필요함.<br>
+
+<pre>
+char sentence[SENT_LEN + 1];
+
+printf("Enter a sentence:\n");
+scanf("%s", sentence);
+gets(sentence);
+</pre>
+
+입력이 To C, or not to C.일 경우 scanf는 To만 받아옴.<br>
+gets는 다 받아옴.<br>
+그러나 scanf와 gets모두 문제가 있는데 str가 꽉 찼는지 확인할 방법이 없다는 것임.<br>
+꽉 차면 array를 넘어 저장하고 이는 undefined behavior를 일으킴.<br>
+scanf는 %ns를 써서 maximum number를 n으로 제한할 수 있음.<br>
+gets는 그런게 없어서 오버플로에 취약함.<br>
+따라서 fgets를 쓰는데, fgets는 n-1글자를 읽고 끝에 null character를 추가하는 식으로 오버플로를 방지함.<br>
