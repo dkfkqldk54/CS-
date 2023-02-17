@@ -76,6 +76,9 @@
 - String Literals
 - String 변수
 - String 읽기, 쓰기
+- String 원소 접근
+- String 라이브러리
+
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -2244,3 +2247,164 @@ gets는 다 받아옴.<br>
 scanf는 %ns를 써서 maximum number를 n으로 제한할 수 있음.<br>
 gets는 그런게 없어서 오버플로에 취약함.<br>
 따라서 fgets를 쓰는데, fgets는 n-1글자를 읽고 끝에 null character를 추가하는 식으로 오버플로를 방지함.<br>
+
+**:pushpin: String 원소 접근**
+
+String에 있는 공백을 count하는 함수를 다음과 같이 쓸 수 있음.<br>
+
+<pre>
+int count_spaces(const char s[])
+{
+  int count = 0, i;
+  
+  for (i = 0; s[i] != '\0'; i++)
+    if (s[i] == ' ')  count++;
+    
+  return count;
+}
+</pre>
+
+string이기 때문에 length를 알려주는 argument 없이 null character가 등장하는 지점까지 subscript하면 됨.<br>
+
+<pre>
+int count_spaces(const char *s)
+{
+  int count = 0;
+  
+  for (; *s != '\0'; s++)
+    if (*s == ' ')  count++;
+      
+  return count;
+</pre>
+
+string을 포인터로 사용할 수 있다는 점을 고려하면 위와 같이 쓸 수 있음.<br>
+const가 있다고 해서 s에 increment를 할 수 없는 건 아님.<br>
+s가 가리키고 있는 대상을 수정할 수 없다는 뜻임.<br>
+
+**:pushpin: String 라이브러리**
+
+<pre>
+char str1[10], str2[10];
+str1 = "abc"; /*** wrong ***/
+str2 = str1; /*** wrong ***/
+</pre>
+
+string을 character array에 =을 써서 copy하는 건 불가능함.<br>
+array를 =의 lvalue로 쓰면 안되는 이유와 일맥상통함.<br>
+array에 값을 지정하면 element를 index로 지정해줘야 함.<br>
+
+<pre>
+char str[10] = "abc"
+</pre>
+
+그러나 이와 같이 선언과 동시에 초기화해주는 건 legal임.<br>
+
+<pre>
+if (str1 == str2) ... /*** wrong ***/
+</pre>
+비교는 할 수 있으나 str1이나 str2이나 다 포인터이기 때문에 array에 있는 contents를 비교하는 것이 불가능함.<br>
+두 포인터가 다른 주소를 가졌기 때문에 결과는 항상 0임.<br>
+
+<pre>
+#include <string.h>
+</pre>
+
+string parameter는 char * 타입으로 선언되어야 함.<br>
+string parameter는 const로 선언되는 것이 좋은데 함수 호출 중 수정될 수 있기 때문임.<br>
+
+**The strcpy(string copy) Function**<br>
+
+<string.h> 헤더를 추가해야 쓸 수 있고 strcpy의 prototype은 char *strcpy (char *s1, const char *s2);임.<br>
+s2가 가리키고 있는 곳을 s1이 가리키도록 하며, s2에서 첫번째 null character가 나오는 지점까지를 return함.<br>
+s2는 const이므로 수정되지 않음.<br>
+
+<pre>
+str2 = "abcd"; /*** wrong ***/
+strcpy(str2, "abcd"); /*** str2 now contains "abcd" ***/
+</pre>
+
+str2의 값을 str1에 옮기는 것도 가능한데, 이 과정을 축약하면 다음과 같이 쓸 수 있음.<br>
+
+<pre>
+strcpy(str1, str2);
+strcpy(str1, strcpy(str2, "abcd"));
+</pre>
+
+그러나 strcpy는 argument 들의 길이를 체크하지 않음.<br>
+str1이 str2보다 길면 상관없지만 짧거나 같으면 문제가 생김.<br>
+
+**The strlen(string length) Function**<br>
+
+<pre>
+size_t strlen(const char *s)
+</pre>
+
+size_t는 unsigned int 타입임.<br>
+strlen은 s안에 있는 character의 수를 return하는데, 첫 번째 null character까지 셈.<br>
+
+<pre>
+int len;
+
+len = strlen("abc"); /* len is now 3 */
+len = strlen(""); /* len is now 0 */
+strcpy(str1, "abc");
+len = strlen(str1); /* len is now 3 */
+</pre>
+
+**The strcat(String concatenation) Function**<br>
+
+<pre>
+char *strcat(char *s1, const char *s2);
+</pre>
+
+s1에 s2를 붙이고, s1을 반환함.<br>
+
+<pre>
+strcpy(str1, "abc");
+strcat(str1, "def"); /* str1 now contains "abcdef") */
+</pre>
+
+return된 결과를 활용할 수도 있음.<br>
+
+<pre>
+strcpy(str1, "abc");
+strcat(str2, "def");
+strcat(str1, strcpy(str2, "ghi")); /* str1 now contains "abcdefghi" */
+</pre>
+
+strcat(str1, str2)에서 str1이 str2를 받아줄 만큼 공간이 없으면 undefined behavior가 일어남.<br>
+
+<pre>
+char str1[6] = "abc";
+strcat(str1, "def"); /* wrong */
+</pre>
+
+이를 방지하기 위해 strncat을 사용함.<br>
+
+<pre>
+strncat(str1, str2, sizeof(str1)-strlen(str2)-1);
+</pre>
+
+3번째 argument는 복사될 수 있는 character의 수를 의미함.<br>
+복사된 후에는 null character로 종결됨.<br>
+
+**The strcmp(string comparison) Function**<br>
+
+<pre>
+int strcmp(const char *s1, const char *s2)
+
+if (strcmp(str1, str2) < 0) /* is str1 < str2 ? */
+</pre>
+
+strcmp는 사전 편찬식으로 비교함.<br>
+i번째까지 일치하는데 i-1번째에 s1이 s2보다 작은 경우 예시로 abd < abe가 있음.<br>
+다 일치하는데 s1이 s2보다 짧은 경우는 abc < abcd가 있음.<br>
+numerical 코드도 비교함.<br>
+A-Z는 65-90, a-z는 97-122, 숫자는 48-57, 공백은 32임.<br>
+
+<pre>
+sprintf(day_str, "%2d", day);
+</pre>
+
+day에 있는 숫자를 string으로 바꿔줌.<br>
+끝에는 null character가 추가됨.<br>
