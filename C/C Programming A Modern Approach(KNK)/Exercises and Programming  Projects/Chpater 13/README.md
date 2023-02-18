@@ -11,13 +11,32 @@
 **:pushpin: 2번**
 
 (a) char 타입이 아니라 pointer가 들어와서 illegal.<br>
-(b) a
-(c) abc
+(b) a<br>
+(c) abc<br>
 (d) str이 아니라 char가 들어와서 illegal.<br>
 
 **:pushpin: 3번**
 
+12, abc34, 56
+
 **:pushpin: 4번**
+
+<pre>
+int read_line(char str[], int n)
+{
+  int ch, i = 0;
+  
+  while (isspace(getchar()));
+  
+  while (i < n && (ch = getchar()) != '\n' && !isspace(ch))
+    if (i == 0 && isspace(ch));
+    else str[i++] = ch;
+  if (ch == '\n' && i < n-1) str[i++] = '\n';
+  str[i] = '\0';
+  
+  return i;
+}
+</pre>
 
 **:pushpin: 5번**
 
