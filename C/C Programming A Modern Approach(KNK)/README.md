@@ -78,7 +78,7 @@
 - String 읽기, 쓰기
 - String 원소 접근
 - String 라이브러리
-
+- String 배열
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -2408,3 +2408,27 @@ sprintf(day_str, "%2d", day);
 
 day에 있는 숫자를 string으로 바꿔줌.<br>
 끝에는 null character가 추가됨.<br>
+
+**:pushpin: String 배열**
+
+<pre>
+char planets[][8] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"};
+</pre>
+
+위와 같이 String을 저장하면 길이가 8이 안 되는 string은 나머지 공간을 null character로 채움.<br>
+따라서 공간을 낭비하게 됨.<br>
+
+<pre>
+char planets[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"};
+</pre>
+
+planets에 있는 원소들은 array를 가리키고 있는 포인터를 담게 됨.<br>
+따라서 공간 낭비가 없음.<br>
+
+<pre>
+for (i = 0; i < 9; i++)
+  if (planets[i][0] == 'M')
+    printf("%s begins with M\n", planets[i]);
+</pre>
+
+M으로 시작하는 String을 찾는 코드는 위와 같음.<br>
