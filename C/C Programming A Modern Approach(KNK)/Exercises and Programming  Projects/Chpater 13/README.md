@@ -1,6 +1,7 @@
 <h2>:pencil2: Exercises</h2>
 
 **:pushpin: 1번**
+
 (b) char 타입에 str 타입이 들어갔음.<br>
 (c) str 타입에 char 타입이 들어갔음.<br>
 (e) printf는 str 타입을 기대하고 있기 때문에.<br>
@@ -39,6 +40,31 @@ int read_line(char str[], int n)
 </pre>
 
 **:pushpin: 5번**
+
+(a)<br>
+<pre>
+void capitalize(char letters[])
+{
+  int i = 0;
+
+  while (letters[i] != '\0')
+    if (isalpha(letters[i]))
+      letters[i] = toupper(letters[i]);
+    i++;
+}
+</pre>
+
+(b)<br>
+<pre>
+void capitalize(char *str) {
+  while (*str) {
+    if (isalpha(*str)) {
+      *str = toupper(*str);
+    }
+    str++;
+  }
+}
+</pre>
 
 **:pushpin: 6번**
 
