@@ -68,9 +68,23 @@ void capitalize(char *str) {
 
 **:pushpin: 6번**
 
+void censor(char *str) {
+  char *p = str;
+  while (*(p+2)!='\0') {
+    if (*p == 'f' && *(p+1) == 'o' && *(p+1) == 'o')  {
+      *p = *(p+1) = *(p+2) = 'x';
+    }
+    p++;
+  }
+}
+
 **:pushpin: 7번**
 
+(d) strcat(str, "");은 str에 ""을 추가하는 것으로 (a), (b), (c)와 다르다.
+
 **:pushpin: 8번**
+
+tired-or-wired?
 
 **:pushpin: 9번**
 
