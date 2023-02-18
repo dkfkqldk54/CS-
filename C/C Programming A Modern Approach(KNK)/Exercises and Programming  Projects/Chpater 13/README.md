@@ -92,7 +92,19 @@ computers
 
 **:pushpin: 10번**
 
+함수 내부에서 선언된 포인터라서 함수 밖에서는 사용할 수가 없음.
+
 **:pushpin: 11번**
+
+<pre>
+int strcmp(char *s, char *t)
+{
+  while (*s == *t)
+    if (*s == '\0')  return 0;
+    s++; t++;
+  return *s - *t;
+}
+</pre>
 
 **:pushpin: 12번**
 
