@@ -88,6 +88,8 @@ tired-or-wired?
 
 **:pushpin: 9번**
 
+computers
+
 **:pushpin: 10번**
 
 **:pushpin: 11번**
