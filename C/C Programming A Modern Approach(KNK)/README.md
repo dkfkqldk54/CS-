@@ -2419,7 +2419,7 @@ char planets[][8] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "
 따라서 공간을 낭비하게 됨.<br>
 
 <pre>
-char planets[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"};
+char *planets[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"};
 </pre>
 
 planets에 있는 원소들은 array를 가리키고 있는 포인터를 담게 됨.<br>
