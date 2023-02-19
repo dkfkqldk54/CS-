@@ -168,3 +168,14 @@ bool test_extension(const char *file_name, const char *extension)
 
 **:pushpin: 18번**
 
+<pre>
+void remove_filename(char *url)
+{
+  char *p = url+7;
+
+  while (*p != '/' && *p != '\0'){
+    p++;
+  }
+  *p = '\0';
+}
+</pre>
