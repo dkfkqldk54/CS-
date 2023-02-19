@@ -122,6 +122,15 @@ void get_extension(const char *file_name, char *extension)
 
 **:pushpin: 13번**
 
+<pre>
+void build_index_url(const char *domain, char *index_url)
+{
+  strcpy(index_url, "http://www.");
+  strcat(index_url, domain);
+  strcpy(index_url, "/index.html");
+}
+</pre>
+
 **:pushpin: 14번**
 
 **:pushpin: 15번**
