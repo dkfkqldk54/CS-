@@ -143,6 +143,17 @@ Grinch
 
 **:pushpin: 16번**
 
+<pre>
+int count_spaces(const char *s)
+{
+  int count = 0;
+
+  while (*s) if (*s++ == ' ') count++;
+
+  return count;
+}
+</pre>
+
 **:pushpin: 17번**
 
 **:pushpin: 18번**
