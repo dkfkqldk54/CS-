@@ -156,5 +156,15 @@ int count_spaces(const char *s)
 
 **:pushpin: 17번**
 
+bool test_extension(const char *file_name, const char *extension)
+{
+  while(*file_name++ != '.');
+
+  while (*file_name && *extension)
+    if (toupper(*file_name++) != toupper(*extension++))
+    return false;
+  return true;
+}
+
 **:pushpin: 18번**
 
