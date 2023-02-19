@@ -133,7 +133,13 @@ void build_index_url(const char *domain, char *index_url)
 
 **:pushpin: 14번**
 
+Grinch
+
 **:pushpin: 15번**
+
+(a)3<br>
+(b)0<br>
+(c)1번째 arguement에 있는 원소 중 2번째 argument에 없는 원소가 없는 첫 번째 경우의 index<br>
 
 **:pushpin: 16번**
 
