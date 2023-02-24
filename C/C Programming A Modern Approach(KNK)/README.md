@@ -2673,6 +2673,96 @@ k = i/j;
 *** Attempt to divide by zero on line 9 of file foo.c***
 </pre>
 
+__STDC__는 C89 혹은 C99면 1을 return함.<br>
+
+**C99에서 쓰이는 predefined macros**<br>
+
+<pre>
+__STDC__HOSTED__
+</pre>
+hosted implementation이면 1, freestanding이면 0을 return함.<br>
+C99의 implementation은 hosted와 freestanding으로 나뉨.<br>
+hosted는 C99에 부합하는 프로그램들을 모두 accept함.<br>
+freestanding은 complex type을 사용하는 program 혹은 몇 가지 standard 헤더만 compile함.<br>
+os에 쓰이는 프로그램 등을 작성할 때 쓰임.<br>
+
+<pre>
+__STDC__VERSION__
+</pre>
+
+C standard가 어떤 버전인지 확인시켜줌.<br>
+C89의 value는 199409L이고 C99의 value는 199901L임.<br>
+
+<pre>
+__STDC__IEC__559__
+</pre>
+
+compiler가 IEC 60559에 따라 실수 연산을 수행하면 1을 return함.<br>
+
+<pre>
+__STDC__IEC__559__COMPLEX__
+</pre>
+
+compiler가 IEC 60559에 따라 complex 연산을 수행하면 1을 return함.<br>
+
+<pre>
+__STDC__ISO__10646__
+</pre>
+
+wchar_t 타입의 value가 ISO/IEC 10646 standard 코드와 맞으면 yyyymmL(199712L)을 retrun함.<br>
+
+**Empty Macro Arguments in C99**<br>
+
+<pre>
+#define ADD(x, y) (x+y)
+i = ADD(,k);
+i = (+k);
+</pre>
+
+argument를 비우는 건 상관없지만 comma 갯수는 맞춰야 함.<br>
+
+<pre>
+#define MK_STR(x) #x
+char empty_string[] = MK_STR();
+char empty_string[] = "";
+</pre>
+
+#는 stringized 하는데 이 경우 argument를 비우면 ""이 됨.<br>
+
+<pre>
+#define JOIN(x, y, z) x##y##z
+...
+int JOIN(a,b,c), JOIN(a,b,), JOIN(a,,c), JOINC(,,c);
+int abc, ab, ac, c;
+</pre>
+
+##operator 자리가 비면 place marker가 들어옴.<br>
+멀쩡한 token과 place marker가 합쳐지면 멀쩡한 token만 남음.<br>
+place marker 2개가 합쳐지면 1개가 됨.<br>
+
+**Macros with a Variable Number of Arguments in C99**<br>
+
+C89에서는 argument의 수를 fix했어야 함.<br>
+C99에서는 제한을 두지 않음.<br>
+
+<pre>
+#define TEST(condition, ...) ( (condition) ? \
+printf("Passed test: %s\n", #condition) : \
+printf(__VA_ARGS__))
+</pre>
+
+...token을 ellipsis라고 함.<br>
+__VA_ARGS__에 들어감.<br>
+
+<pre>
+TEST(voltage <= max_voltage, "Voltage %d exceeds %d\n", voltage, max_voltage);
+
+((voltage <= max_voltage ? printf("Passed test: %s\n", "voltage <= max_voltage") : printf("voltage %d exceeds %d\n", voltage, max_voltage)); 
+</pre>
+
+이 경우 voltage가 max_voltage보다 낮으면 Passed test : voltage <= max_voltage를 출력함.<br>
+voltage가 max_voltage보다 크면 voltage 125 exceeds 120을 출력함.<br>
+
 **:pushpin: 조건부 Compilation**
 
 **:pushpin: 다양한 Directives**
