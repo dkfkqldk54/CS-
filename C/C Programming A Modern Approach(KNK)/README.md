@@ -2763,6 +2763,27 @@ TEST(voltage <= max_voltage, "Voltage %d exceeds %d\n", voltage, max_voltage);
 이 경우 voltage가 max_voltage보다 낮으면 Passed test : voltage <= max_voltage를 출력함.<br>
 voltage가 max_voltage보다 크면 voltage 125 exceeds 120을 출력함.<br>
 
+**The __func__ identifier in C99**<br>
+
+<pre>
+static const char __func__[] = "function-name";
+</pre>
+
+function-name은 현재 사용되고 있는 항목의 이름을 의미함.<br>
+
+<pre>
+#define FUNCTION_CALLED() printf("%s called\n", __func__);
+#define FUNCTION_RETURNS() printf("%s returns\n", __func__);
+
+void f(void)
+{
+  FUNCTION_CALLED(); /* f called */
+  FUNCTION_RETURNS(); /* f returns */
+}
+</pre>
+
 **:pushpin: 조건부 Compilation**
+
+**The #if and #endif Directives**<br>
 
 **:pushpin: 다양한 Directives**
