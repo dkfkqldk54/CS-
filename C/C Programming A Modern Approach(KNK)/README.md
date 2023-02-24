@@ -2541,13 +2541,76 @@ Int i1, i2, i3;
 
 <pre>
 #define GENERIC_MAX(type) \
-type type#_max(type x, type y)\
+type type##_max(type x, type y)\
 { \
   return x > y ? x : y; \
 }
 </pre>
 
 이 경우에는 다음과 같이 응용할 수 있음.
+
+<pre>
+GENERIC_MAX(float);
+float float_max(float x, float y) { return x > y ? x : y; };
+</pre>
+
+**Macro의 일반적인 특성들**<br>
+
+<pre>
+#define PI 3.14159
+#define TWO_PI (2 * PI)
+</pre>
+
+TWO_PI를 컴파일할 때는 2 * PI로 인식하고 PI 값을 찾기 위해 rescan함.<br>
+
+<pre>
+#define SIZE 256
+int BUFFER_SIZE;
+if (BUFFER_SIZE > SIZE) puts("Error: SIZE exceeded");
+</pre>
+
+이는 compile 후 아래와 같이 변함.
+
+<pre>
+#define SIZE 256
+int BUFFER_SIZE;
+if (BUFFER_SIZE > 256) puts("Error: SIZE exceeded");
+</pre>
+
+token으로써 쓰일 때에만 replacement되고 그 외에는 영향을 받지 않음.<br>
+macro가 함수 안에서 선언된다고 해서 그 함수에게 local한 것은 아님. file의 끝까지 영향을 줌.<br>
+macro는 똑같지 않은 이상 2번 정의될 수는 없음. 2번 되려면 아예 똑같아야함.<br>
+
+<pre>
+#undef identifier
+#undef N
+</pre>
+
+#undef N은 N을 define했던 것을 취소시킴.
+
+**Parentheses in Macro Definitions**<br>
+
+<pre>
+#define TWO_PI (2*3.14159)
+</pre>
+
+위와 같이 operator가 들어갈 때는 괄호를 넣어줘야 함.<br>
+
+<pre>
+#define TWO_PI 2*3.14159
+conversion = 360 / TWO_PI;
+conversion = 360 / 2 * 3.14159;
+</pre>
+
+그렇지 않으면 위와 같이 원하지 않는 결과를 가져올 수 있음.<br>
+
+<pre>
+#define SCALE(x) ( (x) * 10 )
+</pre>
+
+parameter가 있을 때도 마찬가지임.<br>
+
+
 **:pushpin: 조건부 Compilation**
 
 **:pushpin: 다양한 Directives**
