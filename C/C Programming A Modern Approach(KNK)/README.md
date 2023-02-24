@@ -2610,6 +2610,68 @@ conversion = 360 / 2 * 3.14159;
 
 parameter가 있을 때도 마찬가지임.<br>
 
+**Creating Longer Macros**<br>
+
+<pre>
+#define ECHO(s) (gets(s), puts(s))
+ECHO(str); /* becomes (gets(str), puts(str)); */
+</pre>
+
+<pre>
+#define ECHO(s) { gets(s); puts(s); }
+if (echo_flag)
+  ECHO(str);
+else
+  gets(str);
+</pre>
+
+이를 compile하면 다음과 같음.<br>
+
+<pre>
+#define ECHO(s) { gets(s); puts(s); }
+if (echo_flag)
+  { gets(s); puts(s); };
+else
+  gets(str);
+</pre>
+
+이 경우 {}뒤에 있는 ;때문에 오류가 생김.<br>
+;를 빼면 성립하지만 보기에 안 좋음.<br>
+
+<pre>
+#define ECHO(s) \
+do { gets(s); puts(s); } while (0)
+</pre>
+
+while문이 항상 거짓이 되도록 쓰면 이 문제를 해결할 수 있음.<br>
+
+**Predefined Macros**<br>
+
+__DATE__와 __TIME__의 쓸모는 다음과 같음.<br>
+
+<pre>
+printf("Wacky Windows (c) 2010 Wacky Software, Inc. \n");
+printf("Compiled on %s at %s\n", __DATE__, __TIME__);
+
+acky Windows (c) 2010 Wacky Software, Inc.
+Compiled on Dec 23 2010 at 22:18:48
+</pre>
+
+__LINE__과 __FILE__의 용도는 다음과 같음.<br>
+
+<pre>
+#define CHECK_ZERO(divisor) \
+if (divisor == 0) \
+printf("*** Attempt to divide by zero on line %d " \
+on line %d "\
+"of file %s ***\n", __LINE__, __FILE__)
+</pre>
+
+<pre>
+CHECK_ZERO(j);
+k = i/j;
+*** Attempt to divide by zero on line 9 of file foo.c***
+</pre>
 
 **:pushpin: 조건부 Compilation**
 
