@@ -80,6 +80,12 @@
 - String 라이브러리
 - String 배열
 
+<a href="#14">:pencil2: Chapter 14. The Preprocessor</a>
+- Preprocessing Directives
+- Macro Definitions
+- 조건부 Compilation
+- 다양한 Directives
+
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
 **:pushpin: C의 기원**
@@ -2432,3 +2438,31 @@ for (i = 0; i < 9; i++)
 </pre>
 
 M으로 시작하는 String을 찾는 코드는 위와 같음.<br>
+
+
+<h2><a id="14">:pencil2: Chapter 14. The Preprocessor</a></h2>
+
+**:pushpin: Preprocessing Directives**
+
+Preprocessing Directives는 일반적으로 3가지로 분류됨.<br>
+Macro definition, File inclusion, Conditional compilation임.<br>
+Macro definition에서 #define은 macro를 define하고, #undef는 macro를 remove함.<br>
+File inclusion에서 #include는 특정 파일의 contents를 프로그램에 포함시킴.<br>
+Conditional compilation은 #if, #ifdef, #ifndef, #elif, #else, #endif 등 컨디션에 따라 block을 포함시킬지 말지 결정함.<br>
+<br>
+Directive에 대한 rule은 다음과 같음.<br>
+directive는 #로 시작함. line의 시작에서부터 #가 들어갈 필요는 없고, 그 앞에 white space는 있어도 됨.<br>
+# define N 1000과 같이 tab이나 space는 얼마든지 들어가도 됨.<br>
+일반적으로 첫 번째 new line character에서 directive가 끝남. 하지만 \를 붙이면 다음 줄에서도 이어갈 수 있음.
+<pre>
+#define DISK_CAPACITY (SIDES * \
+TRACKS_PER_SIDE *)
+</pre>
+directive는 프로그램 시작 부분에서만 있어야 하는 것은 아님.<br>
+directive에 대한 comment는 같은 줄에 있는 것이 좋음.<br>
+
+**:pushpin: Macro Definitions**
+
+**:pushpin: 조건부 Compilation**
+
+**:pushpin: 다양한 Directives**
