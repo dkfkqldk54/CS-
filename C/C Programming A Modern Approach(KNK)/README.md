@@ -2491,6 +2491,63 @@ i = ( (j+k) > (m-n) ? (j+k) : (m-n) );
 if (( (i) %2 == 0 )) i++;
 </pre>
 
+<pre>
+#define getchar() getc(stdin)
+</pre>
+위와 같이 ()안을 비워놔도 됨.<br>
+별다른 의미를 더하지는 않지만 함수와 같은 느낌을 줌.<br>
+
+**macro의 장단점**<br>
+
+macro는 argument 타입을 가리지 않음. 따라서 MAX macro에는 int, long, float 등 여러가지가 올 수 있음.<br>
+함수에 비해서 overhead가 적어서 빠름.<br>
+그러나 macro는 replacement list를 그대로 갖다 쓰기 때문에 compile 된 후에는 program이 커질 수 있음.<br>
+함수는 포인터로 지목당할 수 있는데 포인터는 그럴 수 없음.<br>
+
+<pre>
+n = MAX(i++, j);
+n = ( (i++) > (j) ? (i++) : (j) );
+</pre>
+
+위와 같이 macro는 argument를 1번 이상 소환하여 undefined behavior를 일으킬 수 있음.<br>
+반면 함수는 argument를 딱 1번만 호출함.<br>
+
+<pre>
+#define PRINT_INT(n) printf("%d\n", n)
+</pre>
+
+printf("d\n", i);를 너무 자주 사용할 경우에 parameterized macro로 대체하여 사용할 수도 있음.<br>
+
+**# operator**<br>
+
+#은 macro의 argument를 string literal로 바꿔줌.<br>
+
+<pre>
+#define PRINT_INT(n) printf(#n"=%d\n", n)
+PRINT_INT(i/j);
+printf("i/j" "=%d\n", i/j);
+printf("i/j=%d\n", i/j);
+</pre>
+
+**## operator**<br>
+
+<pre>
+#define MK_ID(n) i##n
+int MK_ID(1), MK_ID(2), MK_ID(3);
+Int i1, i2, i3;
+</pre>
+
+위와 같이 ##는 paste할 때 쓰임.<br>
+
+<pre>
+#define GENERIC_MAX(type) \
+type type#_max(type x, type y)\
+{ \
+  return x > y ? x : y; \
+}
+</pre>
+
+이 경우에는 다음과 같이 응용할 수 있음.
 **:pushpin: 조건부 Compilation**
 
 **:pushpin: 다양한 Directives**
