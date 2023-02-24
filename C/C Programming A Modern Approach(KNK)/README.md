@@ -2786,4 +2786,110 @@ void f(void)
 
 **The #if and #endif Directives**<br>
 
+<pre>
+#define DEBUG 1
+#if DEBUG
+printf("value of i: %d\n", i);
+printf("value of j: %d\n", j);
+#endif
+</pre>
+
+DEBUG가 non-zero면 #if, #endif line만 사라지고 printf line은 남음.<br>
+그러나 DEBUG가 zero면 #if부터 #endif까지 다 사라짐.<br>
+
+<pre>
+#if constant-expression
+</pre>
+
+만약 constant-expression 자리에 undefined identifier가 올라오면 이를 0으로 처리함.<br>
+
+<pre>
+#if DEBUG /* fail */
+#if !DEBUG /* success */
+</pre>
+
+**The Defined Operator**<br>
+
+<pre>
+defined(DEBUG)
+defined DEBUG
+</pre>
+
+defined는 macro가 define되어 있는지 아닌지만 판단함.<br>
+define 되어 있으면 1, 아니면 0임.<br>
+괄호를 생략해도 됨.<br>
+
+<pre>
+#define DEBUG
+</pre>
+
+DEBUG에 value를 할당하지 않아도 define하기만 하면 되므로 defined에서는 1로 처리됨.<br>
+
+<pre>
+#ifdef identifier
+#if defined(identifier)
+</pre>
+
+위 둘은 같음.<br>
+
+<pre>
+#ifndef identifier
+#if identified(!identifier)
+</pre>
+
+위 둘도 같음.<br>
+
+**The #elif and #else Directives**<br>
+
+<pre>
+#if expr1
+Lines to be included if expr1 is nonzero
+#elif expr2
+Lines to be included if expr1 is zero but expr2 is nonzero
+#else
+LInes to be included otherwise
+#endif
+</pre>
+
+**conditional compilation의 활용**<br>
+
+<pre>
+#if defined(WIN32)
+...
+#elif defined(MAX_OS)
+...
+#elif defined(UNIX)
+...
+#endif
+</pre>
+
+OS별로 portable하게 프로그램을 짤 수 있음.<br>
+
+<pre>
+#if __STDC__
+Function prototypes
+#else
+Old style function declarations
+#endif
+</pre>
+
+compiler별로 다른 프로그램을 짤 수 있음.<br>
+
+<pre>
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 256
+#endif
+</pre>
+
+macro에 default 값을 줄 수 있음.<br>
+
+<pre>
+#if 0
+Lines containing comments
+#endif
+</pre>
+
+/* ... */처럼 활용할 수 있음.<br>
+이를 conditioning out이라고 함.<br>
+
 **:pushpin: 다양한 Directives**
