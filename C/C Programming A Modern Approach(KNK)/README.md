@@ -2452,8 +2452,8 @@ Conditional compilation은 #if, #ifdef, #ifndef, #elif, #else, #endif 등 컨디
 <br>
 Directive에 대한 rule은 다음과 같음.<br>
 directive는 #로 시작함. line의 시작에서부터 #가 들어갈 필요는 없고, 그 앞에 white space는 있어도 됨.<br>
-# define N 1000과 같이 tab이나 space는 얼마든지 들어가도 됨.<br>
-일반적으로 첫 번째 new line character에서 directive가 끝남. 하지만 \를 붙이면 다음 줄에서도 이어갈 수 있음.
+#define N 1000과 같이 tab이나 space는 얼마든지 들어가도 됨.<br>
+일반적으로 첫 번째 new line character에서 directive가 끝남. 하지만 \를 붙이면 다음 줄에서도 이어갈 수 있음.<br>
 <pre>
 #define DISK_CAPACITY (SIDES * \
 TRACKS_PER_SIDE *)
@@ -2462,6 +2462,34 @@ directive는 프로그램 시작 부분에서만 있어야 하는 것은 아님.
 directive에 대한 comment는 같은 줄에 있는 것이 좋음.<br>
 
 **:pushpin: Macro Definitions**
+
+**simple macros**<br>
+<pre>
+#define identifier replacement-list
+</pre>
+simple macro는 위와 같은 형식임.<br>
+#define N = 100과 같이 등호나 #define N 100;과 같이 세미콜론을 사용하지 말 것.<br>
+
+**Parameterized Macors**<br>
+<pre>
+#define identifier(x1, x2, ..., xn) replacement-list
+</pre>
+x1~xn은 macro의 parameter들임.<br>
+identifier와 ()사이에는 공백이 있으면 안 됨.<br>
+공백이 있으면 ()를 replacement-list로 간주함.<br>
+
+<pre>
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
+#define IS_EVEN(n) ((n) % 2 == 0)
+</pre>
+위 함수는 다음과 같이 쓰임.<br>
+
+<pre>
+i = MAX(j+k, m-n);
+if (IS_EVEN(i)) i++;
+i = ( (j+k) > (m-n) ? (j+k) : (m-n) );
+if (( (i) %2 == 0 )) i++;
+</pre>
 
 **:pushpin: 조건부 Compilation**
 
