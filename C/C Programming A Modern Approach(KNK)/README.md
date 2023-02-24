@@ -2893,3 +2893,72 @@ Lines containing comments
 이를 conditioning out이라고 함.<br>
 
 **:pushpin: 다양한 Directives**
+
+<pre>
+Error directive: message
+#error message
+</pre>
+
+위와 같은 형식을 가지고 있음.<br>
+
+<pre>
+#if defined(WIN32)
+...
+#elif defined(MAX_OS)
+...
+#else
+#error NO operating system specified
+#endif
+</pre>
+
+이와 같이 활용할 수 있음.<br>
+
+**The # line directive**<br>
+
+<pre>
+#line n
+#line n "file*
+</pre>
+
+n은 integer임.<br>
+#line 정보를 반영하여 __LINE__과 __FILE__ macro도 바뀜.<br>
+
+<pre>
+#line 10 "bar.c"
+</pre>
+
+foo.c 파일의 첫번째 줄이 저 문장이라고 가정함.<br>
+5번째 줄에서 오류가 나면 bar.c의 13번째 줄에서 오류가 났다고 말할 것임.<br>
+첫번째 줄은 directive이고 바로 아래줄이 N번째 줄이 되기 때문임.<br>
+
+**The #pragma directive**<br>
+
+<pre>
+#pragma tokens
+#pragma data(heap_size >= 1000, stack_size >= 2000)
+</pre>
+
+#pragma의 command는 컴파일러마다 다름.<br>
+C89에서는 standard pragma가 없었지만 C99에서는 있음.<br>
+STDC를 첫 번째 token으로 씀.<br>
+FP_CONTRACT, CX_LIMITED_RANGE, FENV_ACCESS가 있음.<br>
+
+<pre>
+__Pragma(string literal)
+</pre>
+
+C99에서는 pragma operator가 있음.<br>
+__Pragma는 destringizes 시킴.<br>
+
+<pre>
+__Pragma("data(heap_size >= 1000, stack_size >= 2000)")
+#pragma data(heap_size >= 1000, stack_size >= 2000)
+</pre>
+
+둘다 같은 문장임.<br>
+
+<pre>
+#define DO_PRAGMA(x) _Pragma(#x)
+DO_PRAGMA(GCC dependency "parse.y")
+#pragma GCC dependency "parse.y"
+</pre>
