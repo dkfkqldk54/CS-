@@ -153,9 +153,20 @@ int main(void)
 #undef SQR이후에 i = SQR(j);에서 SQR이 undefined되었기 때문에 오류가 발생할 수 있음.<br>
 #define SQR이후에 i = SQR(j);는 SQR이 argument를 받기로 한 적이 없기 때문에 오류가 발생할 수 있음.<br>
 
-
 **:pushpin: 15번**
 
+<pre>
+#if defined(ENGLISH)
+  printf("Insert Disk 1\n");
+#elif defined(FRENCH)
+  printf("Le Disque 1\n");
+#elif defined(SPANISH)
+  printf("Inserte El Disco 1\n");
+#endif
+</pre>
+
 **:pushpin: 16번**
+
+_Pragma("ident \"foo\"")
 
 
