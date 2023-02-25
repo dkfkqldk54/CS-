@@ -86,6 +86,9 @@
 - 조건부 Compilation
 - 다양한 Directives
 
+<a href="#15">:pencil2: Chapter 15. Writing Large Programs</a>
+- 헤더 파일
+
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
 **:pushpin: C의 기원**
@@ -2962,3 +2965,144 @@ __Pragma("data(heap_size >= 1000, stack_size >= 2000)")
 DO_PRAGMA(GCC dependency "parse.y")
 #pragma GCC dependency "parse.y"
 </pre>
+
+<h2><a id="15">:pencil2: Chapter 15. Writing Large Programs</a></h2>
+
+**:pushpin: 헤더 파일**
+
+header file과 include file은 같은 말임.<br>
+header file은 .h와 같은 extension을 가지고 있음.<br>
+include는 2가지 형식이 있음.<br>
+
+<pre>
+#include <filename>
+</pre>
+
+이는 시스템 헤더 파일이 있는 폴더를 뒤져보는 헤더 형식임.<br>
+
+<pre>
+#include "filename"
+</pre>
+
+이는 현재 파일이 있는 폴더를 뒤져보는 헤더 형식임.<br>
+현재 디렉토리를 뒤진 다음에는 시스템 파일 디렉토리를 뒤져봄.<br>
+-Ipath command를 이용하면 뒤져보는 폴더를 바꿀 수 있음.<br>
+
+<pre>
+#include <mychecker.h> /*** wrong ***/
+</pre>
+
+현재 디렉토리에 있는 파일을 찾을 때 <>를 쓰면 찾을 수가 없음.<br>
+
+<pre>
+#include "C:\cprogs\utils.h" /* Windows path */
+#include "/cprogs/utils.h" /* UNIX path */
+</pre>
+
+디렉토리의 path를 위와 같이 명시해줄 수도 있으나 좋지 않음.<br>
+""로 덮혀 있어서 string literal로 보이지만 그렇지 않음.<br>
+만약 string literal이면 \c나 \u가 escape sequence로 간주되었을 것임.<br>
+
+<pre>
+#include "d:utils.h"
+#include "\cprogs\include\utils.h"
+#include "d:\cprogs\include\utils.h"
+</pre>
+이렇게 쓸 수도 있지만 아래와 같이 쓰는 것이 좋음.<br>
+
+<pre>
+#include "utils.h"
+#include "..\include\utils.h"
+</pre>
+
+#include tokens와 같은 형식으로 쓸 수도 있음.<br>
+
+<pre>
+#if defined(IA32)
+  #defined CPU_FILE "ia32.h"
+#elif defined(IA64)
+  #defined CPU_FILE "ia64.h"
+#elif defined(AMD64)
+  #defined CPU_FILE "amd64.h"
+#endif
+
+#include CPU_FILE
+</pre>
+
+**Sharing Macro Definition and Type Definition**<br>
+
+<pre>
+#define BOOL int
+#define TRUE 1
+#define FALSE 0
+
+#include "boolean.h"
+</pre>
+
+boolean.h를 include함으로써 macro를 공유할 수 있음.<br>
+#define BOOL int대신 typedef int BOOL;을 써도 됨.<br>
+
+**Sharing Function PRototypes**<br>
+
+다른 파일에서 define된 함수를 call할 때는 prototype이 있어야 함.<br>
+prototpye을 안 써주면 int 타입으로 설정되고 argument의 수와 parameter의 수가 맞아야 하는 등 tandard form에 맞게 가공되어 사용됨.<br>
+그렇지만 prototype을 일일이 다 써주는 것은 번거로울 뿐만 아니라 유지 보수가 어려움.<br>
+그래서 prototype만 모아놓은 헤더 파일을 만들어주고 include함.<br>
+이 헤더 파일은 함수를 define하는 파일에도 include되어 있어야 함.<br>
+f에 엮여있는 함수들의 prototype도 헤더 파일 안에 들어가 있어야 함.<br>
+그러나 관련이 없는 함수의 prototype은 들어가면 안 됨.<br>
+
+**Sharing Variable Declarations**<br>
+
+<pre>
+int i;
+</pre>
+
+이는 i를 declare함과 동시에 define한 것임.<br>
+특정 값을 주지는 않았더라도 값을 넣기 위해 공간을 할당했기 때문임.<br>
+
+<pre>
+extern int i;
+</pre>
+
+i를 declare하기는 했지만 공간을 할당하지 않은 상태임.<br>
+extern은 모든 타입의 변수에 적용됨.<br>
+
+<pre>
+extern int a[];
+</pre>
+array에 공간 할당 할 필요가 없어서 length를 생략할 수 있음.<br>
+함수처럼 변수도 declaration이 있어야 사용할 수 있음.<br>
+shared variable의 declaration도 마찬가지로 헤더 파일 안에 들어가 있어야 함.<br>
+역시 마찬가지로 변수를 define 하는 파일에도 헤더 파일이 include 되어 있어야 함.<br>
+
+**Nested Includes**<br>
+
+<pre>
+bool is_empty(void);
+bool is_full(void);
+</pre>
+
+int 대신 bool을 쓰고 싶을 때는 헤더 파일 안에 또 헤더 파일(stdbool.h)을 넣어야함.<br>
+이를 nested include라고 함.<br>
+nested include는 가능하면 피하는 것이 좋음.<br>
+
+**Protecting Header Files**<br>
+
+소스 파일에 같은 헤더 파일을 2번 이상 include하면 오류가 생길 수 있음.<br>
+p.c가 1.h와 2.h를 include 했는데, 1.h와 2.h모두 3.h를 include하고 있으면 p.c는 3.h를 2번 부르는 셈임.<br>
+항상 오류가 나는 건 아님. macro definition, function prototype, variable declaration만 있으면 괜찮음.<br>
+type definition이 있으면 컴파일 에러가 뜸.<br>
+헤더 파일을 protect하기 위해 #ifndef, #endif 쌍을 활용할 수 있음.<br>
+
+<pre>
+#ifndef BOOLEAN_H
+#define BOOLEAN_H
+#define TRUE 1
+#define FALASE 0
+typedef int Bool;
+#endif
+</pre>
+
+macro의 이름은 그렇게 중요한 건 아닌데 파일 이름이랑 비슷한 게 좋음.<br>
+BOOLEAN.H로 할 수 없으니 BOOLEAN_H로 함.<br>
