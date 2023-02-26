@@ -89,6 +89,7 @@
 <a href="#15">:pencil2: Chapter 15. Writing Large Programs</a>
 - 헤더 파일
 - 프로그램 파일 쪼개기
+- 여러 파일로 이루어진 프로그램 만들기
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -3121,3 +3122,50 @@ justifying은 라인이 꽉 차 보이게 word 사이에 space를 추가하는 �
 한 단어는 20 characters까지이며 20 characters를 넘으면 그 외 글자는 *처리됨.<br>
 한 line은 60 characters임.<br>
 프로그램은 word.c, line.c, justify.c로 나뉘며 justify.c에서 합쳐지므로 헤더 파일은 word.h, line.h만 있음.<br>
+
+**:pushpin: 여러 파일로 이루어진 프로그램 만들기**
+
+각각 소스 파일들은 한번씩은 컴파일 되어야 함. 그래야 오브젝트 파일을 만들 수 있기 때문임.<br>
+헤더 파일은 소스 파일을 컴파일하면서 자동으로 컴파일되니 따로 컴파일해주지 않아도 됨.<br>
+오브젝트 파일은 UNIX에서는 .o, Windows에서는 .obj 확장자를 가지고 있음.<br>
+링커는 오브젝트 파일을 묶어서 executable file을 만듬.<br>
+컴파일러가 resolve하지 않은 external reference들을 resolve함. external reference는 다른 파일에 있는 함수나 변수를 호출할 때 발생함.<br>
+
+<pre>
+gcc -o justify justify.c line.c word.c
+</pre>
+
+justify.c, line.c, word.c를 object 파일로 만든 다음 링커에게 보냄. 링커는 이 세 파일을 조합해서 하나의 파일로 만듬.<br>
+-o는 justify라는 이름의 executable한 파일을 만들고 싶다는 것을 의미함.<br>
+
+**Makefiles**<br>
+
+makefile은 프로그램 안에 들어있는 파일들을 리스트업하고, 파일 사이의 dependencies를 보여줌.<br>
+<pre>
+justify: justify.o word.o line.o
+  gcc -o justify justify.o line.o word.o
+  
+justify.o: justify.c word.h line.h
+  gcc -c justify.c
+  
+word.o: word.c word.h
+  gcc -c word.c
+  
+line.o: line.c line.h
+  gcc -c line.c
+</pre>
+
+4개의 그룹으로 나눠지는데, 각각의 그룹을 rule이라고 함.<br>
+각 그룹의 첫 번째 줄은 target file과 dependant한 파일들을 나타냄.<br>
+두 번째 줄은 dependant 파일들이 변경될 때 rebuilt하기 위한 명령어를 나타냄.<br>
+justify.o가 target file인 그룹의 두 번째 줄은 -c임.<br>
+이는 object 파일은 만들 것이나 linking 하지는 않겠다(실행 가능한 파일을 만들지 않겠다)는 것을 의미함.<br> 
+커맨드 줄은 스페이스가 아니라 tab으로 띄고 시작함.<br>
+makefile의 이름은 Makefile 혹은 makefile로 저장됨. make utility를 사용할 때, 현재 디렉토리에 Makefile 혹은 makefile이 있는지 확인함.<br>
+<pre>
+make target
+make justify
+</pre>
+make를 사용하기 위해서는 위와 같은 명령어를 사용하면 됨.<br>
+target이 명시되어 있지 않으면 first fule을 타겟으로 세움.<br>
+first rule을 제외하면 나머지는 순서가 임의적임.<br>
