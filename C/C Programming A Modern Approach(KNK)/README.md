@@ -88,6 +88,7 @@
 
 <a href="#15">:pencil2: Chapter 15. Writing Large Programs</a>
 - 헤더 파일
+- 프로그램 파일 쪼개기
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -3106,3 +3107,17 @@ typedef int Bool;
 
 macro의 이름은 그렇게 중요한 건 아닌데 파일 이름이랑 비슷한 게 좋음.<br>
 BOOLEAN.H로 할 수 없으니 BOOLEAN_H로 함.<br>
+
+**:pushpin: 프로그램 파일 쪼개기**
+
+UNIX나 Windows prompt에서 justify <quote을 입력하면 justify라는 프로그램이 quote이라는 입력문을 읽으라는 뜻이 됨.<br>
+이를 input redirection이라고 함.<br>
+justify <quote >newquote은 프로그램이 실행된 후 결과를 newquote에 저장하라는 뜻임.<br>
+이를 output redirection이라고 함.<br>
+extra space와 blank line은 삭제하고, line은 filled되거나 justified됨.<br>
+filling은 단어가 더 이상 추가될 수 없을 때까지 추가한다는 뜻임.<br>
+justifying은 라인이 꽉 차 보이게 word 사이에 space를 추가하는 작업을 의미함.<br>
+마지막 line은 justifying하지 않음.<br>
+한 단어는 20 characters까지이며 20 characters를 넘으면 그 외 글자는 *처리됨.<br>
+한 line은 60 characters임.<br>
+프로그램은 word.c, line.c, justify.c로 나뉘며 justify.c에서 합쳐지므로 헤더 파일은 word.h, line.h만 있음.<br>
