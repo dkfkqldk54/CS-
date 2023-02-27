@@ -3169,3 +3169,43 @@ make justify
 make를 사용하기 위해서는 위와 같은 명령어를 사용하면 됨.<br>
 target이 명시되어 있지 않으면 first fule을 타겟으로 세움.<br>
 first rule을 제외하면 나머지는 순서가 임의적임.<br>
+
+**Errors During Linking**<br>
+
+linker가 external reference를 resolve 할 수 없을 때 undefined symbol 혹은 undefined referenece라는 메세지가 나옴.<br>
+linker에 의해 발견될 수 있는 오류는 3가지가 있음.<br>
+misspellings, missing libraries, missing files임.<br>
+missing files는 쓰고자 하는 함수를 사용할 수 없을 때 file을 확인할 수 없다고 나옴.<br>
+
+**Rebuilding a program**<br>
+
+파일 수정이 생길 경우 모든 파일을 다시 compile하는 것이 아니라 수정된 파일과 그로 인해 영향을 받은 파일들만 recompile함.<br>
+word.c에 있는 함수가 헤더 파일에 영향을 주지 못할 정도로만 수정된 경우 word.c만 recompile하고 프로그램을 relink함.<br>
+그러나 헤더 파일에 영향이 있을 경우 헤더 파일을 include하고 있는 모든 파일을 recompile해야 함.<br>
+word.h, word.c, justify.c를 변경했을 경우 line.c는 word.h를 포함하지 않았으므로 recompile 하지 않아도 됨.<br>
+
+<pre>
+gcc -o justify justify.c word.c line.o
+</pre>
+
+따라서 line.c가 아니라 line.o임.<br>
+makefile을 쓰면 각 파일의 date를 이용해서 자동으로 rebuilding함.<br>
+이는 3단계로 이루어짐.<br>
+<pre>
+1. justify.c와 word.h가 변경되었으므로 justify.c를 recompile해서 justify.o로 building함.
+2. word.c와 word.h가 변경되었으므로 word.c를 recompile해서 word.o로 building함.
+3. justfity.o와 word.o가 변경되었으므로 justify.o, word.o, line.o를 linking해서 justify로 building함.
+</pre>
+
+**Defining Macros Outside a Program**<br>
+
+<pre>
+gcc -DDEBUG=1 foo.c
+</pre>
+대부분의 컴파일러들은 -D 옵션을 가지고 있음. -D 옵션은 macro의 value를 specify하는데 사용됨.<br>
+<pre>
+#define DEBUG 1
+<pre>
+gcc command는 위와 같은 효과를 줌.<br>
+macro에 value 설정이 안 되면 그 값은 1로 설정됨.<br>
+-U 옵션도 있는데 이는 undefine하기 위해 사용되며 #undef랑 같음.<br>
