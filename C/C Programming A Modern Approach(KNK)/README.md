@@ -3044,7 +3044,7 @@ include는 2가지 형식이 있음.<br>
 boolean.h를 include함으로써 macro를 공유할 수 있음.<br>
 #define BOOL int대신 typedef int BOOL;을 써도 됨.<br>
 
-**Sharing Function PRototypes**<br>
+**Sharing Function Prototypes**<br>
 
 다른 파일에서 define된 함수를 call할 때는 prototype이 있어야 함.<br>
 prototpye을 안 써주면 int 타입으로 설정되고 argument의 수와 parameter의 수가 맞아야 하는 등 tandard form에 맞게 가공되어 사용됨.<br>
@@ -3074,6 +3074,8 @@ extern은 모든 타입의 변수에 적용됨.<br>
 extern int a[];
 </pre>
 array에 공간 할당 할 필요가 없어서 length를 생략할 수 있음.<br>
+array이랑 포인터랑 비슷하다고 해서 extern int *a;로 쓸 수는 없음.<br>
+expression으로 쓰일 때는 array가 pointer가 되지만, 변수 선언시에는 array와 pointer는 구분되어야 함.<br>
 함수처럼 변수도 declaration이 있어야 사용할 수 있음.<br>
 shared variable의 declaration도 마찬가지로 헤더 파일 안에 들어가 있어야 함.<br>
 역시 마찬가지로 변수를 define 하는 파일에도 헤더 파일이 include 되어 있어야 함.<br>
