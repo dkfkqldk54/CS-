@@ -3205,7 +3205,7 @@ gcc -DDEBUG=1 foo.c
 대부분의 컴파일러들은 -D 옵션을 가지고 있음. -D 옵션은 macro의 value를 specify하는데 사용됨.<br>
 <pre>
 #define DEBUG 1
-<pre>
+</pre>
 gcc command는 위와 같은 효과를 줌.<br>
 macro에 value 설정이 안 되면 그 값은 1로 설정됨.<br>
 -U 옵션도 있는데 이는 undefine하기 위해 사용되며 #undef랑 같음.<br>
