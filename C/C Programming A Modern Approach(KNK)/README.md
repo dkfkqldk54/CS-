@@ -91,6 +91,9 @@
 - 프로그램 파일 쪼개기
 - 여러 파일로 이루어진 프로그램 만들기
 
+<a href="#16">:pencil2: Chapter 16. Structures, Unions, and Enumerations</a>
+- Structure 변수
+
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
 **:pushpin: C의 기원**
@@ -3211,3 +3214,52 @@ gcc -DDEBUG=1 foo.c
 gcc command는 위와 같은 효과를 줌.<br>
 macro에 value 설정이 안 되면 그 값은 1로 설정됨.<br>
 -U 옵션도 있는데 이는 undefine하기 위해 사용되며 #undef랑 같음.<br>
+
+<h2><a id="16">:pencil2: Chapter 16. Structures, Unions, and Enumerations</a></h2>
+
+**:pushpin: Structure 변수**
+
+<pre>
+struct {
+  char name[NAME_LEN + 1];
+  int number;
+  char sex;
+} employee1, employee2;
+</pre>
+
+name, number, sex는 member임.<br>
+member의 이름은 다른 structure의 member의 이름과 같아도 충돌하지 않음.<br>
+
+**Initializing structure variables**<br>
+
+<pre>
+struct {
+  int number;
+  char name[NAME_LEN + 1];
+  int on_hand;
+} part1 = {528, "Disk drive", 10},
+  part2 = {914, "Printer Cable", 5};
+</pre>
+
+array처럼 structure variable도 declare될 때 initialize되어야 함.<br>
+initializer 값의 순서는 member의 순서와 같아야함.<br>
+initializer의 expression에는 constant만 들어가야함. variable은 안 됨.(C99에서는 이 제약이 완화됨.)<br>
+initializer는 member보다 적거나 같아야함.(C99)<br>
+적은 경우 0으로 초기화됨.(C99)<br>
+문자는 0byte가 되고 ""랑 같음.(C99)<br>
+
+**Designated Initializers(C99)**<br>
+
+<pre>
+{.number = 528, .name = "Disk drive", .on_hand = 10}
+</pre>
+
+.과 member 이름이 결합된 것을 designator라고 부름.<br>
+designator를 쓰면 순서에 맞게 쓸 필요가 있음.<br>
+모든 value가 designated initialzied되어야 하는 건 아님.<br>
+
+**:pushpin: **
+
+**:pushpin: **
+
+**:pushpin: **
