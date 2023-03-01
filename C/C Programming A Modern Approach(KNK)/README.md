@@ -93,6 +93,7 @@
 
 <a href="#16">:pencil2: Chapter 16. Structures, Unions, and Enumerations</a>
 - Structure 변수
+- Structure Types
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -3296,7 +3297,39 @@ a1 = a2;
 동시에 declare된 structure는 compatible함.<br>
 같은 structure tag 혹은 같은 type name을 이용하여 declare된 structure는 compatible함.<br> 
 
-**:pushpin: **
+**:pushpin: Structure Types**
+
+<pre>
+struct {
+  int number;
+  char name[NAME_LEN + 1];
+  int on_hand;
+} part1;
+
+struct {
+  int number;
+  char name[NAME_LEN + 1];
+  int on_hand;
+} part2;
+</pre>
+
+이렇게 쓰면 program이 비대해짐.<br>
+part1과 part2는 compatible type도 아님.<br>
+따라서 서로간에 assignment가 불가능함.<br>
+
+**Declaring a Structure Tag**<br>
+
+<pre>
+struct part {
+  int number;
+  char name[NAME_LEN + 1];
+  int on_hand;
+};
+</pre>
+
+structure tag는 part임.<br>
+마지막에 ;이 찍혀야 declaration이 끝났다고 간주됨.<br>
+;이 찍히지 않으면 syntax error가 발생함.<br>
 
 **:pushpin: **
 
