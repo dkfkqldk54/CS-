@@ -49,4 +49,26 @@ Output if DEBUG is not defined:
 
 **:pushpin: 5번**
 
+<pre>
+CC = gcc
+CFLASS = -Wall -Wextra -Wpedantic -std=c99
+
+demo: main.o f1.o f2.o
+  $(CC) -o demo main.o f1.o f2.o $(CFLAGS)
+
+main.o: main.c f1.h
+  $(CC) -c main.c $(CFLAGS)
+
+f1.o: f1.c f1.h f2.h
+  $(CC) -c f1.c $(CFLAGS)
+
+f2.o: f2.c f2.h f1.h
+  $(CC) -c f2.c $(CFLAGS)
+</pre>
+
 **:pushpin: 6번**
+
+(a) main.c, f1.c, f2.c<br>
+(b) f1.o, demo<br>
+(c) main.c f1.c f2.c -> f1.o f2.o main.o -> demo<br>
+(d) f1.c f2.c -> f1.o f2.o -> demo<br>
