@@ -3258,6 +3258,44 @@ initializer는 member보다 적거나 같아야함.(C99)<br>
 designator를 쓰면 순서에 맞게 쓸 필요가 있음.<br>
 모든 value가 designated initialzied되어야 하는 건 아님.<br>
 
+**Operations on Structures**<br>
+
+<pre>
+printf("Part number: %d\n", part1.number);
+</pre>
+
+structure의 member는 position이 아니라 name으로 access됨.<br>
+
+<pre>
+part1.number = 258;
+part1.on_hand++;
+</pre>
+
+structure member는 lvalue여서 assignment도 가능하고 increment나 decrement도 가능함.<br>
+
+<pre>
+scanf("%d", &part1.on_hand);
+</pre>
+
+.은 postfix ++, --와 같은 우선순위를 가지고 있음.<br>
+따라서 &와 함께 쓰일 때 part1.on_hand가 먼저 결합됨.<br>
+
+<pre>
+part2 = part1;
+</pre>
+
+array는 =을 쓸 수 없는데 structure에서는 쓸 수 있음.<br>
+
+<pre>
+struct { int a[10]; } a1, a2;
+a1 = a2;
+</pre>
+
+이를 이용해서 array를 copy할 수도 있음.<br>
+=는 compatible type의 structure랑만 쓸 수 있음.<br>
+동시에 declare된 structure는 compatible함.<br>
+같은 structure tag 혹은 같은 type name을 이용하여 declare된 structure는 compatible함.<br> 
+
 **:pushpin: **
 
 **:pushpin: **
