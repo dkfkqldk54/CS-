@@ -94,6 +94,7 @@
 <a href="#16">:pencil2: Chapter 16. Structures, Unions, and Enumerations</a>
 - Structure 변수
 - Structure Types
+- Nested Arrays and Structures
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
