@@ -3422,6 +3422,58 @@ print_part( (struct part) {.on_hand = 10, .name = "Disk drive", .number = 528} )
 
 designator를 활용할 수도 있음.<br>
 
-**:pushpin: **
+**:pushpin: Nested Arrays and Structures**
+
+**Nested Structures**<br>
+
+<pre>
+struct person_name {
+  char first[FIRST_NAME_LEN + 1];
+  char middle_initial;
+  char last[LAST_NAME_LEN + 1];
+};
+
+struct student {
+  struct person_name name;
+  int id, age;
+  char sex;
+} student1, student2;
+</pre>
+
+student1의 first name을 access하려면 strcpy(student1.name.first, "Fred");와 같이 해야함.<br>
+
+**Arrays of Structures**<br>
+
+<pre>
+struct part inventory[100];
+</pre>
+
+element가 structure인 array임.<br>
+
+<pre>
+print_part(inventory[i]);
+inventory[i].number = 883;
+inventory[i].name[0] = '\0';
+</pre>
+
+인벤토리에 있는 i번째 structure에 대해 다양한 연산이 가능함.<br>
+
+**Initializing an Array of Structures**<br>
+
+<pre>
+struct dialing_code {
+  char *country;
+  int code;
+};
+
+const struct dialing_code country_code[] = { {"Argentina", 54}, ...., {"Vietnam", 843} };
+</pre>
+
+<pre>
+struct part inventory[100] = { [0].number = 528, [0].on_hand = 10, [0].name[0] = '\0'};
+</pre>
+
+C99은 1개 이상의 designator를 허용함.<br>
+처음 2개 item은 2개의 designator, 마지막 item은 3개의 designator를 이용함.<br>
 
 **:pushpin: **
