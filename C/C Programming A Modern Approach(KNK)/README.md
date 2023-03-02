@@ -3331,6 +3331,97 @@ structure tag는 part임.<br>
 마지막에 ;이 찍혀야 declaration이 끝났다고 간주됨.<br>
 ;이 찍히지 않으면 syntax error가 발생함.<br>
 
+<pre>
+struct part part1, part2;
+part part1, part2; /* wrong */
+</pre>
+
+part tag를 declare하면 variable들을 위와 같이 선언할 수 있음.<br>
+part는 type name이 아니므로 struct를 빼면 안 됨.<br>
+part는 struct가 없으면 meaningless하므로, part와 같은 이름의 변수가 있어도 충돌하지 않음.<br>
+
+<pre>
+struct part {
+  int number;
+  char name[NAME_LEN+1];
+  int on_hand;
+} part1, part2;
+</pre>
+
+tag와 variable은 동시에 선언될 수 있음.<br>
+
+<pre>
+struct part part1 = {528, "Disk drive", 1};
+struct part part2;
+part2 = part1; /* legal */
+</pre>
+
+struct part 타입끼리는 compatible함.<br>
+
+**Defining a Structive Type**<br>
+
+<pre>
+typedef struct {
+  int number;
+  char name[NAME_LEN + 1];
+  int on_hands;
+} Part;
+</pre>
+
+typedef에서 name은 마지막에 나와야 함.<br>
+
+<pre>
+Part part1, part2;
+</pre>
+
+Part는 typedef name이므로 변수 선언시 그대로 사용할 수 있음.<br>
+Part로 선언된 변수는 모두 compatible함.<br>
+그러나 linked list를 사용할 때는 반드시 structure tag를 사용해야 하므로 structure tag가 더 많이 이용됨.<br>
+
+**structures as arguments and return value**<br>
+
+함수는 structure를 argument 혹은 return value로 가질 수 있음.<br>
+
+<pre>
+void print_part(struct part p)
+{
+  printf("part number: %d\n", p.number);
+}
+
+print_part(part1);
+</pre>
+
+<pre>
+struct part build_part(int number, const char *name, int on_hand)
+{
+  struct part p;
+  
+  p.number = number;
+  strcpy(p.name, name);
+  p.on_hand = on_hand;
+  return p;
+}
+
+part1 = build_part(528, "Disk drive", 10);
+</pre>
+
+structure를 argument로 쓰거나 return 하는 건 상당한 overhead를 일으킴.<br>
+따라서 structure 자체를 pass하기 보다는 pointer를 넘기는 것이 효율적임.<br>
+
+**compound literals (C99)**<br>
+
+<pre>
+print_part( (struct part) {528, "Disk drive", 10} );
+</pre>
+
+함수에게 전달하는 용도로 compound literal을 활용할 수 있음.<br>
+
+<pre>
+print_part( (struct part) {.on_hand = 10, .name = "Disk drive", .number = 528} );
+</pre>
+
+designator를 활용할 수도 있음.<br>
+
 **:pushpin: **
 
 **:pushpin: **
