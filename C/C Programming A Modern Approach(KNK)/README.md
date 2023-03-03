@@ -3517,3 +3517,55 @@ union {
 </pre>
 
 그러나 C99에서는 designator를 이용해서 첫 번째 member가 아니라도 initialize할 수 있음.<br>
+
+**Using Unions to Save Space**<br>
+
+<pre>
+struct catalog_item {
+  int stock_number;
+  double price;
+  int item_type;
+  char title[TITLE_LEN+1];
+  char author[AUTHOR_LEN+1];
+  int num_pages;
+  char design[DESIGN_LEN+1];
+  int colors;
+  int sizes;
+};
+</pre>
+item이 book인지, mug인지, shirt인지에 따라서 구성요소가 다 다름.<br>
+위와 같이 해놓으면 낭비하는 공간이 생김.<br>
+
+<pre>
+struct catalog_item {
+  int stock_number;
+  double price;
+  int item_type;
+  union {
+    struct {
+      char title[TITLE_LEN+1];
+      char author[AUTHOR_LEN+1];
+      int num_pages;
+    } book;
+    struct {
+      char design[DESIGN_LEN+1];
+    } mug;
+    struct {
+      char design[DESIGN_LEN+1];
+      int colors;
+      int sizes;
+    } shirt;
+  } item;
+};
+</pre>
+
+이와 같이 union을 member로 쓰면 공간낭비를 줄일 수 있음.<br>
+
+<pre>
+strcpy(c.item.mug.design, "Cats");
+printf("%s", c.item.shirt.design); /* prints "Cats" */
+</pre>
+
+원래 union의 한 member에 값을 저장하고, 다른 member에 access하면 값이 undefined되어 있는 것이 당연함.<br>
+그러나 C standard는 union의 2개 이상의 멤버가 structure인 경우, structure가 matching member로 시작하면 이것이 가능하도록 해놓음.<br>
+matching member는 같은 순서로 있고, compatible type을 가진 멤버를 의미함. 꼭 name이 같은 필요는 없음.<br>
