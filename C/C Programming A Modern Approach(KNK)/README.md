@@ -95,6 +95,7 @@
 - Structure 변수
 - Structure Types
 - Nested Arrays and Structures
+- Unions
 
 <h2><a id="2">:pencil2: Chapter 2. C Fundamentals</a></h2>
 
@@ -3477,4 +3478,42 @@ struct part inventory[100] = { [0].number = 528, [0].on_hand = 10, [0].name[0] =
 C99은 1개 이상의 designator를 허용함.<br>
 처음 2개 item은 2개의 designator, 마지막 item은 3개의 designator를 이용함.<br>
 
-**:pushpin: **
+**:pushpin: Unions**
+
+Union은 structure랑 비슷한데 member중에 가장 큰 공간을 차지하는 member만큼의 공간만 할당해줌.<br>
+새로운 값이 member중 하나에 배정이 되면, 그 값을 덮어쓰기 함.<br>
+
+<pre>
+union {
+  int i;
+  double d;
+} u;
+</pre>
+
+만약 structure 였으면 i와 d가 각각 다른 주소에 저장되었겠지만, union에서는 같은 주소에 배정됨.<br>
+
+<pre>
+u.i = 82;
+u.d = 74.8;
+</pre>
+
+union의 member에 access하는 방법도 동일함.<br>
+tag와 type을 부여하는 방식, =로 copy하는 방식, 함수에 parameter로 쓰이거나 return 되는 방식도 동일함.<br>
+
+<pre>
+union {
+  int i;
+  double d;
+} u = {0};
+</pre>
+
+initialize는 첫 번째 원소만 가능함.<br>
+
+<pre>
+union {
+  int i;
+  double d;
+} u = {.d = 0.0};
+</pre>
+
+그러나 C99에서는 designator를 이용해서 첫 번째 member가 아니라도 initialize할 수 있음.<br>
