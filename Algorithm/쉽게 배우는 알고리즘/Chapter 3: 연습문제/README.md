@@ -9,6 +9,35 @@ T(n) <= T(5^k) <= T(5n)인데 T(n) = T(5n)이므로 T(n) = T(5^k) = T(5n)임.<br
 
 **:pushpin: 2번**
 
+<pre>
+isThereX(A[], start, end, x)
+{
+  if x < A[start] 혹은 x > A[end]
+    return false
+  elif x == A[start] 혹은 x == A[end]
+    return true
+  else
+    point = start와 end 가운데, 만약 start와 end가 붙어있으면 start로
+    if x == A[point]
+      return true
+    elif x < A[point]
+      return isThereX(A[], start, point, x)
+    else
+      return isThereX(A[], point, end, x)
+}
+</pre>
+
+<pre>
+T(n) <= T(n/2) + a의 점근적 복잡도는 O(logn)이다. 즉 충분히 큰 n에 대해서 T(n) <= clogn인 양의 상수 c가 존재한다.
+     <= clog(n/2) + a
+     = clogn - clog2 + a
+     = clogn - (clog2 - a)
+     <= clogn
+     
+clog2 -a >= 0 즉 a <= clog2이기만 하면 이를 만족하는 상수 c가 존재함.
+따라서 T(n) = O(nlogn)임.
+</pre>
+
 **:pushpin: 3번**
 
 **:pushpin: 4번**
