@@ -1059,3 +1059,102 @@ jalr(jump and link register) 명령어에서 목적지 레지스터를 꼭 지�
 이 경우 f10에 float을 저장하지만 return은 아무것도 하지 않는다고 볼 수 있음.<br>
 0(x1)은 x1 레지스터에 저장된 주소에서 0바이트 떨어진(offset) 곳의 주소를 나타냄.<br>
 이로 인해 함수를 호출한 지점으로 돌아가게 됨.<br>
+
+**2차원 배열을 사용하는 부동 소수점 C 프로시저를 RISC-V 어셈블리 코드로 컴파일**<br>
+
+대부분의 부동 소수점 계산은 2배 정밀도 연산을 사용함.<br>
+행렬 곱셈 C = C + A*B를 계산하겠음.<br>
+
+<pre>
+void mm (double c[][], double a[][], double b[][])
+{
+ size_t i, j, k;
+ for (i = 0; i < 32; i = i + 1)
+  for (j = 0; j < 32; j = j + 1)
+   for (k = 0; k < 32; k = k + 1)
+    c[i][j] = c[i][j] + a[i][k] * b[k][j];
+}
+</pre>
+
+배열의 시작 주소는 매개변수이므로 x10(c), x11(a), x12(b)에 있고, 정수 변수는 x5(i), x6(j), x7(k)에 있다고 가정함.<br>
+이 프로시저 본체에 대한 RISC-V 어셈블리 코드는 무엇인가?
+<br>
+c[i][j]는 가장 안쪽 순환문에 사용됨.<br>
+이 순환문의 인덱스는 k이므로 c[i][j]에 영향을 미치지 않음.<br>
+따라서 순환문을 반복할 때마다 c[i][j]를 적재하고 저장할 필요는 없음.<br>
+대신 컴파일러는 순환문 외부에서 c[i][j]를 레지스터에 적재하고, 같은 레지스터에 a[i][k] * b[k][j]의 합을 축적시킴.<br>
+가장 안쪽 순환문이 끝나면 그 합을 c[i][j]에 저장함.<br>
+<pre>
+  mm:...
+    addi x28, x0, 32 // x28 = 32(row의 사이즈, loop의 끝)
+    addi x5, x0, 0 // i = 0;
+L1: addi x6, x0, 0 // j = 0;
+L2: addi x7, x0, 0 // k = 0; 
+</pre>
+
+32 * 32 2차원 배열은 32개의 원소를 갖는 1차원 배열 32개와 똑같음.<br>
+따라서 i개의 1차원 배열을 건너뛰고 열을 찾아야함.<br>
+
+<pre>
+slli x30, x5, 5 // x30 = i * 2^5 (size of row of c)
+add x30, x30, x6 / x30 = i & size (row) + j
+</pre>
+
+이 합을 바이트 인덱스로 바꾸기 위해 행렬 원소의 크기를 곱함.<br>
+2배 정밀도 원소 하나는 8바이트씩 차지하므로 8을 곱해야 함.
+
+<pre>
+slli x30, x30, 3 // x30 = byte of offset of [i][j]
+</pre>
+
+이 합을 c의 시작 주소에 더하여 c[i][j]의 주소를 구하거, 2배 정밀도 수 c[i][j]를 f0에 적재함.<br>
+
+<pre>
+add x30, x10, x30 // x30 = byte address of c[i][j]
+fld f0, 0(x30) // f0 = 8 bytes of c[i][j]
+</pre>
+
+주소를 계산하고 2배 정밀도 수 b[k][j]를 레지스터에 넣은 다음 5개 명령어는 앞의 5개 명령어와 실제적으로 같음.<br>
+
+<pre>
+L3: slli x29, x7, 5 // x29 = k * 2^5 (size of row of b)
+    add x29, x29, x6 // x29 = k * size(row) + j
+    slli x29, x29, 3 // x29 = byte offset of [k][j]
+    add x29, x12, x29 // x29 = byte address of b[k][j]
+    fld f1, 0(x29) // f1 = 8 bytes of b[k][j] 
+</pre>
+
+다음 5개 명령어도 앞의 5개 명령어와 하는 일은 같음. 주소를 계산하고 2배 정밀도 수인 a[i][k]를 적재함.<br>
+
+<pre>
+slli x29, x5, 5 // x29 = i * 2^5 (size of row of a)
+add x29, x29, x7 // x29 = i * size(row) + k
+slli x29, x29, 3 // x29 = byte offset of [i][k]
+add x29, x11, x29 // x29 = byte address of a[i][k]
+fld f2, 0(x29) // f2 = a[i][k]
+</pre>
+
+**추가**
+
+<pre>
+addi x1, x0, 10 // x1 = 0 + 10
+add x2, x1, x0 // x2 = x1 + 0
+</pre>
+
+addi x1, x0, 10은 x0에 10을 더한 값을 x1에 저장함.<br>
+이 때, addi 명령어라서 상수 10을 직접 인코딩해서 사용함.<br>
+add x2, x1, x0은 x1과 x0의 값을 더하여 x2에 저장함.<br>
+레지스터에 저장된 값을 사용하기 때문에 직접 인코딩하지 않고 레지스터 값을 가져와서 사용함.<br>
+즉, addi 명령어는 상수를 사용하여 연산을 수행하고, add 명령어는 레지스터 값을 사용하여 연산을 수행함.<br>
+
+<pre>
+addi x7, x7, 1        // k++
+blt x7, x28, L2       // if (k < 32) goto L2
+addi x6, x6, 1        // j++
+blt x6, x28, L1       // if (j < 32) goto L1
+addi x5, x5, 1        // i++
+blt x5, x28, L1       // if (i < 32) goto L1
+jr x1                 // return
+</pre>
+
+for문은 3개인데 loop는 2개일 수 있는 이유는 위와 같음.<br>
