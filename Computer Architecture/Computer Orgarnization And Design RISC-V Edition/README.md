@@ -11,6 +11,7 @@
 - 오류 및 함정
 
  <a href="#2">:pencil2: Chapter2. 명령어: 컴퓨터 언어</a>
+ - 하드웨어 연산
  - 부호있는 수와 부호없는 수
  - 문자와 문자열
  
@@ -271,6 +272,51 @@ CPI가 4배 차이나면 MIPS도 4배 차이가 나는 것임.<br>
 많은 명령어를 실행하지만 빠른 명령어를 사용하는 프로그램으로 바꾸는 경우, 컴퓨터 성능과는 반대로 MIPS 값이 작아짐.<br>
  
 <h2><a id="2">:pencil2: Chapter2. 명령어: 컴퓨터 언어</a></h2>
+
+ **:pushpin: 하드웨어 연산**
+ 
+ RISC-V 산술 명령어는 반드시 한 종류의 연산만 지시하며 항상 변수 3개를 갖음.<br>
+ //의 오른쪽은 주석(comment)으로서 컴퓨터는 이것을 무시함.<br>
+ 고급 프로그래밍 언어와는 달리 한 줄에 명령어 하나만을 쓸 수 있으며, 줄이 끝나면 주석도 끝난다는 점이 C와는 다른 점임.<br>
+ 모든 명령어가 피연산자를 반드시 3개씩 갖도록 제한하는 것은 하드웨어를 단순하게 하자는 원칙과 부합함.<br>
+ 피연산자의 개수가 가변적이면 하드웨어가 복잡해짐.<br>
+ 설계 원칙 1: 간단하기 위해서는 규칙적인 것이 좋다.<br>
+ 
+ <pre>
+ 32개의 레지스터(x0-x31)가 있으며 arithmetic을 숳애하기 위해서는 데이터가 레지스터에 들어와야 함.
+ 레지스터 x0은 항상 0임.
+ 2^30개의 memory words가 있음.
+ Memory[0], Memory[4], ... , Memory[4,294,967,292]
+ 오직 data transfer instructions에 의해서만 접근이 가능함.
+ RISC-V는 byte address를 사용하므로 sequential word는 4씩 차이가 남.
+ Memory는 data structures, arrays, spilled registers를 hold함.
+ </pre>
+ 
+ <pre>
+ Arithmetic
+ 
+ add / add x5, x6, x7 / x5 = x6 + x7
+ subtract / sub x5, x6, x7 / x5 = x6 - x7
+ add immediate / addi x5, x6, 20 / x5 = x6 + 20
+ 
+ Data transfer
+ 
+ load word / lw x5, 40(x6) / x5 = Memory[x6 + 40]
+ load word, unsigned / lwd x5, 40(x6) / x5 = Memory[x6 + 40]
+ store word / sw x5, 40(x6) / Memory[x6 + 40] = x5
+ load halfword / lh x5, 40(x6) / x5 = Memory[x6 + 40]
+ load halfword, unsigned / lhu x5, 40(x6) / x5 = Memory[x6 + 40]
+ store halfword / sh x5, 40(x6) / Memory[x6 + 40] = x5
+ load byte / lb x5, 40(x6) / x5 = Memory[x6 + 40]
+ load byte, unsigned / lbu x5, 40(x6) / x5 = Memory[x6 + 40]
+ store byte / sb x5, 40(x6) / Memory[x6 + 40] = x5
+ load reserved / lr.d x5, (x6) / x5 = Memory[x6] 여기서 d는 double word임.
+ store conditional / sc.d x7, x5, (x6) / Memory[x6] = x5, 업데이트에 성공하면 x7 = 1, 실패하면 x7 = 0
+ load upper immediate / lui x5, 0x12345 / x5 = 0x12345000 / 20 bit constant를 12bit left shifted 된 상태로 load함.
+ 
+ Logical
+ </pre>
+ 
 
 **:pushpin: 부호있는 수와 부호없는 수**
  
