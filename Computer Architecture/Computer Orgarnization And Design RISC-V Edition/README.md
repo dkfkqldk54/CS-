@@ -347,6 +347,32 @@ CPI가 4배 차이나면 MIPS도 4배 차이가 나는 것임.<br>
  jump and link register / jalr x1, 100(x5) / x1 = PC + 4; go to x5 + 100
  </pre>
  
+ C 치환문 2개의 번역<br>
+ 
+ <pre>
+ a = b + c;
+ d = a - e;
+ 
+ add a, b, c
+ sub d, a, e
+ </pre>
+ 
+ 복잡한 C 치환문의 번역<br>
+ 
+ <pre>
+ f = (g + h) - (i + j);
+ 
+ add t0, g, h
+ add t1, i, j
+ sub f, t0, t1
+ </pre>
+ 
+ Java는 원래 이식성을 높이기 위해 소프트웨어 인터프리터를 사용하도록 설계됨.<br>
+ 이 인터프리터의 명령어 집합을 Java 바이트코드라고 부름.<br>
+ 오늘날의 Java 시스템은 Java 바이트코드를 기계어로 컴파일함.<br>
+ C 프로그램보다 컴파일이 훨씬 나중에 일어나므로 이러한 Java 컴파일러를 JIT(Just In Time) 컴파일러라고 부르기도 함.<br>
+ 
+ 
 
 **:pushpin: 부호있는 수와 부호없는 수**
  
