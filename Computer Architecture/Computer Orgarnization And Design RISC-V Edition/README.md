@@ -315,6 +315,36 @@ CPI가 4배 차이나면 MIPS도 4배 차이가 나는 것임.<br>
  load upper immediate / lui x5, 0x12345 / x5 = 0x12345000 / 20 bit constant를 12bit left shifted 된 상태로 load함.
  
  Logical
+ 
+ and / and x5, x6, x7 / x5 = x6 & x7
+ inclusive or / or x5, x6, x8 / x5 = x6 | x8
+ exclusive or / xor x5, x6, x9 / x5 = x6 ^ x9
+ and immediate / andi x5, x6, 20 / x5 = x6 & 20
+ inclusive or immediate / ori x5, x6, 20 / x5 = x6 | 20
+ exclusive or immediate / xori x5, x6, 20 / x5 = x6 ^ 20
+ 
+ Shift
+ 
+ shift left logical / sll x5, x6, x7 / x5 = x6 << x7
+ shift right logical / srl x5, x6, x7 / x5 = x6 >> x7
+ shift right arithmetic / sra x5, x6, x7 / x5 = x6 >> x7
+ shift left logical immediate / slli x5, x6, 3 / x5 = x6 << 3
+ shift right logical immediate / srli x5, x6, 3 / x5 = x6 >> 3
+ shift right arithmetic immediate / srai x5, x6, 3 / x5 = x6 >> 3
+ 
+ Conditional branch
+ 
+ branch if equal / beq x5, x6, 100 / if (x5 == x6) go to PC+100
+ branch if not equal / bne x5, x6, 100 / if (x5 != x6) go to PC+100
+ branch if less than / blt x5, x6, 100 / if (x5 < x6) go to PC+100
+ branch if greater or equal / bge x5, x6, 100 / if (x5 >= x6) go to PC+100
+ branch if less, unsigned / bltu x5, x6, 100 / if (x5 < x6) go to PC+100
+ branch if greater or equal, unsigned / bgeu x5, x6, 100 / if (x5 >= x6) go to PC+100
+ 
+ Unconditional branch
+ 
+ jump and link / jal x1, 100 / x1 = PC + 4; go to PC + 100
+ jump and link register / jalr x1, 100(x5) / x1 = PC + 4; go to x5 + 100
  </pre>
  
 
