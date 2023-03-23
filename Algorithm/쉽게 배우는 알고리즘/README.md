@@ -329,6 +329,19 @@ af(n/b) <= cf(n)은 자기호출로 만나는 하위레벨의 문제들에서 �
 이 원소는 정렬이 끝났다고 볼 수 있으므로 이제 이 원소를 제외한 나머지 원소들로 같은 작업을 반복함.<br>
 
 <pre>
+간략한 기술
+
+selectionSort(A[], n)
+{
+  for last <- n downto 2 {
+    A[1, ..., last]중 가장 큰 수 A[k]를 찾는다;
+    A[k] <-> A[last];
+  }
+}
+</pre>
+
+<pre>
+기호적 기술
 selectionSort(A[], n)
 {
   for last <- n downto 2 {
@@ -355,8 +368,39 @@ theLargest(A[], last)
 따라서 1 + ... + n-1 = n(n-1) / 2임.<br>
 수를 비교하는 횟수가 전체 시간을 좌우하므로 이것을 기준으로 수행 시간을 계산함.<br>
 
-
 **:pushpin: 기본적인 정렬 알고리즘: 버블 정렬**
+
+<pre>
+간략한 기술
+
+bubbleSort(A[], n)
+{
+  for last <- n downto 2
+    for i <- 1 to last-1
+      if (A[i] > A[i+1]) then A[i] <-> A[i+1];
+}
+</pre>
+
+버블 정렬의 총 순환 횟수는 (n-1) + (n-2) + ... + 2 + 1 = n(n-1) / 2임.<br>
+따라서 수행 시간은 Θ(n^2)임.<br>
+버블 정렬 알고리즘은 중간에 배열이 이미 정렬이 되어 있는 상태라도 계속 끝까지 무의미한 순환을 계속함.
+
+<pre>
+수정된 bubble sort
+
+bubbleSort(A[], n)
+{
+  for last <- n downto 2
+      sorted <- TRUE;
+    for i <- 1 to last-1 {
+      if (A[i] > A[i+1]) {
+        A[i] <-> A[i+1];
+        sorted <- FALSE;
+      }
+    }
+    if (sorted = TRUE) then return;
+}
+</pre>
 
 **:pushpin: 기본적인 정렬 알고리즘: 삽입 정렬**
 
