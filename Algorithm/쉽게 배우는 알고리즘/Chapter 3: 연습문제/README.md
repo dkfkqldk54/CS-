@@ -134,6 +134,16 @@ T(n) = Θ(h(n)logn) = Θ(nlogn)
 
 **:pushpin: 9번**
 
+<pre>
+T(n) = 2T(n/2) + O(1)
+
+a = 2, b = 2, f(n) = O(1), h(n) = n
+
+lim f(n) / h(n) = lim 1/n = 0이므로 마스터 정리 1번임.
+
+f(n) / h(n) = 1/n <= c * (1 / n^ε)에서 ε = 0.5, c = 1일때 성립하므로 T(n) = Θ(n)
+</pre>
+
 **:pushpin: 10번**
 
 **:pushpin: 11번**
