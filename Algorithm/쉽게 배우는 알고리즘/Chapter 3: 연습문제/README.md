@@ -122,6 +122,16 @@ af(n/b) = f(n/3) <= cf(b)이 성립함.(a = 1, b = 3, c = 1/2)
 
 **:pushpin: 8번**
 
+<pre>
+T(n) = 2T(n/2) + O(n)
+
+a = 2, b = 2, f(n) = O(n), h(n) = n
+
+f(n) / h(n) = Θ(1)임.
+
+T(n) = Θ(h(n)logn) = Θ(nlogn)
+</pre>
+
 **:pushpin: 9번**
 
 **:pushpin: 10번**
