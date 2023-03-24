@@ -16,6 +16,7 @@
  - 부호있는 수와 부호없는 수
  - 명령어의 컴퓨터 내부 표현
  - 문자와 문자열
+ - 논리 연산 명령어
  
   <a href="#3">:pencil2: Chapter3. 컴퓨터 연산</a>
  - 덧셈과 뺄셈
@@ -859,7 +860,34 @@ $ gcc -o p24 p24.pp.o와 결합하면 p24 실행파일이 생성된 후에, 파�
  Disassembly는 컴퓨터 프로그램의 바이너리 코드를 읽고 해석하여 어셈블리 코드로 변환하는 과정을 말함.<br>
  즉, 컴퓨터가 직접 실행할 수 있는 기계 코드로 작성된 프로그램을 사람이 이해할 수 있는 언어로 변환하는 작업을 말함.<br>
 
-
+ **:pushpin: 논리 연산 명령어**
+ 
+ <pre>
+ Shift left <<(C) <<(Java) sll, slli
+ Shift right >>(C) >>>(Java) srl, srli
+ Shift right arithmetic >>(C) >>(Java) sra, srai
+ Bit by bit AND &(C, Java) and, andi
+ Bit by bit OR |(C, Java) or, ori
+ Bit by bit XOR ^(C, Java) xor, xori
+ Bit by bit NOT ~(C, Java) xori
+ </pre>
+ 
+ NOT은 xor 111...111과 같음.<br>
+ NOT 명령어를 만들지 않고 xor을 쓰는 이유는 3피연산자 형식을 유지하기 위해서임.<br>
+ 
+ <pre>
+ slli x11, x19, 4 // reg x11 = reg x19 << 4 bits
+ </pre>
+ 
+ I타입 명령어임.<br>
+ 32비트 레지스터를 32자리 이상 이동하는 것은 쓸모가 없기 때문에 immediate 12비트 필드 중에서 하위 6비트만 사용하고, 나머지 6비트는 추가적인 opcode 필드로 재사용함.<br>
+ AND는 어떤 비트 패턴에서 0의 위치에 해당하는 비트들을 강제로 0으로 만드는 데 사용할 수 있음.<br>
+ AND와 함께 쓰이는 이러한 비트 패턴은 일부 비트를 감추는 역할을 하기 때문에 마스크라고 부름.<br>
+ C에서는 워드 안에서 비트 필드 또는 필드라는 것을 정의할 수 있음.<br>
+ 이를 이용하면 하나의 워드 안에 여러 값을 넣을 수도 있고, 입출력장치같이 외부의 융통성 없는 인터페이스에 맞출 수도 있음.<br>
+ 모든 필드는 한 워드에 들어갈 수 있는 크기이어야 하며, 최소 길이 1비트의 부호없는 정수임.<br>
+ C 컴파일러는 RISC-V의 논리 연산 andi, ori, slli, srli 등을 사용하여 필드를 삽입하거나 추출함.<br>
+ 
   <h2><a id="3">:pencil2: Chapter3. 컴퓨터 연산</a></h2>
  
  **:pushpin: 덧셈과 뺄셈**
