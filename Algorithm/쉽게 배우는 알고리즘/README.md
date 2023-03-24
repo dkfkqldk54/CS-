@@ -476,7 +476,7 @@ for 루프는 n-1번 순환되므로 Θ(n)에 가까운 시간이 듬.<br>
 <pre>
 mergeSort(A[], p, r)
 {
-  if (p<r) then {
+  if (p < r) then {
     q <- (p+r) / 2;
     mergeSort(A, p, q);
     mergeSort(A, q+1, r);
@@ -546,7 +546,7 @@ T(n) <= 2T(n/2) + cn
 <pre>
 quickSort(A[], p, r)
 {
-  if (p<r) then {
+  if (p < r) then {
     q <- partition(A, p, r);
     quickSort(A, p, q-1);
     quickSort(A, q+1, r);
@@ -770,7 +770,7 @@ else
   if (a1 < a3) return a2 < a1 <a3
   else
     if (a2 < a3)  return a2 < a3 < a1
-    else return a3 < a2 <a1
+    else return a3 < a2 < a1
 </pre>
 
 리프노드를 만날 때까지 비교를 계속 함.<br>
