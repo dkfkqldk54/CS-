@@ -1,0 +1,98 @@
+1. 다음은 main.py 파일이다.
+
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[ ]:
+
+import sys
+
+# commandline arguments 확인
+if len(sys.argv) != 4:
+    print("Usage: python main.py [version] [input_file_path] [output_file_path]")
+    sys.exit()
+
+# 버전에 따라 함수 선택
+version = int(sys.argv[1])
+if version == 1:
+    def select_kth(arr, k):
+        def partition(A, p, r):
+            x = A[r]
+            i = p - 1
+            for j in range(p, r):
+                if A[j] <= x:
+                    i += 1
+                    A[i], A[j] = A[j], A[i]
+            A[i+1], A[r] = A[r], A[i+1]
+            return i+1
+        
+        def randomized_select(A, p, r, i):
+            if p == r:
+                return A[p]
+            q = partition(A, p, r)
+            k = q - p + 1
+            if i == k:
+                return A[q]
+            elif i < k:
+                return randomized_select(A, p, q-1, i)
+            else:
+                return randomized_select(A, q+1, r, i-k)
+        
+        return randomized_select(arr, 0, len(arr)-1, k-1)
+
+elif version == 2:
+    def select_kth(arr, k):
+        def median_of_medians(arr):
+            if len(arr) <= 5:
+                return sorted(arr)[len(arr)//2]
+            
+            chunks = [arr[i:i+5] for i in range(0, len(arr), 5)]
+            medians = [median_of_medians(chunk) for chunk in chunks]
+            
+            return median_of_medians(medians)
+        
+        pivot = median_of_medians(arr)
+        smaller = [x for x in arr if x < pivot]
+        equal = [x for x in arr if x == pivot]
+        larger = [x for x in arr if x > pivot]
+        
+        if k <= len(smaller):
+            return select_kth(smaller, k)
+        elif k <= len(smaller) + len(equal):
+            return pivot
+        else:
+            return select_kth(larger, k-len(smaller)-len(equal))
+    
+else:
+    print("Version must be 1 or 2")
+    sys.exit()
+
+# 입력 파일 읽기
+input_file_path = sys.argv[2]
+with open(input_file_path, "r") as f:
+    n, m = map(int, f.readline().split())
+    arr = list(map(int, f.readline().split()))
+
+# k번째 작은 수 찾기
+kth = select_kth(arr, m)
+
+# 출력 파일 쓰기
+output_file_path = sys.argv[3]
+with open(output_file_path, "w") as f:
+    f.write(str(kth))
+    
+2. main 프로그램은 세 개의 commandline argument를 받아야 합니다.
+- 버전
+- 입력 파일 경로
+- 출력 파일 경로
+
+checker 프로그램은 두 개의 commandline argument를 받아야 합니다.
+- (main 프로그램의) 입력 파일 경로
+- (main 프로그램의) 출력 파일 경로
+
+checker 프로그램은 입력 파일의 내용물에 대한 정답이 출력 파일의 내용물과 같은 경우 1, 그렇지 않은 경우 0을 stdout으로 출력해야 합니다.
+
+<실행 예시>
+./checker ./input/test1.in ./output/test1.out
+
+checker.py 파일을 만들어줘.
