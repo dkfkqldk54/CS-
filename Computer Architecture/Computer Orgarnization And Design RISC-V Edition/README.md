@@ -17,6 +17,7 @@
  - 명령어의 컴퓨터 내부 표현
  - 문자와 문자열
  - 논리 연산 명령어
+ - 판단을 위한 명령어
  
   <a href="#3">:pencil2: Chapter3. 컴퓨터 연산</a>
  - 덧셈과 뺄셈
@@ -943,6 +944,34 @@ main 함수에서는 x2 레지스터에 5를 저장하고, foo 함수를 호출�
  <pre>
  Untyped pointer(비타입 포인터)는 포인터가 가리키는 데이터의 타입에 대한 정보가 없는 포인터를 말합니다. C 언어에서 void 포인터(void *)가 그 예시임.
  </pre>
+ 
+  **:pushpin: 판단을 위한 명령어**
+  
+  <pre>
+  beq rs1, rs2, L1
+  bne rs1, rs2, L1
+  </pre>
+  
+  beq는 branch if equal을 의미하고, bne는 branch if not equal을 의미함.<br>
+  rs1과 rs2의 값이 같은지 안 같은지에 따라서 L1으로 분기함.<br>
+  
+  <pre>
+  f = x19, g = x20, h = x21, i = x22, j = x23
+  if (i == j) f = g + h; else f = g - h;
+  
+  beq를 쓰는 것보다는 bne를 쓰는 것이 효율적임.
+  
+  bne x22, x23, Else
+  add x19, x20, x21
+  beq x0, x0, Exit
+  Else: sub x19, x20, x21;
+  Exit:
+  </pre>
+  
+  beq x0, x0, Exit은 무조건 분기(unconditional branch)로 쓰임.<br>
+  컴파일러는 소스 프로그램에 없는 분기 명령어나 레이블을 만들어 내는 경우가 많이 있음.<br>
+  필요한 레이블과 분기 명령을 일일이 표시하지 않아도 되는 것이 상위 수준 프로그래밍 언어의 장점 중 하나임.<br>
+  상위 수준 언어를 사용하면 코딩이 더 빨라지는 이유이기도 함.<br>
  
   <h2><a id="3">:pencil2: Chapter3. 컴퓨터 연산</a></h2>
  
