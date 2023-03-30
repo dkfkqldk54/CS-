@@ -1,0 +1,35 @@
+ <h1>:green_book: HW4 관련 정리</h1>
+
+**:pushpin: important.h**
+<pre>
+int foo(int a, int b, int c);
+</pre>
+
+**:pushpin: important.o**
+<pre>
+/* 코드에 대한 메타 데이터 */
+/* 링커와 로더에게 코드의 섹션, 정렬, 심볼의 가시성, 타입에 대한 정보를 제공함. */
+/* 이를 활용하여 링커와 로더는 프로그램의 메모리 레이아웃을 올바르게 구성할 수 있음. */
+
+  .text                  /* 이어지는 코드가 텍스트일 것을 지정함. */
+  .align      2          /* 메모리 주소가 2의 거듭제곱(2^2=4)로 정렬되도록 함. 이어지는 코드는 4바이트 경계에 정렬됨. */
+  .globl      foo        /* foo 심볼이 전역 심볼로 선언됨. 다른 오브젝트 파일에서도 참조 가능함. */
+  .type foo,  @function  /* foo 심볼의 타입이 함수임을 나타냄. */
+
+foo:
+  mul a4, a1, a2
+  mv a3, a0
+  li a5, 2
+  sub a5, a5, a2
+  sll a0, a1, a5
+  mul a2, a2, a3
+  add a4, a4, a3
+  add a4, a4, a0
+  ble a2, a4, .LI
+  mv a0, a1
+
+.LI:
+  ret
+</pre>
+
+.
