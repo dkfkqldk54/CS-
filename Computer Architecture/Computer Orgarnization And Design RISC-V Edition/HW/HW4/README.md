@@ -32,6 +32,23 @@ foo:
   ret
 </pre>
 
+**:pushpin: important.c**
+<pre>
+int foo(int a, int b, int c)
+{
+ int tmp2 = b * c;
+ int tmp1 = a;
+ int tmp3 = 2 - c;
+ a = b << tmp3;
+ c *= tmp1;
+ tmp2 = tmp2 + tmp1 + a;
+ if (c <= tmp2) 
+  return a;
+ else
+  return b;
+}
+</pre>
+
 **:pushpin: 명령어 설명**
 
 **mv**
