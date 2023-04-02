@@ -1176,7 +1176,41 @@ some_function:
    스택 포인터 sp는 스택에 저장되는 레지스터 개수에 맞추어 조정됨.<br>
    복귀할 때에는 메모리에서 값을 꺼내 레지스터를 원상 복구하고 이에 맞추어 스택 포인터를 다시 조정함.<br>
    
+   <pre>
+   n 계승을 계산하는 다음 재귀 프로시저에 해당하는 RISC-V 어셈블리 코드를 보여라.
+   int fact(int n)
+   {
+     if (n < 1) return (1);
+     else return (n * fact(n-1));
+   }
+   인수 n은 인수 레지스터 x10에 해당함.<br>
    
+   fact:
+    addi sp, sp, -8 //adjust stack for 2 items
+    sw x1, 4(sp)
+    sw x10, 0(sp)
+    
+    addi x5, x10, -1 // x5 = n - 1
+    bge x5, x0, L1 // if (n-1) >= 0 즉 if n >= 1, go to L1
+    
+    // n이 1보다 작으면 1을 인수 레지스터에 넣음. 이를 위해서 0에다 1을 더해서 x10에 넣음. 복귀하기 전에 스택에 저장된 값 2개를 버리고 복귀 주소로 분기함.
+    addi x10, x0, 1 // return 1
+    addi sp, sp 8 // pop 2 items off stack
+    jalr x0, 0(x1) // return to caller
+    
+  L1:
+   addi x10, x10, -1 // n >= 1: argument get (n-1)
+   jal x1, fact // call fact with (n-1)
+   
+ addi x6, x10, 0 // return from jal: move result of fact (n-1) to x6
+ lw x10, 0(sp) // restore argument n
+ lw x1, 4(sp) // restore the return address
+ addi sp, sp, 8 // adjust stack pointer to pop 2 items
+ 
+ mul x10, x10, x6 // return n * fact (n-1)
+ jalr x0, 0(x1) // return to caller
+    
+   </pre>
  
   <h2><a id="3">:pencil2: Chapter3. 컴퓨터 연산</a></h2>
  
