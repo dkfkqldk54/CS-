@@ -1186,31 +1186,58 @@ some_function:
    인수 n은 인수 레지스터 x10에 해당함.<br>
    
    fact:
-    addi sp, sp, -8 //adjust stack for 2 items
-    sw x1, 4(sp)
-    sw x10, 0(sp)
-    
-    addi x5, x10, -1 // x5 = n - 1
-    bge x5, x0, L1 // if (n-1) >= 0 즉 if n >= 1, go to L1
-    
-    // n이 1보다 작으면 1을 인수 레지스터에 넣음. 이를 위해서 0에다 1을 더해서 x10에 넣음. 복귀하기 전에 스택에 저장된 값 2개를 버리고 복귀 주소로 분기함.
-    addi x10, x0, 1 // return 1
-    addi sp, sp 8 // pop 2 items off stack
-    jalr x0, 0(x1) // return to caller
-    
-  L1:
-   addi x10, x10, -1 // n >= 1: argument get (n-1)
-   jal x1, fact // call fact with (n-1)
-   
- addi x6, x10, 0 // return from jal: move result of fact (n-1) to x6
- lw x10, 0(sp) // restore argument n
- lw x1, 4(sp) // restore the return address
- addi sp, sp, 8 // adjust stack pointer to pop 2 items
- 
- mul x10, x10, x6 // return n * fact (n-1)
- jalr x0, 0(x1) // return to caller
-    
+    addi sp, sp, -8              # 스택에 공간 할당 (8바이트)
+    sw x1, 4(sp)                 # 반환 주소(ra)를 스택에 저장
+    sw x10, 0(sp)                # 인수 n을 스택에 저장
+
+    addi x5, x10, -1             # x5 = n - 1
+    bge x5, x0, L1               # if (n-1) >= 0 즉 if n >= 1, go to L1
+
+    addi x10, x0, 1              # return 1
+    addi sp, sp, 8               # 스택 포인터 복원 (8바이트 할당 해제)
+    jalr x0, 0(x1)               # 호출자에게 제어 반환
+
+L1:
+    addi x10, x10, -1            # n >= 1: argument get (n-1)
+    jal x1, fact                 # call fact with (n-1)
+
+    addi x6, x10, 0              # return from jal: move result of fact (n-1) to x6
+    lw x10, 0(sp)                # restore argument n
+    lw x1, 4(sp)                 # restore the return address
+    addi sp, sp, 8               # adjust stack pointer to pop 2 items
+    mul x10, x10, x6             # return n * fact(n-1)
+    jalr x0, 0(x1)               # return to caller
    </pre>
+   
+   C 변수는 기억 장치의 한 장소에 해당함.<br>
+   여기에 기억된 내용을 어떻게 해석하는가는 데이터형(type)과 저장 유형(storage class)에 따라 달라짐.<br>
+   데이터형의 예로는 정수형, 문자형 등이 있음.<br>
+   C에는 자동(automatic)과 정적(static) 두 가지 저장 유형이 있음.<br>
+   자동 변수는 프로시저 내에서만 정의되는 것으로 프로시저가 종료되면 없어짐.<br>
+   정적 변수는 프로시저로 들어간 후나 프로시저에서 빠져나온 후에도 계속 존재함.<br>
+   모든 프로시저의 외부에서 선언된 C 변수는 정적 변수로 간주되며, static이라는 키워드를 사용해서 선언된 변수도 마찬가지임.<br>
+   그 나머지는 모두 자동 변수임.<br>
+   정적 데이터를 쉽게 접근할 수 있도록 어떤 RISC-V 컴파일러는 x3을 전역 포인터(global pointer, gp)로 사용함.<br>
+   
+   <pre>
+   preserved
+   
+   saved registers: x8-x9, x18-x27
+   stack pointer register: x2(sp)
+   frame pointer: x8(fp)
+   return address x1(ra)
+   stack above the stack pointer
+   
+   not preserved
+   
+   temporary registers: x5-x7, x28-x31
+   argument/result registers: x10-x17
+   stack below the stack pointer
+   </pre>
+   여러 가지 방법으로 스택을 보존하여 호출 프로그램이 스택에 저장한 값과 같은 값을 꺼낼 수 있게 보장하고 있음.<br>
+   피호출 프로그램이 sp보다 위쪽에는 값을 쓰지 못하게 함으로써, sp 윗부분의 스택을 원상태로 유지함.<br>
+   호출 프로그램이 sp에서 뺀 값만큼 피호출 프로그램이 더해서 sp가 변하지 않게 함.<br>
+   다른 레지스터는 (만일 프로시저 내에서 사용되면) 스택에 저장했다가 다시 꺼내서 원래 값을 유지함.<br>
  
   <h2><a id="3">:pencil2: Chapter3. 컴퓨터 연산</a></h2>
  
