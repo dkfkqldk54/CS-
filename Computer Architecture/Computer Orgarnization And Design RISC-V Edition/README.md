@@ -1341,6 +1341,33 @@ L1:
    반면 C는 저수준 프로그래밍 언어라서 프로그래머가 직접 메모리 관리를 수행해야 함.<br>
    그래서 malloc이나 free 함수를 사용하는  것임.<br>
    메모리 관리 과정에서 실수가 발생하면 메모리 누수나 할당되지 않은 메모리 영역에 접근하는 등의 문제가 발생할 수 있음.
+   
+   **:pushpin: ppt 슬라이드 추가**
+   
+   <pre>
+   $ risc64-unknown-elf-gcc -march=rv32i -mabi=ilp32 -O -S sum.c
+   </pre>
+   
+   risc64-unknown-elf-gcc: RISC-V용 gcc 크로스 컴파일러를 호출하는데 사용되는 명령어임. 이 컴파일러는 RISC-V 아케틱처의 명령어 집합을 사용하여 코드를 생성함.<br>
+   -march=rv32i: 생성된 코드의 목표 아키텍처를 RISC-V 32비트 아키텍처(rv32i)로 설정함. rv32i는 RISC-V의 기본 명령어 집합을 사용함. rv32i가 아니라 x86-64 혹은 i386 등으로 설정하면 해당 명령어 집합에 맞는 어셈블리 코드를 생성함.<br>
+   -mabi=ilp32: 생성된 코드의 목표(ABI:Application Binary Interface)를 ilp32로 설정함. ilp32 ABI는 32비트 RISC-V 아키텍처에서 사용되며, 정수와 포인터의 크기가 모두 32비트임을 의미함.<br>
+   -O: 컴파일러 최적화를 활성화함. 이 옵션은 코드의 실행 속도를 높이고, 크기를 줄이기 위해 컴파일러가 다양한 최적화를 수행하도록 지시함.<br>
+   -S: 이 옵션은 컴파일 과정에서 어셈블리 코드 생성까지만 진행하도록 지시함. 이후에 해당 파일을 사용해 object file이나 executable file을 만들 수 있음.<br>
+   sum.c: 입력 소스 파일의 이름. 컴파일러는 이 파일의 C코드를 읽고, 처리한 다음, 어셈블리 코드로 변환함.<br>
+   
+   **Assembler와 Linker**<br>
+   
+   Assembler는 .s를 .o로 바꿈.<br>
+   각 명령어를 binary encoding함.<br>
+   거의 executable code로 만들어놓음.<br>
+   하지만 다른 파일과의 linkage는 없음.<br>
+   Linker는 파일들간의 references를 resolve함.<br>
+   static run time libraries를 이용하여 combine함.<br>
+   static run time libraries(정적 런타임 라이브러리)는 프로그램이 실행되는 동안 필요한 라이브러리 함수들을 컴파일 시점에 프로그램 바이너리에 포함시키는 라이브러리임. 이렇게 하면 프로그램이 실행될 때 외부 라이브러리 파일을 참조할 필요가 없어짐.<br>
+   몇몇 라이브러리들은 dynamic하게 linked됨. 즉 프로그램 실행과 동시에 링크됨.<br>
+   
+   
+   
  
   <h2><a id="3">:pencil2: Chapter3. 컴퓨터 연산</a></h2>
  
