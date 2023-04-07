@@ -1091,6 +1091,51 @@ c = 3이면 2<=n이면 모든 n에 대해 D(n) <= cnlogn이므로 D(n) = O(nlogn
 
 **:pushpin: 이진 검색 트리: 삭제**
 
+노드 r을 삭제하고자 할 때는 다음 세 가지 경우에 따라 각각 다르게 처리를 해주어야 함.<br>
+case 1: r이 리프 노드인 경우<br>
+case 2: r의 자식 노드가 하나인 경우<br>
+case 3: r의 자식 노드가 두 개인 경우<br>
+<br>
+이 중에서 r의 자식이 둘인 경우를 살펴보자.<br>
+r의 부모가 r을 가리키던 포인터는 하나임.<br>
+r자리에 옮겨놓아도 이진 검색 트리의 성질을 꺠지 않는 원소를 찾아야함.<br>
+왼쪽 서브 트리에서 가장 큰 원소(크기 순으로 r의 직전 원소)와 오른쪽 서브 트리에서 가장 작은 원소(크기 순으로 r의 직후 원소)임.<br>
+둘 중 하나를 택해 키를 r의 자리로 옮김.(여기서는 r의 직후 원소를 선택함.)<br>
+그런 다음 직후 원소가 들어 있던 노드를 삭제함.<br>
+다행히 직후 원소는 절대 왼쪽 자식을 가질 수 없음.<br>
+그러므로 이 직후 원소의 삭제는 case1이나 case2에 속하게 되어 비교적 간단한 삭제 작업이 됨.<br>
+
+<pre>
+treeDelete(t, r, p):
+{
+  if (r=t) then root <- deleteNode(t);
+  else if (r = left[p])
+    then left[p] <- deleteNode(r);
+    else right[p] <- deleteNode(r);
+}
+
+deleteNode(r)
+{
+  if (left[r] = right[r] = NIL) then return NIL;
+  else if (left[r] = NIL and right[r] != NIL) then return right[r];
+  else if (left[r] != NIL and right[r] = NIL) then return left[r];
+  else {
+    s <- right[r];
+    while (left[s] != NIL)
+      {parent <- s; s <- left[s];}
+    key[r] <- key[s];
+    if (s = right[r]) then right[r] <- right[s]
+                      else left[parent] <- right[s];
+    return r;
+  }
+}
+</pre>
+
+case1과 case2는 상수 시간이 들음.<br>
+case3은 노드 r의 직후 원소를 찾는데 최악의 경우 트리의 높이에 비례하는 시간이 들음.<br>
+직후 원소를 찾은 다음에 삭제하는 것은 case1 또는 case2에 해당되므로 상수 시간이 들음.<br>
+따라서 삭제 작업을 위한 최악의 시간은 트리의 높이에 따라 O(logn)과 O(n) 사이에서 결정됨.<br>
+
 **:pushpin: 레드 블랙 트리**
 
 **:pushpin: 레드 블랙 트리: 삽입**
