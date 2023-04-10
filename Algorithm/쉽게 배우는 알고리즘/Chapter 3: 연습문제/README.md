@@ -125,8 +125,31 @@ n이 15이상이면 cnlog(n/3 + 15) <= cnlogn이고, 45clog(n/3+15)와 Θ(n)은 
 a = 2, b = 2, f(n) = Θ(nlog2n), h(n) = 1
 
 lim f(n) / h(n) =  ∞이고 2f(n/2) = Θ(nlog2(n/2)) <= Θ(nlog2n)이므로 T(n) = Θ(f(n))임.
+따라서 T(n) = Θ(nlogn)임.
 
 점근적 상한
+
+T(n) = 2T(n/2) + Θ(nlog2n)
+     = 2^2 * T(n/2^2) + Θ(nlog2(n/2)) + Θ(nlog2n)
+     = ...
+     = 2^k * T(n/2^k) + Θ(nlog2(n/2^(k-1))) + ... + Θ(nlog2n)
+     = 2^k * T(1) + kΘ(nlog2n) - nk(k-1)/2
+     
+따라서 점근적 상한은 O(2^k)임.
+
+점근적 하한
+
+T(n) = Ω(nlogn)임을 가정함.
+T(n) >= cnlogn임을 가정함.
+
+T(n) = 2T(n/2) + Θ(nlog2n)
+     >= cnlog(n/2) + Θ(nlog2n)
+     >= cnlogn
+     
+위 조건을 만족하는 상수 c를 잡을 수 있음.
+
+따라서 점근적 하한은 Ω(nlogn)임.
+</pre>
 
 6.
 <pre>
@@ -142,6 +165,18 @@ T(n) = 10c * (n/15)^log10(15) + 10b + b
 위 조건을 만족하는 c가 존재하므로 상한은 O(n^log10(15))임.
 </pre>
 
+7.
+<pre>
+T(n) = O(nlogn)임을 가정함.
+즉, T(n) <= cnlogn임을 가정함.
+
+T(n) = 5T(n/6 + 100) + n
+     <= 5cn/6 * log(n/6 + 100) + 500c * log(n/6 + 100) + n
+     <= cnlogn
+     
+n >= 6000일 때(n이 충분히 큰 상수일 때) 위 조건을 만족하는 상수 c를 구할 수 있다.
+
+따라서 상한은 T(n) = O(nlogn)임.
 </pre>
 
 **:pushpin: 4번**
