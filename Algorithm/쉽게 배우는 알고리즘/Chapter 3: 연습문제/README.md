@@ -387,6 +387,25 @@ T(n) = 2T(n/3) + T(2n/3) + O(1)
 
 **:pushpin: 16번**
 
+<pre>
+T(n) = T(2n/7) + T(5n/7) + n
+
+T(n) = O(nlogn)으로 가정하자.
+즉, T(n) <= cnlogn으로 가정하자.
+
+T(n) = T(2n/7) + T(5n/7) + n
+     <= 2cn/7 * log(2n/7) + 5cn/7 * log(5n/7) + n
+     = cnlogn + cn((2/7)log2 + (5/7)log5 - log7) + n
+     ≈ cnlogn -0.26cn + n
+     <= cnlogn
+     
+n <= 0.26cn을 만족하는 c를 잡을 수 있음.
+
+따라서 T(n) = O(nlogn)임.
+
+return 값도 cnlogn임. 이 때 c는 1이상의 상수임.
+</pre>
+
 **:pushpin: 17번**
 
 **:pushpin: 18번**
