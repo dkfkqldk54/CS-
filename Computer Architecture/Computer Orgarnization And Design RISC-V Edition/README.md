@@ -33,6 +33,7 @@
  - 단순한 구현
  - 파이프라이닝 개관
  - 파이프라인 데이터패스 및 제어
+ - 데이터 해저드: 전방전달 대 지연
  
 <h2><a id="1">:pencil2: Chapter1. 컴퓨터 추상화 및 관련 기술</a></h2>
 
@@ -2639,3 +2640,123 @@ MIPS 소프트웨어는 분기 명령어에 의해 영향을 받지 않는 명�
  이 같은 제어 신호를 전달하는 가장 간단한 방법은 파이프라인 레지스터를 확장하여 제어 정보를 포함하도록 하는 것임.<br>
  7개 제어선 중 2개가 EX 단계에서 사용되고 나머지 5개 제어선은 제어 신호를 저장하도록 확장된 EX/MEM 파이프라인 레지스터로 전달됨.<br>
  이 중 3개는 MEM 단계에서 사용되고 나머지 2개는 WB 단계에서 사용되기 위해 MEM/WB로 전달됨.<br>
+ 
+  **:pushpin: 데이터 해저드: 전방전달 대 지연**
+  
+  한 클럭 사이클에 같은 레지스터에 대한 읽기와 쓰기가 동시에 행해질 수 있음.<br>
+  쓰기는 클럭 사이클 앞 부분에서 일어나고, 읽기는 뒷부분에서 일어나기 때문임.<br>
+  따라서 읽기는 새로 써진 값을 읽을 수 있으며 데이터 해저드가 발생하지 않음.<br>
+  
+  <pre>
+  sub x2, x1, x3
+  and x12, x2, x5
+  or x13, x6, x2
+  add x14, x2, x2
+  sw x15, 100(x2)
+ </pre>
+ 
+ and와 or은 EX 단계의 시작인 클럭 사이클 4와 5에서 각각 필요함.<br>
+ 데이터가 레지스터 파일에서 읽을 수 있게 되기 전이라도 데이터가 계산되어 나오자마자 이를 필요로 하는 유닛으로 전방전달하기만 하면 이 코드들을 지연 없이 실행할 수 있음.<br>
+ 해저드 조건을 다음과 같음.<br>
+ 
+ <pre>
+ 1a. EX/MEM.RegisterRd = ID/EX.RegisterRs1
+ 1b. EX/MEM.RegisterRd = ID/EX.RegisterRs2
+ 2a. MEM/WB.RegisterRd = ID/EX.RegisterRs1
+ 2b. MEM/WB.RegisterRd = ID/EX.RegisterRs2
+ </pre>
+ 
+ sub-and는 1a 해저드가 있고, sub-or은 2b 해저드가 있음.<br>
+ 어떤 명령어들은 레지스터에 쓰기를 하지 않기 때문에 이 같은 방침이 정확하지 않음.<br>
+ 필요없을 때에도 전방전달을 하는 경우가 있기 때문임.<br>
+ 한 가지 해결책은 RegWrite 신호가 활성화되어 있는지 확인하는 것임.<br>
+ EX 단계와 MEM 단계 동안에 파이프라인 레지스터 WB 제어 필드를 조사하면 RegWrite 신호가 인가되었는지를 알 수 있음.<br>
+ RISC-V에서 x0를 피연산자로 사용하면 피연산자 값은 항상 0임.<br>
+ 예를 들어 addi x0, x1, 2 결과값을 굳이 전방전달할 필요가 없음.<br>
+ 첫 번째 해저드 조건에 EX/MEM.RegisterRd != 0을 추가하고, 두 번째 조건에 MEM/WB.ReigsterRd != 0을 추가하면 위의 조건들은 제대로 작동함.<br>
+ ID/EX 레지스터뿐만 아니라 어느 파이프라인 레지스터에서라도 ALU 입력을 가져올 수가 있다면 적절한 데이터를 전방전달할 수 있음.<br>
+ ALU 입력에 멀티플렉서를 추가하고 적절한 제어를 붙이면 이 같은 데이터 종속성이 존재하더라도 파이프라인을 최고 속도로 실행할 수 있음.<br>
+ <br>
+ ALU 전방전달 멀티플렉서가 EX 단계에 있으므로 전방전달 제어불도 EX 단계에 있음.<br>
+ 따라서 전방전달 여부를 결정할 수 있도록 레지스터 번호를 ID 단계에서부터 ID/EX 파이프라인 레지스터를 거쳐 전달해줘야 함.<br>
+ 전방전달이 추가되기 전까지는 ID/EX 레지스터에 rs1과 rs2 필드를 저장할 필요가 없었으므로, rs1과 rs2 필드를 ID/EX에 추가해야 함.<br>
+ 
+ <pre>
+ ForwardA = 00, 근원지 ID/EX, ALU의 첫 번째 피연산자가 레지스터 파일에서 옴.
+ ForwardA = 10, 근원지 EX/MEM, 직전의 ALU 결과가 ALU의 첫 번째 피연산자로 전방전달 됨.
+ ForwardA = 01, 근원지 MEM/WB, 데이터 메모리나 전전 ALU 결과가 ALU의 첫 번째 피연산자로 전방전달 됨.
+ ForwardB = 00, 근원지 ID/EX, ALU의 첫 번째 피연산자가 레지스터 파일에서 옴.
+ ForwardB = 10, 근원지 EX/MEM, 직전의 ALU 결과가 ALU의 두 번째 피연산자로 전방전달 됨.
+ ForwardB = 01, 근원지 MEM/WB, 데이터 메모리나 전전 ALU 결과가 ALU의 두 번째 피연산자로 전방전달 됨.
+ </pre>
+ 
+ EX 해저드
+ 
+ <pre>
+ if (EX/MEM.RegWrite and (EX/MEM.RegisterRd != 0) and (EX/MEM.RegisterRD = ID/EX.RegisterRS1)) ForwardA = 10
+ if (EX/MEM.RegWrite and (EX/MEM.RegisterRd != 0) and (EX/MEM.RegisterRD = ID/EX.RegisterRS2)) ForwardB = 10
+ </pre>
+ 
+ MEM 해저드
+ 
+ <pre>
+ if (MEM/WB.RegWrite and (MEM/WB.RegisterRd != 0) and (MEM/WB.RegisterRd = ID/EX.RegisterRs1)) ForwardA = 01
+ if (MEM/WB.RegWrite and (MEM/WB.RegisterRd != 0) and (MEM/WB.RegisterRd = ID/EX.RegisterRs2)) ForwardB = 01
+ </pre>
+ 
+ WB 단계에는 해저드가 없음.<br>
+ WB 단계에 있는 명령어가 값을 저장하는 레지스터를 ID 단계에 있는 명령어가 읽는다면 레지스터 파일은 올바른 값을 제공한다고 가정하기 때문임.<br>
+ 복잡한 문제는 WB 단계에 잇는 명령어의 결과값과 MEM 단계에 있는 명령어의 결과값 모두가 ALU 단계에 있는 명령어의 근원지 피연산자 사이에 데이터 해저드가 일어날 수 있다는 것임.<br>
+ 이 경우 MEM 단계의 결과값이 더 최근의 것이기 때문에 결과값은 MEM 단계에서 전방전달됨.<br>
+ 따라서 MEM 해저드에 대한 제어는 다음과 같음.<br>
+ 
+ <pre>
+ if (MEM/WB.RegWrite and (MEM/WB.RegisterRd != 0) 
+ and not (EX/MEM.RegWrite and (EX/MEM.RegisterRd != 0) and (EX/MEM/RegisterRd = ID/EX/RegisterRs1)) 
+ and (MEM/WB.RegisterRd = ID/EX.RegisterRs1)) ForwardA = 01
+ 
+ if (MEM/WB.RegWrite and (MEM/WB.RegisterRd != 0)
+ and not (EX/MEM.RegWrite and (EX/MEM.RegisterRd != 0) and (EX/MEM/RegisterRd = ID/EX/RegisterRs2)) 
+ and (MEM/WB.RegisterRd = ID/EX.RegisterRs2)) ForwardB = 01
+ </pre>
+ 
+ **데이터 해저드와 지연**<br>
+ 
+ 전방전달이 해결 못 하는 경우 중 하나는 적재 명령어를 뒤따르는 명령어가 적재 명령어에서 쓰기를 행하는 레지스터를 읽으려고 시도할 때임.<br>
+ 적재 명령어가 데이터를 읽고 있는데 ALU는 이미 그 다음 명령어를 위한 연산을 수행하고 있는 경우 파이프라인을 지연시켜야 함.<br>
+ 따라서 전방전달 유닛 외에 해저드 검출 유닛(hazard detection unit)도 필요함.<br>
+ ID 단계에서 동작하여 적재 명령어와 결과값 사용 명령어 사이에 지연을 추가할 수 있도록 함.<br>
+ 적재 명령어만 검사하면 되므로 해저드 검출 유닛에 대한 제어는 다음과 같은 한 가지 조건을 갖음.<br>
+ 
+ <pre>
+ if (ID/EX/MemRead and
+ ((ID/EX.RegisterRd = IF/ID.RegisterRs1) or
+ (ID/EX.RegisterRd = IF/ID.RegisterRS2)))
+ stall the pipeline
+ </pre>
+ 
+ 첫 번째 줄은 명령어가 적재 명령어인지 테스트함.<br>
+ 데이터 메모리를 읽는 유일한 명령어가 적재 명령어이기 때문임.<br>
+ 다음 두 줄은 EX 단계에 있는 적재 명령어의 목적지 레지스터 필드가 ID 단계에 있는 명령어의 근원지 레지스터인지를 체크함.<br>
+ 조건이 만족되면 명령어는 1클럭 사이클만큼 지연됨.<br>
+ 1클럭 사이클 지연 후에는 전방전달 회로가 종속성을 처리할 수 있으므로 실행은 계속 진행됨.<br>
+ 만약 전방전달이 없다면 명령어들은 1 사이클 더 지연되어야 함.<br>
+ <br>
+ ID 단계에 있는 명령어가 지연되면 IF 단계에 있는 명령어 역시 지연됨.<br>
+ 그렇지 않으면 인출된 명령어를 잃게 됨.<br>
+ 이처럼 두 명령어의 진행을 막으려면 PC 레지스터와 IF/ID 파이프라인 레지스터만 변하지 않게 하면 됨.<br>
+ 이 레지스터 값들이 그대로 유지되면 IF 단계에서는 PC 값을 이용하여 똑같은 명령어를 계속 읽고, ID 단계에서는 IF/ID 파이프라인 레지스터의 같은 명령어 필드를 이용하여 rs1, rs2 레지스터를 계속 읽음.<br>
+ EX 단계부터 시작되는 파이프라인의 후반부도 뭔가를 해야 하는데, 하는 일은 아무런 효과도 없는 명령어 nop을 실행하는 것임.<br>
+ <br>
+ nop은 EX, MEM, WB 단계의 7개 제어 신호 모두를 인가하지 않으면(즉 0으로 만들면) 아무 것도 하지 않는 nop 명령어를 만들 수 있음.<br>
+ ID 단계에서 해저드를 찾아내면 ID/EX 파이프라인 레지스터의 EX, MEM, WB 제어 필드 값을 모두 0으로 만들어서 파이프라인에 거품을 집어넣을 수 있음.<br>
+ 이 제어값들은 매 클럭마다 앞으로 전진하면서 나름의 일을 하지만, 모든 제어값이 0이므로 실제로 레지스터나 메모리 내용은 전혀 변하지 않음.<br>
+ and 명령어에 해당하는 파이프라인 실행 자리는 nop으로 바뀌며 and 명령어 이후의 모든 명령어는 한 사이클씩 지연됨.<br>
+ 지연 거품은 그 뒤의 명령어를 모두 지연시키고 한 사이클에 한 단계식 명령어 파이프를 진행한 후 끝에서 빠져나감.<br>
+ and 및 or 명령어는 해저드 때문에 클럭 사이클 3에서 했던 것을 클럭 사이클 4에서도 그대로 반복함.<br>
+ 겉으로 보이는 지연의 효과는 이렇게 같은 일을 반복하는 것이고, 이 반복의 효과는 and와 or 명령어의 시간을 잡아 늘려서 add 명령어의 인출을 지연시키는 것임.<br>
+ 레지스터나 메모리에 쓰는 것을 막기 위해 제어선들을 0으로 만든다고 한 앞의 설명에서, 사실은 RegWrite와 MemWrite 신호만 0으로 만들면 되고 나머지 제어 신호들은 don't care이어도 됨.<br>
+ 
+ 
+ 
+ 
